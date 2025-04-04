@@ -1,0 +1,2 @@
+CardTemplate
+Resource

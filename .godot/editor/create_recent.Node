@@ -1,0 +1,9 @@
+RichTextLabel
+CollisionShape2D
+Area2D
+Sprite2D
+Button
+Node2D
+Panel
+CanvasLayer
+AnimationPlayer

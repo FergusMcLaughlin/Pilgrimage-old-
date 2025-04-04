@@ -1,0 +1,24 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Pilgrimage_v1.0"
+run/main_scene="uid://dmybsbr6ii0pb"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://assets/images/icon.svg"
+
+[autoload]
+
+CardDictionaryJsonLoader="*res://src/singletons/card_dictionary_json_loader.gd"
+GlobalSignalBus="*res://src/singletons/global_signal_bus.gd"
+CreateCard="*res://src/singletons/create_card.gd"
+InputManager="*res://src/singletons/input_manager.gd"
+GameConstants="*res://src/singletons/game_constants.gd"

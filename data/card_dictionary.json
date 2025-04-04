@@ -1,0 +1,50 @@
+{
+  "0001": {
+	"id": "0001",
+	"name": "Knight",
+	"type": "unit",
+	"health": 5,
+	"attack": 5,
+	"image_path": "res://assets/images/cards/knight.png"
+  },
+  "0002": {
+	"id": "0002",
+	"name": "Goatman",
+	"type": "unit",
+	"health": 3,
+	"attack": 6,
+	"image_path": "res://assets/images/cards/Goatman.png"
+  },
+  "0003": {
+	"id": "0003",
+	"name": "Goblins",
+	"type": "unit",
+	"health": 1,
+	"attack": 2,
+	"image_path": "res://assets/images/cards/Goblins.png"
+  },
+  "0004": {
+	"id": "0004",
+	"name": "Oddity",
+	"type": "unit",
+	"health": 2,
+	"attack": 3,
+	"image_path": "res://assets/images/cards/Oddity.png"
+  },
+  "0005": {
+	"id": "0005",
+	"name": "Snail Town",
+	"type": "location",
+	"health": 0,
+	"attack": 0,
+	"image_path": "res://assets/images/cards/SnailTown.png"
+  },
+  "0006": {
+	"id": "0006",
+	"name": "Woods",
+	"type": "location",
+	"health": 0,
+	"attack": 0,
+	"image_path": "res://assets/images/cards/Woods.png"
+  }
+}
