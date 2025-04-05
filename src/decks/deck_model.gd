@@ -1,64 +1,78 @@
 extends Node2D
+class_name DeckModel
 
 signal cardDrawn(card)
-signal deckEmptied(deck)
-signal deckShuffled(deck)
-signal deckClicked(deck)
+signal deckEmptied
+signal deckShuffled
+
+@export var deckTexture: Texture2D
+
+@onready var deckSprite = $DeckSprite
+@onready var cardsCountLabel = $RichTextLabel
+@onready var collisionShape = $Area2D/CollisionShape2D
 
 const cardDrawSpeed = 0.2
-var deck = ["0002", "0002", "0002", "0002", "0002", "0002", "0002", "0002" ]
+var cards = []
 
 func _ready():
+	if deckTexture:
+		deckSprite.texture = deckTexture
+	
 	$Area2D.collision_layer = GameConstants.LAYER_DECK
-	$Area2D.input_event.connect(onInputEvent)
-	shuffle()
+	$Area2D.collision_mask = 0
+	$Area2D.input_event.connect(onDeckInputEvent)
+	
+	shuffleDeck()
 	updateDeckDisplay()
 
-func shuffle():
-	deck.shuffle()
-	emit_signal("deckShuffled", self)
+func initaliseDeck(cardIds):
+	cards = cardIds.duplicate()
+	shuffleDeck()
+	updateDeckDisplay()
+
+func shuffleDeck():
+	if cards.size() > 1:
+		cards.shuffle()
+		emit_signal("deckShuffled")
 	updateDeckDisplay()
 
 func updateDeckDisplay():
-	$RichTextLabel.text = str(deck.size())
+	cardsCountLabel.text = str(cards.size())
 	
-	if deck.size() == 0:
-		$Area2D/CollisionShape2D.disabled = true
-		$DeckSprite.visible = false
-		$RichTextLabel.visible = false
-		emit_signal("deckEmptied", self)
+	if cards.is_empty():
+		collisionShape.disabled = true
+		deckSprite.visible = false
+		cardsCountLabel.visible = false
+		emit_signal("deckEmptied")
+	else:
+		collisionShape.disabled = false
+		deckSprite.visible = true
+		cardsCountLabel.visible = true
 
 func drawCard():
-	if deck.size() == 0:
-		print("Deck is empty, cannot draw card!")
+	if cards.is_empty():
 		return null
 	
-	var cardId = deck[0]
-	deck.erase(cardId)
+	var cardId = cards[0]
+	cards.erase(cardId)
 	updateDeckDisplay()
 	
 	var newCard = CreateCard.createCard(cardId)
-	
-	if !newCard:
-		print("Failed to create card with ID: %s" % cardId)
-		return null
-		
-	get_parent().add_child(newCard)
-	newCard.name = "Card" + cardId
-		
-	var handNode = get_parent().get_node_or_null("Hand")
-	if handNode:
-		handNode.addCardToHand(newCard)
-	else:
-		print("Warning: No 'Hand' node found!")
-		
-	newCard.flipCard()
-		
-	emit_signal("cardDrawn", newCard)
+	if newCard:
+		emit_signal("cardDrawn", newCard)
 	return newCard
 
-func onInputEvent(_viewport, event, _shapeIdx):
+func addCardToTop(cardId):
+	cards.push_front(cardId)
+	updateDeckDisplay()
+
+func addCardToBottom(cardId):
+	cards.push_back(cardId)
+	updateDeckDisplay()
+
+func getDeckSize():
+	return cards.size()
+
+func onDeckInputEvent(_viewport, event, _shapeIdx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		print("Deck clicked!")
 		emit_signal("deckClicked", self)
-		drawCard()
