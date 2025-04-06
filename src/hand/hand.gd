@@ -28,6 +28,9 @@ func addCardToHand(card):
 		add_child(card)
 		card.setCardState(card.cardState.IN_HAND)
 		
+		if card.has_method("flipCard"):
+			card.flipCard()
+		
 		card.global_position = global_position
 		orgoniseCardsInHand()
 		return true

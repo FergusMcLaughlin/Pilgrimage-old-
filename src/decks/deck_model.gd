@@ -73,6 +73,6 @@ func addCardToBottom(cardId):
 func getDeckSize():
 	return cards.size()
 
-func onDeckInputEvent(_viewport, event, _shapeIdx):
+func onDeckInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
 		emit_signal("deckClicked", self)

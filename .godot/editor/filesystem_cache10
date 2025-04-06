@@ -1,6 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
 ::res://::1743888813
 main.tscn::PackedScene::3690903409898938209::1743770177::0::1::::<><><>0<>0<><>::
+player_deck.tscn::PackedScene::3931331454275875830::1743975540::0::1::::<><><>0<>0<><>::uid://b5l4r1wi6h16q::::res://src/decks/deck_model.tscn
 ::res://assets/::1741950972
 ::res://assets/fonts/::1741950987
 MedievalSharp-Regular.ttf::FontFile/FontFile::4719003761271148586::1741950972::1741950987::1::::<><><>0<>0<>c6fa47545053ee6378c393904e31c0fb<>res://.godot/imported/MedievalSharp-Regular.ttf-e22c9abdabfcb4fa340d0849f73aa98d.fontdata::
@@ -29,9 +30,10 @@ card_slot.tscn::PackedScene::364137548400226839::1743770178::0::1::::<><><>0<>0<
 ::res://src/card/::1743770178
 card.gd::GDScript::8989437794526131057::1743717012::0::1::::<>Node2D<><>0<>0<><>::
 card.tscn::PackedScene::8412872351787294431::1743770178::0::1::::<><><>0<>0<><>::uid://djxseklo7je4s::::res://assets/images/cards/cardback.png<>uid://d1csyysbkrcir::::res://src/card/card.gd<>uid://bnm1bgpcxc5nr::::res://assets/images/cards/knight.png
-::res://src/decks/::1743772883
-deck_model.gd::GDScript::3168649276642460235::1743772625::0::1::::<>Node2D<><>0<>0<><>::
-deck_model.tscn::PackedScene::4516586699413357758::1743772883::0::1::::<><><>0<>0<><>::uid://chlcgbkfqdcd3::::res://assets/images/boardPices/Deck.png<>uid://ble6gqm7h1h04::::res://src/decks/deck_model.gd
+::res://src/decks/::1743975515
+deck_model.gd::GDScript::3168649276642460235::1743895258::0::1::::DeckModel<>Node2D<><>0<>0<><>::
+deck_model.tscn::PackedScene::4516586699413357758::1743975501::0::1::::<><><>0<>0<><>::uid://chlcgbkfqdcd3::::res://assets/images/boardPices/Deck.png<>uid://ble6gqm7h1h04::::res://src/decks/deck_model.gd
+player_deck.gd::GDScript::6427116384364278513::1743895258::0::1::::PlayerDeck<>DeckModel<><>0<>0<><>::
 ::res://src/hand/::1743770283
 hand.gd::GDScript::8820750270136895456::1743770283::0::1::::Hand<>Node2D<><>0<>0<><>::
 hand.tscn::PackedScene::5222215749142464695::1743770178::0::1::::<><><>0<>0<><>::uid://dxw3p6i8emtgi::::res://src/hand/hand.gd

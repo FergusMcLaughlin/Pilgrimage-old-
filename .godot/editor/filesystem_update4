@@ -1,3 +1,12 @@
 res://src/decks/deck_model.tscn
 res://src/decks/deck_model.gd
 res://src/decks/player_deck.gd
+res://src/decks/journey_deck.gd
+res://src/decks/player_deck.tscn
+res://src/tests/card_test.tscn
+res://src/tests/card_test.gd
+res://src/singletons/global_signal_bus.gd
+res://src/hand/hand.gd
+res://src/card/card.tscn
+res://data/card_dictionary.json
+res://src/card/card.gd

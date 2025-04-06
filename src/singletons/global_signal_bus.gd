@@ -42,3 +42,5 @@ signal cardDrawn(card)          # When a card is drawn from deck
 signal deckShuffled(deck)       # When a deck is shuffled
 signal deckEmptied(deck)        # When a deck has no more cards
 signal deckClicked(deck)        # When a deck is clicked
+#player deck
+signal cardDrawnToHand(card)
