@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://clnygrjw5bahg" path="res://src/tests/card_test.gd" id="1_r60gl"]
 [ext_resource type="PackedScene" uid="uid://fgnj62pot7s2" path="res://src/boardComponents/cardSlot/card_slot.tscn" id="2_dp3pv"]
-[ext_resource type="PackedScene" uid="uid://b5l4r1wi6h16q" path="res://src/decks/deck_model.tscn" id="3_wpjxq"]
 [ext_resource type="PackedScene" uid="uid://cgnxeo00y2kct" path="res://src/hand/hand.tscn" id="4_h6cl3"]
+[ext_resource type="PackedScene" uid="uid://bwamppuvr2yh7" path="res://src/decks/player_deck.tscn" id="4_luk4p"]
 
 [node name="CardTest" type="Node2D"]
 script = ExtResource("1_r60gl")
@@ -68,8 +68,8 @@ text = "debug cards"
 position = Vector2(142, 289)
 scale = Vector2(5.975, 5.975)
 
-[node name="Deck" parent="." instance=ExtResource("3_wpjxq")]
-position = Vector2(988, 181)
-
 [node name="Hand" parent="." instance=ExtResource("4_h6cl3")]
 position = Vector2(562, 594)
+
+[node name="playerDeck" parent="." instance=ExtResource("4_luk4p")]
+position = Vector2(957, 209)

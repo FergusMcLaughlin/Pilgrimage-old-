@@ -1,10 +1,10 @@
 extends Node2D
 var current_test_card = null
-
+@onready var playerDeck = $playerDeck
 func _ready():
 	# Create a test card
 	spawn_test_card()
-	
+	playerDeck.initialiseFromPreset("test")
 	# Debug information about the scene
 	print("\n----- SCENE DEBUG INFO -----")
 	print_scene_tree()
