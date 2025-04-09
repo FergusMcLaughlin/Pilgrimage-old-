@@ -1,3 +1,4 @@
+
 {
   "0001": {
 	"id": "0001",
@@ -33,7 +34,7 @@
   },
   "0005": {
 	"id": "0005",
-	"name": "Snail Town",
+	"name": "SnailTown",
 	"type": "location",
 	"health": 0,
 	"attack": 0,
