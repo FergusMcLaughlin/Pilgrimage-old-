@@ -29,6 +29,7 @@ func setCurrentCard(card):
 
 	if card != null:
 		card.setCardState(card.cardState.IN_SLOT)
+		card.reparent(self, true)
 		var tween = create_tween()
 		tween.tween_property(card, "global_position", global_position, 0.3)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)

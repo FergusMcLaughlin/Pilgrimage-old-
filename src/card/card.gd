@@ -51,7 +51,7 @@ func updateCardVisuals ():
 func setCardState (newCardState):
 	var oldState = currentState
 	currentState = newCardState
-	
+	print(get_parent())
 	z_index = 1
 	scale = Vector2(1.0, 1.0)
 	
@@ -72,6 +72,7 @@ func setCardState (newCardState):
 			$Area2D.input_pickable = false
 		cardState.IN_SLOT:
 			print("card in slot")
+			z_index = 500
 			$Area2D.input_pickable = false
 	
 	GlobalSignalBus.emit_signal("cardStateChanged", self, oldState, newCardState)

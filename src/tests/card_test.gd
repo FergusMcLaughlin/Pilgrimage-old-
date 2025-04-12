@@ -1,6 +1,6 @@
 extends Node2D
 var current_test_card = null
-@onready var playerDeck = $playerDeck
+@onready var playerDeck = $GameBoard/playerDeck
 func _ready():
 	# Create a test card
 	spawn_test_card()
