@@ -25,6 +25,6 @@ func getCardPosition(cardIndex: int, totalCards: int, centerOfHand: Vector2):
 
 func createCardTween(card, targetPosition: Vector2, targetRotation: float, duration = 0.3):
 	var tween = card.create_tween() # kinda breaking encapsualtion ?
-	tween.tween_property(card, "global_position", targetPosition, duration).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(card, "rotation", targetRotation, duration)
+	tween.tween_property(card, "global_position", targetPosition, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.parallel().tween_property(card, "rotation", targetRotation, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	return tween

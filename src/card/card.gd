@@ -16,6 +16,8 @@ enum cardState {
 }
 
 var currentState: int = cardState.IN_DECK 
+var shadowSprite: Sprite2D
+var isReturningToLocation: bool = false
 
 func _ready():
 	$Area2D.connect("mouse_entered", Callable(self, "onCardAreaEntered"))
@@ -23,6 +25,8 @@ func _ready():
 	$Area2D.connect("input_event", Callable(self, "onCardAreaInputEvent"))
 	$Area2D.collision_layer = GameConstants.LAYER_CARD
 	$Area2D.collision_mask = 0
+	
+	createCardShadow()
 
 func initialiseCard (cardData):
 	cardId = cardData["id"]
@@ -34,6 +38,9 @@ func initialiseCard (cardData):
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
 	
 	updateCardVisuals()
+	
+	if shadowSprite == null:
+		createCardShadow()
 
 func updateCardVisuals ():
 	$Name.text = cardName
@@ -47,6 +54,14 @@ func updateCardVisuals ():
 	else: 
 		push_error("Cant load card picture: " + cardImagePath)
 
+func createCardShadow():
+	shadowSprite = Sprite2D.new()
+	shadowSprite.texture = $CardBack.texture
+	shadowSprite.modulate = Color(0,0,0,0.3)
+	shadowSprite.scale = $CardBack.scale * 1.05
+	shadowSprite.z_index = -1
+	shadowSprite.visible = false
+	add_child(shadowSprite)
 
 func setCardState (newCardState):
 	var oldState = currentState
@@ -59,21 +74,28 @@ func setCardState (newCardState):
 		cardState.IN_DECK:
 			print("card in deck")
 			$Area2D.input_pickable = false
+			toggleShadow(false)
 		cardState.IN_HAND:
 			print("card in hand")
 			$Area2D.input_pickable = true
+			isReturningToLocation = true
 		cardState.ON_BOARD:
 			print("card on board")
 			$Area2D.input_pickable = true
+			toggleShadow(false)
 		cardState.BEING_DRAGGED:
 			print("card being dragged")
 			z_index = 10
 			scale = Vector2(1.05, 1.05)
 			$Area2D.input_pickable = false
+			isReturningToLocation = false
+			toggleShadow(true)
+			shadowSprite.position = Vector2(5,5)
 		cardState.IN_SLOT:
 			print("card in slot")
-			z_index = 500
+			z_index = 9
 			$Area2D.input_pickable = false
+			toggleShadow(false)
 	
 	GlobalSignalBus.emit_signal("cardStateChanged", self, oldState, newCardState)
 
@@ -92,6 +114,15 @@ func flipCard ():
 		)
 	tween.tween_property(self, "scale:x", 1, 0.15)
 	GlobalSignalBus.emit_signal("cardFlipped", self)
+
+func onReturnToHandComplete():
+	if currentState == cardState.IN_HAND:
+		toggleShadow(false)
+	isReturningToLocation = false
+
+func toggleShadow(isVisable):
+	if shadowSprite != null:
+		shadowSprite.visible = isVisable
 
 func onCardAreaEntered():
 	GlobalSignalBus.emit_signal("cardHovered", self)

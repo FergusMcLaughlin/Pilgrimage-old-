@@ -60,7 +60,12 @@ func orgoniseCardsInHand():
 		
 		var cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
 		card.z_index = cardData.zIndex
-		organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		var tween = organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		
+		if card.has_method("onReturnToHandComplete"):
+			tween.tween_callback(func():
+				card.onReturnToHandComplete()
+			)
 		
 	await get_tree().create_timer(orgonisationDuration).timeout
 	isOrganising = false
