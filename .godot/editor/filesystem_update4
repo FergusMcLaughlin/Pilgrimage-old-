@@ -4,10 +4,7 @@ res://src/decks/player_deck.tscn
 res://src/card/card.tscn
 res://src/boardComponents/cardGrid/card_grid.tscn
 res://src/boardComponents/cardSlot/card_slot.tscn
-res://src/boardComponents/board/boardController.gd
 res://src/boardComponents/board/gameBoard.tscn
-res://src/singletons/global_signal_bus.gd
+res://src/decks/journey_deck.tscn
 res://src/tests/card_test.gd
-res://src/card/card.gd
-res://src/hand/hand.gd
-res://src/boardComponents/cardSlot/card_slot.gd
+res://src/decks/journey_deck.gd

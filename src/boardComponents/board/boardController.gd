@@ -32,7 +32,7 @@ func placeCardInSlot(card, slot):
 	slot.setCurrentCard(card)
 	
 	if GlobalSignalBus.has_signal("cardPlayed"):
-		GlobalSignalBus.emmit_signal("cardPlayed", card, slot)
+		GlobalSignalBus.emit_signal("cardPlayed", card, slot)
 
 func updateBoardState():
 	GlobalSignalBus.emit_signal("boardStateChanged")
