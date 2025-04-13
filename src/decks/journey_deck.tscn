@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhaxdjn1i2dd"]
+
+[ext_resource type="PackedScene" uid="uid://b5l4r1wi6h16q" path="res://src/decks/deck_model.tscn" id="1_bu50m"]
+[ext_resource type="Script" uid="uid://blgb4aunhvh81" path="res://src/decks/journey_deck.gd" id="2_84das"]
+
+[node name="DeckModel" instance=ExtResource("1_bu50m")]
+script = ExtResource("2_84das")
+boardNodePath = NodePath("")
+autoFillBoardOnEmpty = true

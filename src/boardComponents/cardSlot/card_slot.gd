@@ -23,11 +23,13 @@ func _ready():
 	$Area2D.collision_mask = 0
 
 func setCurrentCard(card):
+	print("setting card in slot to :" + str(card))
 	currentCard = card
 	cardInSlot = true
 	
 
 	if card != null:
+		card.z_index = 100
 		card.setCardState(card.cardState.IN_SLOT)
 		card.reparent(self, true)
 		var tween = create_tween()
