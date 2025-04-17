@@ -47,51 +47,18 @@ func _ready():
 	print("- fill_board connected: ", $Ui/ButtonPanel/fill_board.is_connected("pressed", Callable(self, "on_fill_board_button_pressed")))
 	print("- fill_one_slot connected: ", $Ui/ButtonPanel/fill_one_slot.is_connected("pressed", Callable(self, "on_fill_one_slot_button_pressed")))
 
-# New function for fill_board button
+# New function for fill_board button using journeyDeck methods
 func on_fill_board_button_pressed():
 	print("\n----- FILL BOARD BUTTON PRESSED -----")
 	
 	if journeyDeck:
 		print("Filling board with journey cards")
-		
-		# Check if we can access the grid
-		if cardGrid && cardGrid.has_method("getEmptySlots"):
-			var emptySlots = cardGrid.getEmptySlots()
-			print("Found " + str(emptySlots.size()) + " empty slots")
-			
-			# Fill all empty slots
-			for slot in emptySlots:
-				var card = journeyDeck.drawCard()
-				if card:
-					journeyDeck.placeCardInSlot(card, slot)
-					print("Placed card " + card.cardName + " in slot")
-				else:
-					print("No more cards in journey deck")
-					break
-		else:
-			print("ERROR: Cannot find CardGrid or it lacks getEmptySlots method")
-			# Try direct approach - find slots in scene
-			var slots = get_tree().get_nodes_in_group("cardSlot")
-			print("Found " + str(slots.size()) + " card slots via group")
-			
-			var emptySlots = []
-			for slot in slots:
-				if !slot.cardInSlot:
-					emptySlots.append(slot)
-			
-			print("Found " + str(emptySlots.size()) + " empty slots")
-			for slot in emptySlots:
-				var card = journeyDeck.drawCard()
-				if card:
-					place_journey_card_in_slot(card, slot)
-					print("Placed card " + card.cardName + " in slot")
-				else:
-					print("No more cards in journey deck")
-					break
+		# Use the journeyDeck's fillEmptySlots method
+		journeyDeck.fillEmptySlots()
 	else:
 		print("ERROR: JourneyDeck not found or initialized")
 
-# New function for fill_one_slot button
+# New function for fill_one_slot button using journeyDeck methods
 func on_fill_one_slot_button_pressed():
 	print("\n----- FILL ONE SLOT BUTTON PRESSED -----")
 	
@@ -103,10 +70,9 @@ func on_fill_one_slot_button_pressed():
 		
 		if emptySlot:
 			print("Found empty slot at position: " + str(emptySlot.global_position))
-			var card = journeyDeck.drawCard()
-			
+			# Use the journeyDeck's revealTopCard method
+			var card = journeyDeck.revealTopCard(emptySlot)
 			if card:
-				place_journey_card_in_slot(card, emptySlot)
 				print("Placed card " + card.cardName + " in slot")
 			else:
 				print("No more cards in journey deck")
@@ -115,32 +81,18 @@ func on_fill_one_slot_button_pressed():
 	else:
 		print("ERROR: JourneyDeck not found or initialized")
 
-# Helper function to place a journey card in a slot
-func place_journey_card_in_slot(card, slot):
-	# Set card state
-	card.setCardState(card.cardState.IN_SLOT)
-	# Move card to slot position
-	var tween = create_tween()
-	tween.tween_property(card, "global_position", slot.global_position, 0.3)
-	
-	# Update slot state
-	if slot.has_method("setCurrentCard"):
-		slot.setCurrentCard(card)
-	else:
-		print("WARNING: Slot doesn't have setCurrentCard method")
-
 # Helper function to find the first empty slot
 func find_first_empty_slot():
 	# Try with grid
-	if cardGrid && cardGrid.has_method("getEmptySlots"):
+	if cardGrid and cardGrid.has_method("getEmptySlots"):
 		var emptySlots = cardGrid.getEmptySlots()
-		if !emptySlots.is_empty():
+		if not emptySlots.is_empty():
 			return emptySlots[0]
 	
 	# Direct approach - check all slots
 	var slots = get_tree().get_nodes_in_group("cardSlot")
 	for slot in slots:
-		if !slot.cardInSlot:
+		if not slot.cardInSlot:
 			return slot
 	
 	return null

@@ -14,3 +14,4 @@ res://src/singletons/input_manager.gd
 res://src/card/card.gd
 res://src/hand/hand.gd
 res://src/helpers/organise_cards_in_hand_helper.gd
+res://src/boardComponents/cardGrid/card_grid.gd

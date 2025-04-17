@@ -83,6 +83,7 @@ offset_bottom = 306.0
 text = "fill a slot"
 
 [node name="GameBoard" parent="." instance=ExtResource("2_luk4p")]
+gridPath = NodePath("CardGrid")
 
 [node name="Hand" parent="GameBoard" instance=ExtResource("4_h6cl3")]
 position = Vector2(562, 594)
