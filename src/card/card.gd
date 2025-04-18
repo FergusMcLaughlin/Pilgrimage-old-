@@ -67,25 +67,27 @@ func setCardState (newCardState):
 	var oldState = currentState
 	currentState = newCardState
 	print(get_parent())
-	z_index = 1
 	scale = Vector2(1.0, 1.0)
 	
 	match currentState:
 		cardState.IN_DECK:
 			print("card in deck")
+			CardZIndexManager.setCardZIndex(self, "DEFUALT")
 			$Area2D.input_pickable = false
 			toggleShadow(false)
 		cardState.IN_HAND:
 			print("card in hand")
+			CardZIndexManager.setCardZIndex(self, "IN_HAND")
 			$Area2D.input_pickable = true
 			isReturningToLocation = true
 		cardState.ON_BOARD:
 			print("card on board")
+			CardZIndexManager.setCardZIndex(self, "ON_BOARD")
 			$Area2D.input_pickable = true
 			toggleShadow(false)
 		cardState.BEING_DRAGGED:
 			print("card being dragged")
-			z_index = 10
+			CardZIndexManager.setCardZIndex(self, "DRAGGING")
 			scale = Vector2(1.05, 1.05)
 			$Area2D.input_pickable = false
 			isReturningToLocation = false
@@ -93,7 +95,7 @@ func setCardState (newCardState):
 			shadowSprite.position = Vector2(5,5)
 		cardState.IN_SLOT:
 			print("card in slot")
-			z_index = 9
+			CardZIndexManager.setCardZIndex(self, "IN_SLOT")
 			$Area2D.input_pickable = false
 			toggleShadow(false)
 	

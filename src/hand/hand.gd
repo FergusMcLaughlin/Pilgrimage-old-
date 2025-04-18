@@ -61,7 +61,7 @@ func orgoniseCardsInHand():
 			continue
 		
 		var cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
-		card.z_index = cardData.zIndex
+		CardZIndexManager.setCardsInHandZIndex(card, i)
 		
 		var tween = organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
 		if i == cardCount - 1:

@@ -32,7 +32,6 @@ func getCardPosition(cardIndex: int, totalCards: int, centerOfHand: Vector2):
 	return {
 		"position": Vector2(xPosition, yPosition),
 		"rotation": rotation,
-		"zIndex" : cardIndex + 10
 	}
 
 func createCardTween(card, targetPosition: Vector2, targetRotation: float, duration = 0.3):
