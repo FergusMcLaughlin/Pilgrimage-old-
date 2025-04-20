@@ -29,7 +29,6 @@ func setCurrentCard(card):
 	
 
 	if card != null:
-		card.z_index = 100
 		card.setCardState(card.cardState.IN_SLOT)
 		card.reparent(self, true)
 		var tween = create_tween()

@@ -22,3 +22,9 @@ GlobalSignalBus="*res://src/singletons/global_signal_bus.gd"
 CreateCard="*res://src/singletons/create_card.gd"
 InputManager="*res://src/singletons/input_manager.gd"
 GameConstants="*res://src/singletons/game_constants.gd"
+CardZIndexManager="*res://src/singletons/card_z_index_manager.gd"
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900

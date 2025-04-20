@@ -49,15 +49,6 @@ func getSlotAtPosition(position:Vector2) -> CardSlot:
 		return result[0].collider.get_parent()
 	return null
 
-#func fillBoardFromDeck(Deck):
-	#var emptySlots = grid.getEmptySlots()
-	#for slot in emptySlots:
-		#var card = deck.drawCard()
-		#if card:
-			#placeCardInSlot(card, slot)
-		#else:
-			#break
-
 func clearBoard():
 	for row in grid.slots:
 		for slot in row:
@@ -65,9 +56,22 @@ func clearBoard():
 				slot.clearSlot()
 
 func getOccupiedSlots():
+	if !grid:
+		push_error("grid is not linked to the board. check inspector")
 	var occupied = []
 	for row in grid.slots:
 		for slot in row:
 			if slot.cardInSlot:
 				occupied.append(slot)
 	return occupied
+
+
+func getEmptySlots():
+	if !grid:
+		push_error("grid is not linked to the board. check inspector")
+	var empty = []
+	for row in grid.slots:
+		for slot in row:
+			if !slot.cardInSlot:
+				empty.append(slot)
+	return empty

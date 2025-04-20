@@ -83,18 +83,19 @@ offset_bottom = 306.0
 text = "fill a slot"
 
 [node name="GameBoard" parent="." instance=ExtResource("2_luk4p")]
+gridPath = NodePath("CardGrid")
 
 [node name="Hand" parent="GameBoard" instance=ExtResource("4_h6cl3")]
-position = Vector2(562, 594)
+position = Vector2(769, 824)
 
 [node name="playerDeck" parent="GameBoard" instance=ExtResource("4_luk4p")]
-position = Vector2(957, 209)
+position = Vector2(165, 475)
 
 [node name="CardGrid" parent="GameBoard" instance=ExtResource("4_i13km")]
-position = Vector2(558, 247)
+position = Vector2(749, 380)
 
 [node name="journeyDeck" parent="GameBoard" instance=ExtResource("6_i13km")]
-position = Vector2(950, 366)
+position = Vector2(744, 68)
 rotation = 1.5708
 boardNodePath = NodePath("..")
 autoFillBoardOnEmpty = false

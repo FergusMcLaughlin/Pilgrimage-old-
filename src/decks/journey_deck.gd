@@ -24,11 +24,19 @@ func initialiseJourneyDeck():
 	initaliseDeck(journeyCards)
 
 func fillEmptySlots():
+	print("1")
+	print("boardNode = ", boardNode)
+	print("boardNode class = ", boardNode.get_class())
+	print("Has getEmptySlots method: ", boardNode.has_method("getEmptySlots"))
+	
 	if !boardNode || !boardNode.has_method("getEmptySlots"):
 		push_error("JourneyDeck: Board not found or the getEmptySlots function's not there ?")
 		return
-		
+
 	var emptySlots = boardNode.getEmptySlots()
+	print("Found " + str(emptySlots.size()) + " empty slots to fill")
+	var delayBetweenCards = 0.04
+	
 	for slot in emptySlots:
 		if cards.is_empty():
 			break
@@ -36,16 +44,21 @@ func fillEmptySlots():
 		var card = drawCard()
 		if card:
 			placeCardInSlot(card, slot)
+			await get_tree().create_timer(delayBetweenCards).timeout
 
 func placeCardInSlot(card, slot):
 	card.setCardState(card.cardState.IN_SLOT)
-	card.flipCard()
+	
+	if card.get_node("CardBack").visible && !card.get_node("CardFace").visible:
+		card.flipCard()
 	
 	add_child(card)
 	card.global_position = global_position
 	
 	var tween = create_tween()
 	tween.tween_property(card, "global_position", slot.global_position, 0.3)
+	tween.parallel().tween_property(card, "rotation", slot.rotation, 0.3)
+	tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
 	
 	slot.setCurrentCard(card)
 	
@@ -68,9 +81,8 @@ func updateDeckDisplay():
 
 func onDeckInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		GlobalSignalBus.emit_signal("deckClicked", self)
-		
-	if boardNode && boardNode.has_method("getEmptySlots"):
-			var emptySlots = boardNode.getEmptySlots()
-			if !emptySlots.is_empty():
-				revealTopCard(emptySlots[0])
+		GlobalSignalBus.emit_signal("deckClicked", self)	
+		if boardNode && boardNode.has_method("getEmptySlots"):
+				var emptySlots = boardNode.getEmptySlots()
+				if !emptySlots.is_empty():
+					revealTopCard(emptySlots[0])
