@@ -4,6 +4,7 @@ var current_test_card = null
 @onready var journeyDeck = $GameBoard/journeyDeck
 @onready var cardGrid = $GameBoard/CardGrid
 
+
 func _ready():
 	# Create a test card
 	spawn_test_card()
@@ -25,7 +26,7 @@ func _ready():
 		print("\nWARNING: No node named 'CardSlot' found!")
 		
 	# Connect UI buttons with the correct function names
-	$Ui/ButtonPanel/FlipButton.pressed.connect(on_flip_button_pressed)
+	$Ui/ButtonPanel/findmiddleslotButton.pressed.connect(on_flip_button_pressed)
 	$Ui/ButtonPanel/StateButton.pressed.connect(on_change_state_button_pressed)
 	$Ui/ButtonPanel/DragButton.pressed.connect(on_test_drag_button_pressed)
 	$Ui/ButtonPanel/MoveToSlotButton.pressed.connect(on_move_to_slot_button_pressed)
@@ -38,7 +39,7 @@ func _ready():
 	
 	# Verify button connections
 	print("\nButton connections:")
-	print("- FlipButton connected: ", $Ui/ButtonPanel/FlipButton.is_connected("pressed", Callable(self, "on_flip_button_pressed")))
+	print("- FlipButton connected: ", $Ui/ButtonPanel/findmiddleslotButton.is_connected("pressed", Callable(self, "on_flip_button_pressed")))
 	print("- StateButton connected: ", $Ui/ButtonPanel/StateButton.is_connected("pressed", Callable(self, "on_change_state_button_pressed")))
 	print("- DragButton connected: ", $Ui/ButtonPanel/DragButton.is_connected("pressed", Callable(self, "on_test_drag_button_pressed")))
 	print("- MoveToSlotButton connected: ", $Ui/ButtonPanel/MoveToSlotButton.is_connected("pressed", Callable(self, "on_move_to_slot_button_pressed")))
@@ -46,6 +47,12 @@ func _ready():
 	print("- debug_button connected: ", $Ui/ButtonPanel/debug_button.is_connected("pressed", Callable(self, "on_debug_button_pressed")))
 	print("- fill_board connected: ", $Ui/ButtonPanel/fill_board.is_connected("pressed", Callable(self, "on_fill_board_button_pressed")))
 	print("- fill_one_slot connected: ", $Ui/ButtonPanel/fill_one_slot.is_connected("pressed", Callable(self, "on_fill_one_slot_button_pressed")))
+	
+	GameController.boardController = $GameBoard
+	GameController.playerDeck = $GameBoard/playerDeck
+	GameController.journeyDeck = $GameBoard/journeyDeck
+	GameController.hand = $GameBoard/Hand
+	GameController.setupBoard()
 
 # New function for fill_board button using journeyDeck methods
 func on_fill_board_button_pressed():
@@ -114,8 +121,29 @@ func spawn_test_card():
 	pass
 
 func on_flip_button_pressed():
-	# Your existing implementation
-	pass
+	print("\n----- TESTING GET CENTER SLOT -----")
+	
+	# Access the board controller
+	if $GameBoard.has_method("getCenterSlot"):
+		var centerSlot = $GameBoard.getCenterSlot()
+		
+		if centerSlot:
+			print("Successfully found center slot!")
+			print("Slot name: " + centerSlot.name)
+			print("Slot position: " + str(centerSlot.global_position))
+			print("Slot coordinates: " + str(centerSlot.coordinates))
+			
+			# For visual feedback, let's place a card in the center
+			if playerDeck.has_method("drawCard"):
+				var card = playerDeck.drawCard()
+				if card:
+					centerSlot.setCurrentCard(card)
+					card.global_position = centerSlot.global_position
+					print("Placed card in center slot for visualization")
+		else:
+			print("ERROR: Center slot not found")
+	else:
+		print("ERROR: GameBoard doesn't have getCenterSlot method")
 
 func on_change_state_button_pressed():
 	# Your existing implementation

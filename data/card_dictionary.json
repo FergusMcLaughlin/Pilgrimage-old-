@@ -1,5 +1,14 @@
 
 {
+  "0000": {
+	"id": "0000",
+	"name": "Player",
+	"type": "player",
+	"health": 5,
+	"attack": 5,
+	"isPlayer": true,
+	"image_path": "res://assets/images/cards/player.png"
+  },
   "0001": {
 	"id": "0001",
 	"name": "Knight",

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt6g0wlclgad"]
+
+[ext_resource type="PackedScene" uid="uid://dr4i1p7c1lf5x" path="res://src/card/card.tscn" id="1_3d4x1"]
+[ext_resource type="Script" uid="uid://c77pt0dasd0v7" path="res://src/card/character_card.gd" id="2_e2iso"]
+
+[node name="Card" instance=ExtResource("1_3d4x1")]
+script = ExtResource("2_e2iso")

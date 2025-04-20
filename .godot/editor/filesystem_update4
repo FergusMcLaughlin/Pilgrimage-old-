@@ -19,3 +19,10 @@ res://src/singletons/card_z_index_manager.gd
 res://src/helpers/card_hover_helper.gd
 res://src/helpers/card_shadow_helper.gd
 res://src/hand/hand.tscn
+res://src/card/character_card.tscn
+res://src/card/character_card.gd
+res://data/card_dictionary.json
+res://src/singletons/create_card.gd
+res://src/decks/player_deck.gd
+res://src/game/game_manager.gd
+res://src/singletons/game_controller.gd
