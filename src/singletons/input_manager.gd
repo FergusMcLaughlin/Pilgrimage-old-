@@ -106,6 +106,8 @@ func placeCardInSlot(card, slot):
 
 
 func returnCardToHand(card):
+	card.isReturningToLocation = true
+	CardZIndexManager.setReturningCardZIndex(card)
 	card.setCardState(card.cardState.IN_HAND)
 	
 	if GlobalSignalBus.has_signal("cardReturnedToHand"):

@@ -3,6 +3,7 @@ extends Node
 const LAYER_DEFAULT = 1
 const LAYER_HOVERED = 2
 const LAYER_HAND = 10
+const LAYER_RETURNING_TO_HAND = 200
 const LAYER_DRAGGING = 100
 const LAYER_FOCUSED_IN_HAND = 15
 const LAYER_BOARD_DEFUALT = 50
@@ -22,6 +23,8 @@ func setCardZIndex(card, state):
 			card.z_index = LAYER_HAND
 		"DRAGGING":
 			card.z_index = LAYER_DRAGGING
+		"RETURNING_TO_HAND":
+			card.z_index = LAYER_RETURNING_TO_HAND
 		"FOCUSED_IN_HAND":
 			card.z_index = LAYER_FOCUSED_IN_HAND
 		"BOARD_DEFUALT":
@@ -39,6 +42,10 @@ func getCardState(card):
 func setCardsInHandZIndex(card, indexInHand):
 	var baseIndex = LAYER_HAND
 	card.z_index = baseIndex + indexInHand
+	return card.z_index
+
+func setReturningCardZIndex(card):
+	card.z_index = LAYER_RETURNING_TO_HAND
 	return card.z_index
 
 func cardFocused(card,focused):

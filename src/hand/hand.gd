@@ -33,6 +33,7 @@ func addCardToHand(card):
 		
 		card.global_position = global_position
 		
+		orgoniseCardsInHand()
 		await get_tree().process_frame
 		orgoniseCardsInHand()
 		return true
@@ -49,7 +50,11 @@ func removeCardFromHand(card):
 	return false
 
 func orgoniseCardsInHand():
-	if isOrganising || cardsInHand.is_empty():
+	if isOrganising && cardsInHand.size() > 0:
+		isOrganising = false
+		return
+	
+	if cardsInHand.is_empty():
 		return
 	
 	isOrganising = true
@@ -60,19 +65,30 @@ func orgoniseCardsInHand():
 		if card.currentState == card.cardState.BEING_DRAGGED:
 			continue
 		
-		var cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
-		CardZIndexManager.setCardsInHandZIndex(card, i)
+		var  cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
+		
+		if !card.isReturningToLocation:
+			CardZIndexManager.setCardsInHandZIndex(card, i)
+		else:
+			CardZIndexManager.setReturningCardZIndex(card)
 		
 		var tween = organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		
+		if card.isReturningToLocation:
+			var cardIndex = i
+			tween.finished.connect(
+				func():
+					card.onReturnToHandComplete()
+					CardZIndexManager.setCardsInHandZIndex(card, cardIndex)
+			)
+			
 		if i == cardCount - 1:
 			tween.finished.connect(
 				func():
 					isOrganising = false
 			)
-	await get_tree().create_timer(orgonisationDuration + 0.1).timeout.connect(
-		func():
-			isOrganising = false
-	)
+			
+	await get_tree().create_timer(orgonisationDuration + 0.1).timeout
 	isOrganising = false
 
 func getCardCount():
@@ -90,7 +106,6 @@ func onCardDrawn(card):
 
 func onCardReturnedToHand(card):
 	if cardsInHand.has(card):
-		card.setCardState(card.cardState.IN_HAND)
 		orgoniseCardsInHand()
 	else:
 		if card.get_parent() != self:

@@ -17,3 +17,5 @@ res://src/helpers/organise_cards_in_hand_helper.gd
 res://src/boardComponents/cardGrid/card_grid.gd
 res://src/singletons/card_z_index_manager.gd
 res://src/helpers/card_hover_helper.gd
+res://src/helpers/card_shadow_helper.gd
+res://src/hand/hand.tscn

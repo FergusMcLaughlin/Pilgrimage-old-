@@ -18,6 +18,7 @@ enum cardState {
 var currentState: int = cardState.IN_DECK 
 var shadowSprite: Sprite2D
 var isReturningToLocation: bool = false
+var shadowHelper: CardShadowHelper
 
 func _ready():
 	$Area2D.connect("mouse_entered", Callable(self, "onCardAreaEntered"))
@@ -26,7 +27,7 @@ func _ready():
 	$Area2D.collision_layer = GameConstants.LAYER_CARD
 	$Area2D.collision_mask = 0
 	
-	createCardShadow()
+	shadowHelper = CardShadowHelper.new(self)
 
 func initialiseCard (cardData):
 	cardId = cardData["id"]
@@ -38,9 +39,6 @@ func initialiseCard (cardData):
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
 	
 	updateCardVisuals()
-	
-	if shadowSprite == null:
-		createCardShadow()
 
 func updateCardVisuals ():
 	$Name.text = cardName
@@ -54,55 +52,72 @@ func updateCardVisuals ():
 	else: 
 		push_error("Cant load card picture: " + cardImagePath)
 
-func createCardShadow():
-	shadowSprite = Sprite2D.new()
-	shadowSprite.texture = $CardBack.texture
-	shadowSprite.modulate = Color(0,0,0,0.3)
-	shadowSprite.scale = $CardBack.scale * 1.05
-	shadowSprite.z_index = -1
-	shadowSprite.visible = false
-	add_child(shadowSprite)
-
 func setCardState (newCardState):
 	var oldState = currentState
 	currentState = newCardState
 	print(get_parent())
 	scale = Vector2(1.0, 1.0)
 	
+	if shadowHelper == null:
+		shadowHelper = CardShadowHelper.new(self)
+	
 	match currentState:
 		cardState.IN_DECK:
 			print("card in deck")
 			CardZIndexManager.setCardZIndex(self, "DEFUALT")
 			$Area2D.input_pickable = false
-			toggleShadow(false)
+			shadowHelper.setShadowVisible(false)
+			
 		cardState.IN_HAND:
 			print("card in hand")
-			CardZIndexManager.setCardZIndex(self, "IN_HAND")
+			if !isReturningToLocation:
+				CardZIndexManager.setCardZIndex(self, "IN_HAND")
 			$Area2D.input_pickable = true
-			isReturningToLocation = true
+			shadowHelper.setShadowVisible(true)
+			
+			
 		cardState.ON_BOARD:
 			print("card on board")
-			CardZIndexManager.setCardZIndex(self, "ON_BOARD")
+			if !isReturningToLocation:
+				CardZIndexManager.setCardZIndex(self, "ON_BOARD")
 			$Area2D.input_pickable = true
-			toggleShadow(false)
+			shadowHelper.setShadowVisible(false)
+			
 		cardState.BEING_DRAGGED:
 			print("card being dragged")
-			CardZIndexManager.setCardZIndex(self, "DRAGGING")
+			if !isReturningToLocation:
+				CardZIndexManager.setCardZIndex(self, "DRAGGING")
 			scale = Vector2(1.05, 1.05)
 			$Area2D.input_pickable = false
-			isReturningToLocation = false
-			toggleShadow(true)
-			shadowSprite.position = Vector2(5,5)
+			if newCardState == cardState.BEING_DRAGGED:
+				isReturningToLocation = false
+			shadowHelper.setShadowVisible(true, true)
+			
 		cardState.IN_SLOT:
 			print("card in slot")
 			CardZIndexManager.setCardZIndex(self, "IN_SLOT")
 			$Area2D.input_pickable = false
-			toggleShadow(false)
+			shadowHelper.setShadowVisible(false)
+			
+	if scale != Vector2(1.0,1.0):
+		shadowHelper.updateShadowForScale(scale)
 	
 	GlobalSignalBus.emit_signal("cardStateChanged", self, oldState, newCardState)
 
+func _set(property, value):
+	if property == "scale" && shadowHelper != null:
+		shadowHelper.updateShadowForScale(value)
+	return false
+
 func flipCard ():
 	var tween = create_tween()
+	var shadowWasVisible = false
+	if shadowHelper != null && shadowHelper.shadowSprite != null:
+		shadowWasVisible = shadowHelper.shadowSprite.visible
+		shadowHelper.setShadowVisible(false)
+	else:
+		shadowHelper = CardShadowHelper.new(self)
+	
 	tween.tween_property(self, "scale:x", 0, 0.15)
 	tween.tween_callback(func():
 		# Toggle visibility of front and back
@@ -115,12 +130,19 @@ func flipCard ():
 		
 		)
 	tween.tween_property(self, "scale:x", 1, 0.15)
+	tween.tween_callback(func():
+		if shadowHelper != null && shadowWasVisible && currentState in [cardState.IN_HAND, cardState.BEING_DRAGGED]:
+			var isDragging = currentState == cardState.BEING_DRAGGED
+			shadowHelper.setShadowVisible(true, isDragging)
+	)
 	GlobalSignalBus.emit_signal("cardFlipped", self)
 
 func onReturnToHandComplete():
-	if currentState == cardState.IN_HAND:
-		toggleShadow(false)
+	print("Card return to hand complete!")
 	isReturningToLocation = false
+	
+	if currentState == cardState.IN_HAND:
+		CardZIndexManager.setCardZIndex(self, "IN_HAND")
 
 func toggleShadow(isVisable):
 	if shadowSprite != null:

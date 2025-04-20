@@ -81,9 +81,8 @@ func updateDeckDisplay():
 
 func onDeckInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		GlobalSignalBus.emit_signal("deckClicked", self)
-		
-	if boardNode && boardNode.has_method("getEmptySlots"):
-			var emptySlots = boardNode.getEmptySlots()
-			if !emptySlots.is_empty():
-				revealTopCard(emptySlots[0])
+		GlobalSignalBus.emit_signal("deckClicked", self)	
+		if boardNode && boardNode.has_method("getEmptySlots"):
+				var emptySlots = boardNode.getEmptySlots()
+				if !emptySlots.is_empty():
+					revealTopCard(emptySlots[0])
