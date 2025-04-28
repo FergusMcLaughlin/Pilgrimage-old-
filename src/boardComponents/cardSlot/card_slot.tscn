@@ -7,6 +7,7 @@
 size = Vector2(28, 34)
 
 [node name="CardSlot" type="Node2D"]
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_pa8d1")
 
 [node name="CardSlotImage" type="Sprite2D" parent="."]

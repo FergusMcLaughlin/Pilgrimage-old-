@@ -44,3 +44,9 @@ signal boardStateChanged()      # When board state changes
 signal boardSetup()             # When board is initially set up
 signal turnStarted(turnNumber)  # When a new turn begins
 signal turnEnded(turnNumber)    # When current turn ends
+# ==============================================
+# GAME CONTROLLER SIGNALS
+# ==============================================
+signal battleCompleted(attacker, defender, result)
+signal cardMoved(card, fromSlot, toSlot)
+signal cardDamaged(card, amount, newHealth)

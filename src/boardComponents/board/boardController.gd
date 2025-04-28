@@ -81,7 +81,7 @@ func getCenterSlot():
 	var centerRow = int(floor(grid.rows / 2))
 	var centerCol = int(floor(grid.columns / 2))
 	
-	var centerSlotPosition = Vector2(centerRow, centerCol)
+	var centerSlotPosition = Vector2(centerCol, centerRow)
 	var centerSlot = grid.getSlotAt(centerSlotPosition) 
 	
 	return centerSlot

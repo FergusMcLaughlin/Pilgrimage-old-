@@ -61,6 +61,7 @@ func onArea2dMouseExited():
 
 func onArea2dInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+		print("CardSlot: CLICKED - emitting slotClicked signal")
 		GlobalSignalBus.emit_signal("slotClicked", self)
 
 func onCardDragStarted(card):
