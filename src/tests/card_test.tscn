@@ -17,13 +17,13 @@ offset_top = 3.0
 offset_right = 125.0
 offset_bottom = 327.0
 
-[node name="FlipButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="findmiddleslotButton" type="Button" parent="Ui/ButtonPanel"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 43.0
 offset_right = 61.0
 offset_bottom = 74.0
-text = "Flip"
+text = "Find middle"
 
 [node name="StateButton" type="Button" parent="Ui/ButtonPanel"]
 layout_mode = 0

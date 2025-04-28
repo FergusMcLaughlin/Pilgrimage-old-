@@ -20,7 +20,7 @@ func _ready():
 
 func initialiseJourneyDeck():
 	#this will maybe call a helper or a journey deck builder system for now hard coded
-	var journeyCards = ["0005", "0006", "0005", "0006","0005", "0006", "0005", "0006","0005", "0006", "0005", "0006","0005", "0006", "0005", "0006","0005", "0006", "0005", "0006"]
+	var journeyCards = ["0002", "0002", "0003", "0006","0005", "0006", "0005", "0006","0005", "0003", "0005", "0006","0005", "0006", "0005", "0006","0005", "0006", "0005", "0006"]
 	initaliseDeck(journeyCards)
 
 func fillEmptySlots():

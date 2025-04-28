@@ -96,7 +96,7 @@ func setCardState (newCardState):
 		cardState.IN_SLOT:
 			print("card in slot")
 			CardZIndexManager.setCardZIndex(self, "IN_SLOT")
-			$Area2D.input_pickable = false
+			$Area2D.input_pickable = true
 			shadowHelper.setShadowVisible(false)
 			
 	if scale != Vector2(1.0,1.0):
@@ -157,4 +157,11 @@ func onCardAreaExited():
 func onCardAreaInputEvent(_viewport,event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		print("Card: Clicked detected, emitting cardClicked signal")
-		GlobalSignalBus.emit_signal("cardClicked", self)
+		if currentState == cardState.IN_SLOT:
+			print("Card in slot clicked, emitting for movement only")
+			GlobalSignalBus.emit_signal("cardClicked", self)
+		elif currentState == cardState.IN_HAND:
+			print("Card in hand clicked")
+			GlobalSignalBus.emit_signal("cardClicked", self)
+		else:
+			GlobalSignalBus.emit_signal("cardClicked", self)

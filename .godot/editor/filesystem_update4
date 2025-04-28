@@ -6,16 +6,5 @@ res://src/boardComponents/cardGrid/card_grid.tscn
 res://src/boardComponents/cardSlot/card_slot.tscn
 res://src/boardComponents/board/gameBoard.tscn
 res://src/decks/journey_deck.tscn
-res://src/tests/card_test.gd
-res://src/decks/journey_deck.gd
-res://src/boardComponents/board/boardController.gd
-res://src/boardComponents/cardSlot/card_slot.gd
-res://src/singletons/input_manager.gd
-res://src/card/card.gd
-res://src/hand/hand.gd
-res://src/helpers/organise_cards_in_hand_helper.gd
-res://src/boardComponents/cardGrid/card_grid.gd
-res://src/singletons/card_z_index_manager.gd
-res://src/helpers/card_hover_helper.gd
-res://src/helpers/card_shadow_helper.gd
 res://src/hand/hand.tscn
+res://src/card/character_card.tscn
