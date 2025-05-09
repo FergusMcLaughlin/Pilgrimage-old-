@@ -8,3 +8,4 @@ res://src/boardComponents/board/gameBoard.tscn
 res://src/decks/journey_deck.tscn
 res://src/hand/hand.tscn
 res://src/card/character_card.tscn
+res://src/singletons/game_controller.gd

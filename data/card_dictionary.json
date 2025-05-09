@@ -56,5 +56,29 @@
 	"health": 0,
 	"attack": 0,
 	"image_path": "res://assets/images/cards/Woods.png"
+  },
+  "0007": {
+	"id": "0007",
+	"name": "Stew",
+	"type": "Buff",
+	"health": 2,
+	"attack": 0,
+	"image_path": "res://assets/images/cards/Stew.png"
+  },
+  "0008": {
+	"id": "0008",
+	"name": "Ale",
+	"type": "Buff",
+	"health": 2,
+	"attack": 0,
+	"image_path": "res://assets/images/cards/Ale.png"
+  },
+  "0009": {
+	"id": "0009",
+	"name": "Rally",
+	"type": "Buff",
+	"health": 0,
+	"attack": 3,
+	"image_path": "res://assets/images/cards/Rally.png"
   }
 }

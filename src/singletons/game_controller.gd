@@ -51,6 +51,9 @@ func setupBoard():
 	print("GameManager: Board setup complete")
 
 func onCardClicked(card):
+	if card.currentState == card.cardState.IN_HAND || card.currentState == card.cardState.BEING_DRAGGED:
+		return
+	
 	if card.get("isPlayerCard") == true:
 		return
 	
@@ -106,6 +109,22 @@ func calculateBattle(attacker, defender):
 	
 	var attackerWins = attacker.cardAttack > defender.cardHealth
 	var attackerSurvives = attacker.cardHealth > defender.cardAttack
+	
+	if defender.cardType == "Buff":
+		attacker.cardHealth += defender.cardHealth
+		attacker.cardAttack += defender.cardAttack
+		attacker.updateCardVisuals()
+		
+		var result = {
+			"success": true,
+			"damage": 0,
+			"attackerDied": false,
+			"isBuff": true
+			}
+		defender.queue_free()
+		
+		GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
+		return result
 	
 	if defender.cardAttack > 0:
 		applyDamageToCard(attacker, defender.cardAttack)
