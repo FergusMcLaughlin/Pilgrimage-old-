@@ -20,7 +20,17 @@ func _ready():
 
 func initialiseJourneyDeck():
 	#this will maybe call a helper or a journey deck builder system for now hard coded
-	var journeyCards = ["0008", "0009", "0007", "0008", "0006", "0004", "0001", "0005", "0003", "0009", "0002", "0004", "0005", "0001", "0006", "0003", "0004", "0002", "0005", "0006", "0001", "0002", "0005", "0003", "0006", "0004", "0001", "0005", "0002", "0006", "0003", "0004", "0005", "0001", "0006", "0002", "0003", "0004", "0005", "0006"]
+	var journeyCards = [# Mix of combat units with different strengths
+				"0001", "0002", "0003", "0003", "0004", "0001", "0002", "0004",
+				# Locations spaced out
+				"0005", "0006", "0005", "0006",
+				# Buffs spaced out to enhance player
+				"0007", "0008", "0009", "0007", "0008", "0009",
+				# More units with buffs interspersed
+				"0001", "0007", "0002", "0008", "0003", "0009", "0004",
+				# End of journey with more challenging units
+				"0002", "0001", "0004", "0002", "0001", "0004"
+			]
 	initaliseDeck(journeyCards)
 
 func fillEmptySlots():
