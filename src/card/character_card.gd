@@ -1,12 +1,13 @@
 extends "res://src/card/card.gd"
 
 const isPlayerCard = true
+var isGameOver = false
 
 func updateCardVisuals():
 	super.updateCardVisuals()
 	
-	if cardHealth <= 0:
-		await get_tree().create_timer(0.5).timeout
+	if cardHealth <= 0 && !isGameOver:
+		isGameOver = true
 		characterDeath()
 
 func characterDeath():

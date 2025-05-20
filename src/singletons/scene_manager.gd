@@ -42,6 +42,7 @@ func transitionToScene(scenePath: String, transitionType = TransitionType.NONE):
 		
 	isTransitioning = true
 	
+	
 	var toScene = load(scenePath)
 	if !toScene:
 		push_error("sceneManager: Failed to load scene")
