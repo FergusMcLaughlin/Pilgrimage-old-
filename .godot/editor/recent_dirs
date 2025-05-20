@@ -1,4 +1,6 @@
 res://src/singletons
+res://src/ui/gameOver
+res://src/ui
 res://
 res://src/decks
 res://assets/images/boardPices

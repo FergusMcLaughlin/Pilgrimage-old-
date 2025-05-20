@@ -1,3 +1,14 @@
 extends "res://src/card/card.gd"
 
 const isPlayerCard = true
+var isGameOver = false
+
+func updateCardVisuals():
+	super.updateCardVisuals()
+	
+	if cardHealth <= 0 && !isGameOver:
+		isGameOver = true
+		characterDeath()
+
+func characterDeath():
+	SceneTransitionManager.transitionToScene("res://src/ui/gameOver/game_over.tscn", SceneTransitionManager.TransitionType.FADE)

@@ -50,3 +50,8 @@ signal turnEnded(turnNumber)    # When current turn ends
 signal battleCompleted(attacker, defender, result)
 signal cardMoved(card, fromSlot, toSlot)
 signal cardDamaged(card, amount, newHealth)
+# ==============================================
+# SCENE MANAGER SIGNALS
+# ==============================================
+signal sceneTransitionStarted(fromScene, toScene, transitionType)
+signal sceneTransitionCompleted(fromScene, toScene, transitionType)
