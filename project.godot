@@ -24,6 +24,7 @@ InputManager="*res://src/singletons/input_manager.gd"
 GameConstants="*res://src/singletons/game_constants.gd"
 CardZIndexManager="*res://src/singletons/card_z_index_manager.gd"
 GameController="*res://src/singletons/game_controller.gd"
+SceneTransitionManager="*res://src/singletons/scene_manager.gd"
 
 [display]
 

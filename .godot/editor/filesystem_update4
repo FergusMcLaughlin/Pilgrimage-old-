@@ -1,5 +1,5 @@
-res://src/ui/main_menu.tscn
-res://src/ui/mainMenu/main_menu.tscn
 res://src/ui/gameOver/game_over.tscn
+res://src/singletons/scene_manager.gd
+res://src/ui/mainMenu/main_menu.tscn
 res://src/ui/mainMenu/main_menu.gd
-res://src/ui/gameOver/game_over.gd
+res://src/card/character_card.gd
