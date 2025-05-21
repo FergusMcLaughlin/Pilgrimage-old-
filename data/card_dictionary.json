@@ -1,39 +1,70 @@
 
 {
-  "0000": {
-	"id": "0000",
+  "C_0000": {
+	"id": "C_0000",
 	"name": "Player",
 	"type": "player",
 	"health": 10,
 	"attack": 5,
 	"isPlayer": true,
+	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
   },
-  "0001": {
-	"id": "0001",
+  "C_0001": {
+	"id": "C_0001",
+	"name": "Player1",
+	"type": "player",
+	"health": 10,
+	"attack": 5,
+	"isPlayer": true,
+	"isUnlocked":true,
+	"image_path": "res://assets/images/cards/player.png"
+  },
+  "C_0002": {
+	"id": "C_0002",
+	"name": "Player2",
+	"type": "player",
+	"health": 10,
+	"attack": 5,
+	"isPlayer": true,
+	"isUnlocked":true,
+	"image_path": "res://assets/images/cards/player.png"
+  },
+  "C_0003": {
+	"id": "C_0003",
+	"name": "Player3",
+	"type": "player",
+	"health": 10,
+	"attack": 5,
+	"isPlayer": true,
+	"isUnlocked":false,
+	"image_path": "res://assets/images/cards/player.png"
+  },
+  "M_0000": {
+	"id": "M_0000",
 	"name": "Knight",
 	"type": "unit",
 	"health": 5,
 	"attack": 5,
 	"image_path": "res://assets/images/cards/knight.png"
   },
-  "0002": {
-	"id": "0002",
+  "M_0002": {
+	"id": "M_0002",
 	"name": "Goatman",
 	"type": "unit",
 	"health": 3,
 	"attack": 6,
 	"image_path": "res://assets/images/cards/Goatman.png"
   },
-  "0003": {
-	"id": "0003",
+  "M_0003": {
+	"id": "M_0003",
 	"name": "Goblins",
 	"type": "unit",
 	"health": 1,
 	"attack": 2,
 	"image_path": "res://assets/images/cards/Goblins.png"
   },
-  "0004": {
+  "M_0004": {
 	"id": "0004",
 	"name": "Oddity",
 	"type": "unit",
@@ -41,42 +72,42 @@
 	"attack": 3,
 	"image_path": "res://assets/images/cards/Oddity.png"
   },
-  "0005": {
-	"id": "0005",
+  "M_0005": {
+	"id": "M_0005",
 	"name": "SnailTown",
 	"type": "location",
 	"health": 0,
 	"attack": 0,
 	"image_path": "res://assets/images/cards/SnailTown.png"
   },
-  "0006": {
-	"id": "0006",
+  "M_0006": {
+	"id": "M_0006",
 	"name": "Woods",
 	"type": "location",
 	"health": 0,
 	"attack": 0,
 	"image_path": "res://assets/images/cards/Woods.png"
   },
-  "0007": {
-	"id": "0007",
+  "M_0007": {
+	"id": "M_0007",
 	"name": "Stew",
-	"type": "Buff",
+	"type": "buff",
 	"health": 2,
 	"attack": 0,
 	"image_path": "res://assets/images/cards/Stew.png"
   },
-  "0008": {
-	"id": "0008",
+  "M_0008": {
+	"id": "M_0008",
 	"name": "Ale",
-	"type": "Buff",
+	"type": "buff",
 	"health": 2,
 	"attack": 0,
 	"image_path": "res://assets/images/cards/Ale.png"
   },
-  "0009": {
-	"id": "0009",
+  "M_0009": {
+	"id": "M_0009",
 	"name": "Rally",
-	"type": "Buff",
+	"type": "buff",
 	"health": 0,
 	"attack": 3,
 	"image_path": "res://assets/images/cards/Rally.png"

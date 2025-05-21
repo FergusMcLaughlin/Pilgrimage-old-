@@ -28,7 +28,7 @@ func setupBoard():
 		push_error("GameManager: Missing references to board or journey deck")
 		return
 	
-	var characterCard = CreateCard.createCard("0000")
+	var characterCard = CreateCard.createCard("C_0000")
 	if !characterCard:
 		push_error("GameManager: Failed to create character card")
 		return
