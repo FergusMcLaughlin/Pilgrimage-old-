@@ -40,8 +40,8 @@
 	"isUnlocked":false,
 	"image_path": "res://assets/images/cards/player.png"
   },
-  "M_0000": {
-	"id": "M_0000",
+  "M_0001": {
+	"id": "M_0001",
 	"name": "Knight",
 	"type": "unit",
 	"health": 5,

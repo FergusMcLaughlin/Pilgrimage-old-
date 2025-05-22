@@ -1,26 +1,27 @@
 extends Node
 
-var characterList = []
+var characterCardNameList = []
 var getCardsOfTypeFromDictionaryHelper: GetCardsOfTypeFromDictionaryHelper
+var characterCards = []
 #var focusedCharacter
 #var selectedCharacter
 
 func _ready():
+	createCharacterCards()
+
+
+func createCharacterCards():
 	getCardsOfTypeFromDictionaryHelper = GetCardsOfTypeFromDictionaryHelper.new()
-	print(getCardsOfTypeFromDictionaryHelper.getCardsOfType("player"))
+	characterCardNameList.append_array(getCardsOfTypeFromDictionaryHelper.getCardsOfType("player"))
+	
+	for cardId in characterCardNameList:
+		var cardInstance = CreateCard.createCard(cardId)
+		if cardInstance:
+			cardInstance.flipCard()
+			add_child(cardInstance)
+			characterCards.append(cardInstance)
 
 
-#func characterDictionaryToList(characterDictionary):
-#loop through each card in the dictionary
-#add all there Id's to the character list
-
-#func createCharacterCards(characterList):
-#for each item in the loop we are going to need to instanciate a new character card object
-#in here we should create the card, alter it depending on values in the dictionary
-#then we should add it to our character grid
-#creates all cards in the scene tree
-
-#func addCardsToGrid()
 # go to scene tree, get all cards that have been created, orgonise them into a grid format similar to the card grid
 
 #func focusedCharacter()

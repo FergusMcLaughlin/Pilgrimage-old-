@@ -11,3 +11,6 @@ res://src/decks/player_deck.gd
 res://src/boardComponents/board/gameBoard.tscn
 res://src/singletons/game_controller.gd
 res://src/helpers/get_cards_of_type_from_dictionary_helper.gd
+res://src/decks/journey_deck.tscn
+res://src/singletons/create_card.gd
+res://src/boardComponents/cardGrid/card_grid.tscn
