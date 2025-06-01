@@ -98,6 +98,7 @@ func setCardState (newCardState):
 			CardZIndexManager.setCardZIndex(self, "IN_SLOT")
 			$Area2D.input_pickable = true
 			shadowHelper.setShadowVisible(false)
+		
 			
 	if scale != Vector2(1.0,1.0):
 		shadowHelper.updateShadowForScale(scale)

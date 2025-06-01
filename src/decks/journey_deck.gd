@@ -21,15 +21,15 @@ func _ready():
 func initialiseJourneyDeck():
 	#this will maybe call a helper or a journey deck builder system for now hard coded
 	var journeyCards = [# Mix of combat units with different strengths
-				"0001", "0002", "0003", "0003", "0004", "0001", "0002", "0004",
+				"M_0001", "M_0002", "M_0003", "M_0003", "M_0004", "M_0001", "M_0002", "M_0004",
 				# Locations spaced out
-				"0005", "0006", "0005", "0006",
+				"M_0005", "M_0006", "M_0005", "M_0006",
 				# Buffs spaced out to enhance player
-				"0007", "0008", "0009", "0007", "0008", "0009",
+				"M_0007", "M_0008", "M_0009", "M_0007", "M_0008", "M_0009",
 				# More units with buffs interspersed
-				"0001", "0007", "0002", "0008", "0003", "0009", "0004",
+				"M_0001", "M_0007", "M_0002", "M_0008", "M_0003", "M_0009", "M_0004",
 				# End of journey with more challenging units
-				"0002", "0001", "0004", "0002", "0001", "0004"
+				"M_0002", "M_0001", "M_0004", "M_0002", "M_0001", "M_0004"
 			]
 	initaliseDeck(journeyCards)
 

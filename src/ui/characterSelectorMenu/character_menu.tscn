@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://b64j8vyjcuw8w"]
+
+[ext_resource type="Script" uid="uid://drqkh1dpjcxra" path="res://src/ui/characterSelectorMenu/character_menu.gd" id="1_0imbw"]
+[ext_resource type="PackedScene" uid="uid://be4w3ppk6lqy0" path="res://src/boardComponents/cardGrid/card_grid.tscn" id="2_23ilg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1p3a"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="CharacterMenu" type="Node"]
+script = ExtResource("1_0imbw")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1p3a")
+metadata/_edit_use_anchors_ = true
+
+[node name="CardGrid" parent="Panel" instance=ExtResource("2_23ilg")]
+position = Vector2(804, 377)
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_right = 1602.0
+offset_bottom = 93.0
+theme_override_font_sizes/normal_font_size = 61
+text = "PICK A PILGRIM"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BackButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = 300.0
+offset_right = 91.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "BACK"
+metadata/_edit_use_anchors_ = true
+
+[node name="QuitButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = 336.0
+offset_right = 91.0
+offset_bottom = 367.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "QUIT"
+metadata/_edit_use_anchors_ = true

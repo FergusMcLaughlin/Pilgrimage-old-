@@ -8,13 +8,13 @@ func _ready():
 	if CardDictionaryJsonLoader.cardData.is_empty():
 		await CardDictionaryJsonLoader.ready
 
-func createCard(cardName) -> Node2D:
+func createCard(cardId) -> Node2D:
 	var cardInstance
-	if !CardDictionaryJsonLoader.cardData.has(cardName):
-		push_error("Failed to load card, could not find " + cardName + "in the card dictionary")
+	if !CardDictionaryJsonLoader.cardData.has(cardId):
+		push_error("Failed to load card, could not find " + cardId + "in the card dictionary")
 		return null
 	
-	var cardData = CardDictionaryJsonLoader.cardData[cardName]
+	var cardData = CardDictionaryJsonLoader.cardData[cardId]
 	
 	if cardData.has("isPlayer") and cardData["isPlayer"] == true:
 		cardInstance = characterCardScene.instantiate()

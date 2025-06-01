@@ -28,7 +28,11 @@ func setupBoard():
 		push_error("GameManager: Missing references to board or journey deck")
 		return
 	
-	var characterCard = CreateCard.createCard("0000")
+	if(GameConstants.playerCharacter != null):
+		characterCard = CreateCard.createCard(GameConstants.playerCharacter)
+	else:
+		characterCard = CreateCard.createCard("C_0000")
+	
 	if !characterCard:
 		push_error("GameManager: Failed to create character card")
 		return
@@ -126,6 +130,9 @@ func calculateBattle(attacker, defender):
 		GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
 		return result
 	
+	attackerWins = attacker.cardAttack > defender.cardHealth
+	attackerSurvives = attacker.cardHealth > defender.cardAttack
+	
 	if defender.cardAttack > 0:
 		applyDamageToCard(attacker, defender.cardAttack)
 	
@@ -133,7 +140,7 @@ func calculateBattle(attacker, defender):
 		"success": attackerWins && attackerSurvives,
 		"damage": defender.cardAttack,
 		"attackerDied": !attackerSurvives
-		}
+	}
 	
 	if attackerWins:
 		defender.queue_free()
