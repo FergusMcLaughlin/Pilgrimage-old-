@@ -6,3 +6,4 @@ const LAYER_CARD = 2
 const LAYER_DECK = 4
 
 #var interactionsAllowed = true
+var playerCharacter = null;

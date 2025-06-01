@@ -14,3 +14,6 @@ res://src/helpers/get_cards_of_type_from_dictionary_helper.gd
 res://src/decks/journey_deck.tscn
 res://src/singletons/create_card.gd
 res://src/boardComponents/cardGrid/card_grid.tscn
+res://src/card/card.gd
+res://src/singletons/game_constants.gd
+res://src/ui/mainMenu/main_menu.gd

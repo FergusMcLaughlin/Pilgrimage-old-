@@ -14,8 +14,8 @@
 	"id": "C_0001",
 	"name": "Player1",
 	"type": "player",
-	"health": 10,
-	"attack": 5,
+	"health": 20,
+	"attack": 6,
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
@@ -25,7 +25,7 @@
 	"name": "Player2",
 	"type": "player",
 	"health": 10,
-	"attack": 5,
+	"attack": 10,
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b64j8vyjcuw8w"]
+[gd_scene load_steps=4 format=3 uid="uid://b64j8vyjcuw8w"]
 
 [ext_resource type="Script" uid="uid://drqkh1dpjcxra" path="res://src/ui/characterSelectorMenu/character_menu.gd" id="1_0imbw"]
+[ext_resource type="PackedScene" uid="uid://be4w3ppk6lqy0" path="res://src/boardComponents/cardGrid/card_grid.tscn" id="2_23ilg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1p3a"]
 bg_color = Color(0, 0, 0, 1)
@@ -17,6 +18,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_f1p3a")
 metadata/_edit_use_anchors_ = true
+
+[node name="CardGrid" parent="Panel" instance=ExtResource("2_23ilg")]
+position = Vector2(804, 377)
 
 [node name="Title" type="RichTextLabel" parent="."]
 offset_right = 1602.0
