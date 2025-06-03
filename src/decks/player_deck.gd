@@ -28,7 +28,7 @@ func initialiseFromPreset(presetName):
 func loadDeckPreset(presetName):
 	#ill need to add 2 scripts to deal with deck gen at some stage.
 	var presets = {
-		"test":["0001","0002","0003","0004","0001","0005"],
+		"test":["M_0000","M_0001","M_0002","M_0003","M_0004","M_0001","M_0005"],
 		"deck_2":[],
 		"deck_3":[]
 	}

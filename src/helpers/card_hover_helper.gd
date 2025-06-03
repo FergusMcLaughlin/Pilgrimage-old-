@@ -5,7 +5,7 @@ func applyHoverEffect(card, isHovered):
 		return
 	if isHovered:
 		card.scale = Vector2(1.05,1.05)
-		card.z_index = 2
+		CardZIndexManager.cardFocused(card, "true")
 	else:
 		card.scale = Vector2(1.0,1.0)
-		card.z_index = 1
+		CardZIndexManager.cardFocused(card, "false")

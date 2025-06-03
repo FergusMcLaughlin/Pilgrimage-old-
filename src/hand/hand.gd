@@ -32,6 +32,9 @@ func addCardToHand(card):
 			card.flipCard()
 		
 		card.global_position = global_position
+		
+		orgoniseCardsInHand()
+		await get_tree().process_frame
 		orgoniseCardsInHand()
 		return true
 	return false
@@ -47,7 +50,11 @@ func removeCardFromHand(card):
 	return false
 
 func orgoniseCardsInHand():
-	if isOrganising || cardsInHand.is_empty():
+	if isOrganising && cardsInHand.size() > 0:
+		isOrganising = false
+		return
+	
+	if cardsInHand.is_empty():
 		return
 	
 	isOrganising = true
@@ -58,11 +65,30 @@ func orgoniseCardsInHand():
 		if card.currentState == card.cardState.BEING_DRAGGED:
 			continue
 		
-		var cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
-		card.z_index = cardData.zIndex
-		organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		var  cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
 		
-	await get_tree().create_timer(orgonisationDuration).timeout
+		if !card.isReturningToLocation:
+			CardZIndexManager.setCardsInHandZIndex(card, i)
+		else:
+			CardZIndexManager.setReturningCardZIndex(card)
+		
+		var tween = organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		
+		if card.isReturningToLocation:
+			var cardIndex = i
+			tween.finished.connect(
+				func():
+					card.onReturnToHandComplete()
+					CardZIndexManager.setCardsInHandZIndex(card, cardIndex)
+			)
+			
+		if i == cardCount - 1:
+			tween.finished.connect(
+				func():
+					isOrganising = false
+			)
+			
+	await get_tree().create_timer(orgonisationDuration + 0.1).timeout
 	isOrganising = false
 
 func getCardCount():
@@ -79,19 +105,22 @@ func onCardDrawn(card):
 	addCardToHand(card)
 
 func onCardReturnedToHand(card):
-	var tween = create_tween()
-	
 	if cardsInHand.has(card):
-		card.setCardState(card.cardState.IN_HAND)
 		orgoniseCardsInHand()
 	else:
 		if card.get_parent() != self:
 			if card.get_parent():
 				card.get_parent().remove_child(card)
-				add_child(card)
+			add_child(card)
+			
 		card.setCardState(card.cardState.IN_HAND)
-		card.global_position = card.global_position
+		
+		var currentPosition = card.global_position
+		card.global_position = currentPosition
+		
 		cardsInHand.append(card)
+		
+		await  get_tree().process_frame
 		orgoniseCardsInHand()
 
 func onCardDragStarted(card):

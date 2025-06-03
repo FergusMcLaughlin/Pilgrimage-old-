@@ -23,12 +23,14 @@ func _ready():
 	$Area2D.collision_mask = 0
 
 func setCurrentCard(card):
+	print("setting card in slot to :" + str(card))
 	currentCard = card
 	cardInSlot = true
 	
 
 	if card != null:
 		card.setCardState(card.cardState.IN_SLOT)
+		card.reparent(self, true)
 		var tween = create_tween()
 		tween.tween_property(card, "global_position", global_position, 0.3)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
@@ -59,6 +61,7 @@ func onArea2dMouseExited():
 
 func onArea2dInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+		print("CardSlot: CLICKED - emitting slotClicked signal")
 		GlobalSignalBus.emit_signal("slotClicked", self)
 
 func onCardDragStarted(card):

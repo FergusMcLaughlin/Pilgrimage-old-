@@ -5,6 +5,7 @@ var cardHoverHelper = CardHoverHelper.new()
 var cardBeingDragged = null
 var draggingOffset = Vector2.ZERO
 var hoveredObject = null
+var originalCardRotation = 0.0
 
 func _ready():
 	GlobalSignalBus.connect("cardClicked", onCardClicked)
@@ -17,6 +18,13 @@ func _input(event):
 			var newPosition = event.global_position + draggingOffset
 			cardBeingDragged.global_position = newPosition
 			
+			var dragDistance = (newPosition - cardBeingDragged.get_parent().global_position).length()
+			var maxDistance = 100
+			var targetRotation = 0.0
+			var weight = min(dragDistance / maxDistance, 1.0)
+			
+			cardBeingDragged.rotation = lerp(originalCardRotation, targetRotation, weight)
+			
 			GlobalSignalBus.emit_signal("cardDragging", cardBeingDragged, newPosition)
 		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT && !event.pressed:
 			stopDraggingCard(event.global_position)
@@ -24,6 +32,11 @@ func _input(event):
 func onCardClicked(card):
 	if cardBeingDragged != null:
 		return
+	
+	if card.currentState == card.cardState.IN_SLOT:
+		print("InputManager: Card is in slot, not dragging")
+		return
+	
 	if card.currentState != card.cardState.BEING_DRAGGED:
 		startDraggingCard(card)
 
@@ -44,6 +57,7 @@ func startDraggingCard(card):
 	cardBeingDragged = card
 	var mousePosition = get_viewport().get_mouse_position()
 	draggingOffset = card.global_position - mousePosition
+	originalCardRotation = card.rotation
 	
 	var oldState = card.currentState
 	card.setCardState(card.cardState.BEING_DRAGGED)
@@ -97,6 +111,8 @@ func placeCardInSlot(card, slot):
 
 
 func returnCardToHand(card):
+	card.isReturningToLocation = true
+	CardZIndexManager.setReturningCardZIndex(card)
 	card.setCardState(card.cardState.IN_HAND)
 	
 	if GlobalSignalBus.has_signal("cardReturnedToHand"):

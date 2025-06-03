@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo27k16mvgtqx"]
+
+[ext_resource type="Script" uid="uid://d145lcoimoobn" path="res://src/ui/mainMenu/main_menu.gd" id="1_qfl0q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqkvv"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="Node"]
+script = ExtResource("1_qfl0q")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uqkvv")
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_right = 1602.0
+offset_bottom = 93.0
+theme_override_font_sizes/normal_font_size = 61
+text = "PILGRIMAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = -51.0
+offset_right = 91.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "START"
+
+[node name="CharacterButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = -15.5
+offset_right = 91.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "CHARACTER SELECTOR"
+
+[node name="QuitButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = 20.5
+offset_right = 91.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "QUIT"
