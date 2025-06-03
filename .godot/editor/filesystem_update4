@@ -17,3 +17,7 @@ res://src/boardComponents/cardGrid/card_grid.tscn
 res://src/card/card.gd
 res://src/singletons/game_constants.gd
 res://src/ui/mainMenu/main_menu.gd
+res://src/helpers/scene_transition_helper.gd
+res://src/helpers/scene_loading_helper.gd
+res://src/singletons/scene_manager.gd
+res://src/ui/gameOver/game_over.gd

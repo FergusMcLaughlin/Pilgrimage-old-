@@ -84,7 +84,15 @@ func selectCharacter(card):
 		print("Clicked card is not a character card")
 
 func on_back_button_pressed():
+	if SceneTransitionManager.isCurrentlyTransitioning():
+		print("Transition already in progress, ignoring click")
+		return
+		
 	SceneTransitionManager.transitionToScene("res://src/ui/mainMenu/main_menu.tscn", SceneTransitionManager.TransitionType.FADE)
 
 func on_quit_button_pressed():
+	if SceneTransitionManager.isCurrentlyTransitioning():
+		print("Transition already in progress, ignoring click")
+		return
+		
 	get_tree().quit()
