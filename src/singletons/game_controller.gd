@@ -114,7 +114,7 @@ func calculateBattle(attacker, defender):
 	var attackerWins = attacker.cardAttack > defender.cardHealth
 	var attackerSurvives = attacker.cardHealth > defender.cardAttack
 	
-	if defender.cardType == "Buff":
+	if defender.cardType == "buff":
 		attacker.cardHealth += defender.cardHealth
 		attacker.cardAttack += defender.cardAttack
 		attacker.updateCardVisuals()
@@ -135,6 +135,11 @@ func calculateBattle(attacker, defender):
 	
 	if defender.cardAttack > 0:
 		applyDamageToCard(attacker, defender.cardAttack)
+	
+	if attackerSurvives && !attackerWins:
+		applyDamageToCard(defender, attacker.cardAttack)
+		if defender.cardHealth == 0 ||  defender.cardHealth < 0:
+			attackerWins = true
 	
 	var result = {
 		"success": attackerWins && attackerSurvives,

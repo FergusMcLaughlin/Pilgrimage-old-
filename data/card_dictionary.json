@@ -15,7 +15,7 @@
 	"name": "Player1",
 	"type": "player",
 	"health": 20,
-	"attack": 6,
+	"attack": 1,
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
