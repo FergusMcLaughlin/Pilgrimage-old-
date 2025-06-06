@@ -6,6 +6,9 @@ var cardType: String
 var cardHealth: int
 var cardAttack: int
 var cardImagePath: String
+var cardEffects: Array = [] 
+var baseAttack: int                  
+var baseHealth: int
 
 enum cardState {
 	ON_BOARD,
@@ -36,9 +39,17 @@ func initialiseCard (cardData):
 	cardHealth = cardData["health"]
 	cardAttack = cardData["attack"]
 	
+	cardEffects = cardData.get("effects", [])
+	baseAttack = cardAttack
+	baseHealth = cardHealth
+	
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
 	
 	updateCardVisuals()
+
+func resetToBaseStats():
+	cardAttack = baseAttack
+	cardHealth = baseHealth
 
 func updateCardVisuals ():
 	$Name.text = cardName
@@ -137,6 +148,20 @@ func flipCard ():
 			shadowHelper.setShadowVisible(true, isDragging)
 	)
 	GlobalSignalBus.emit_signal("cardFlipped", self)
+
+func getEffectDescription() -> String:
+	if cardEffects.is_empty():
+		return ""
+	
+	var descriptions = []
+	var effectManager = get_node("/root/EffectManager")
+	
+	for individualEffect in cardEffects:
+		var effectData = effectManager.effectDefinitions.get(individualEffect, {})
+		var description = effectData.get("description", "Unknown effect")
+		descriptions.append(description)
+	
+	return "\n".join(descriptions)
 
 func onReturnToHandComplete():
 	print("Card return to hand complete!")

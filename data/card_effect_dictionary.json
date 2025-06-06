@@ -1,0 +1,14 @@
+{
+	"reclusive_beast":{
+		"name": "Reclusive Beast",
+		"description": "This creature finds comfort and confidence in isolation.",
+		"effect": "+1 to both attack and health for each forest card on the board.",
+		"type": "stat_augmentation",
+		"trigger": "slot_filled",
+		"target_card_type": "location",
+		"target_card_name": "Woods",
+		"stats_affected": ["attack", "health"],
+		"stat_boost": true,
+		"stat_change": 1
+	}
+}

@@ -6,6 +6,7 @@
 	"type": "player",
 	"health": 10,
 	"attack": 5,
+	"effects":[],
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
@@ -14,8 +15,9 @@
 	"id": "C_0001",
 	"name": "Player1",
 	"type": "player",
-	"health": 20,
-	"attack": 1,
+	"health": 200,
+	"attack": 200,
+	"effects":[],
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
@@ -26,6 +28,7 @@
 	"type": "player",
 	"health": 10,
 	"attack": 10,
+	"effects":[],
 	"isPlayer": true,
 	"isUnlocked":true,
 	"image_path": "res://assets/images/cards/player.png"
@@ -36,6 +39,7 @@
 	"type": "player",
 	"health": 10,
 	"attack": 5,
+	"effects":[],
 	"isPlayer": true,
 	"isUnlocked":false,
 	"image_path": "res://assets/images/cards/player.png"
@@ -46,6 +50,7 @@
 	"type": "unit",
 	"health": 5,
 	"attack": 5,
+	"effects":[],
 	"image_path": "res://assets/images/cards/knight.png"
   },
   "M_0002": {
@@ -54,6 +59,7 @@
 	"type": "unit",
 	"health": 3,
 	"attack": 6,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Goatman.png"
   },
   "M_0003": {
@@ -62,14 +68,16 @@
 	"type": "unit",
 	"health": 1,
 	"attack": 2,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Goblins.png"
   },
   "M_0004": {
-	"id": "0004",
+	"id": "M_0004",
 	"name": "Oddity",
 	"type": "unit",
 	"health": 2,
 	"attack": 3,
+	"effects":["reclusive_beast"],
 	"image_path": "res://assets/images/cards/Oddity.png"
   },
   "M_0005": {
@@ -78,6 +86,7 @@
 	"type": "location",
 	"health": 0,
 	"attack": 0,
+	"effects":[],
 	"image_path": "res://assets/images/cards/SnailTown.png"
   },
   "M_0006": {
@@ -86,6 +95,7 @@
 	"type": "location",
 	"health": 0,
 	"attack": 0,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Woods.png"
   },
   "M_0007": {
@@ -94,6 +104,7 @@
 	"type": "buff",
 	"health": 2,
 	"attack": 0,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Stew.png"
   },
   "M_0008": {
@@ -102,6 +113,7 @@
 	"type": "buff",
 	"health": 2,
 	"attack": 0,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Ale.png"
   },
   "M_0009": {
@@ -110,6 +122,7 @@
 	"type": "buff",
 	"health": 0,
 	"attack": 3,
+	"effects":[],
 	"image_path": "res://assets/images/cards/Rally.png"
   }
 }

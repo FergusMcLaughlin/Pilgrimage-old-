@@ -74,6 +74,9 @@ func placeCardInSlot(card, slot):
 	
 	emit_signal("journeyCardRevealed", card, slot)
 	GlobalSignalBus.emit_signal("slotFilled", slot, card)
+	
+	if GlobalSignalBus.currentBoard:
+		GlobalSignalBus.currentBoard.updateBoardState()
 
 func revealTopCard(slot):
 	if cards.is_empty():

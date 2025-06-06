@@ -24,9 +24,15 @@ func _ready():
 
 func setupBoard():
 	print("GameManager: Setting up board...")
+	
 	if !boardController || !journeyDeck:
 		push_error("GameManager: Missing references to board or journey deck")
 		return
+	
+	
+	if GlobalSignalBus.currentBoard == null:
+		print("WARNING: currentBoard was null, using boardController as fallback")
+		GlobalSignalBus.currentBoard = boardController
 	
 	if(GameConstants.playerCharacter != null):
 		characterCard = CreateCard.createCard(GameConstants.playerCharacter)
@@ -161,6 +167,9 @@ func moveCard(card, targetSlot):
 	
 	targetSlot.setCurrentCard(card)
 	GlobalSignalBus.emit_signal("cardMoved", card, fromSlot, targetSlot)
+	
+	if GlobalSignalBus.currentBoard:
+		GlobalSignalBus.currentBoard.updateBoardState()
 
 func applyDamageToCard(card, amount):
 	var newHealth = card.cardHealth - amount

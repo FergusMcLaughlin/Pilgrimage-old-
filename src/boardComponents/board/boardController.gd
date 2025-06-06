@@ -33,6 +33,8 @@ func placeCardInSlot(card, slot):
 	
 	if GlobalSignalBus.has_signal("cardPlayed"):
 		GlobalSignalBus.emit_signal("cardPlayed", card, slot)
+	
+	updateBoardState()
 
 func updateBoardState():
 	GlobalSignalBus.emit_signal("boardStateChanged")
@@ -54,6 +56,8 @@ func clearBoard():
 		for slot in row:
 			if slot.currentCard:
 				slot.clearSlot()
+	
+	updateBoardState()
 
 func getOccupiedSlots():
 	if !grid:
@@ -85,3 +89,6 @@ func getCenterSlot():
 	var centerSlot = grid.getSlotAt(centerSlotPosition) 
 	
 	return centerSlot
+
+func forceUpdateBoardState():
+	updateBoardState()

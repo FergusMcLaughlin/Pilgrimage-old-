@@ -11,6 +11,17 @@ func _ready():
 	playerDeck.initialiseFromPreset("test")
 	journeyDeck.initialiseJourneyDeck()
 	
+	# CRITICAL: Set currentBoard reference FIRST, before any other setup
+	print("DEBUG: Setting currentBoard to GameBoard...")
+	GlobalSignalBus.currentBoard = $GameBoard
+	print("DEBUG: currentBoard set to: ", GlobalSignalBus.currentBoard)
+	
+	# Verify the board has the necessary methods
+	if $GameBoard.has_method("getOccupiedSlots"):
+		print("DEBUG: ✓ GameBoard has getOccupiedSlots method")
+	else:
+		push_error("DEBUG: ✗ GameBoard missing getOccupiedSlots method!")
+	
 	# Debug information about the scene
 	print("\n----- SCENE DEBUG INFO -----")
 	print_scene_tree()
@@ -48,11 +59,25 @@ func _ready():
 	print("- fill_board connected: ", $Ui/ButtonPanel/fill_board.is_connected("pressed", Callable(self, "on_fill_board_button_pressed")))
 	print("- fill_one_slot connected: ", $Ui/ButtonPanel/fill_one_slot.is_connected("pressed", Callable(self, "on_fill_one_slot_button_pressed")))
 	
+	# IMPORTANT: Set up GameController AFTER currentBoard is set
 	GameController.boardController = $GameBoard
 	GameController.playerDeck = $GameBoard/playerDeck
 	GameController.journeyDeck = $GameBoard/journeyDeck
 	GameController.hand = $GameBoard/Hand
+	
+	# Verify currentBoard is still set after GameController setup
+	print("DEBUG: currentBoard after GameController setup: ", GlobalSignalBus.currentBoard)
+	
 	GameController.setupBoard()
+	
+	# Final verification
+	print("DEBUG: currentBoard after all setup: ", GlobalSignalBus.currentBoard)
+	
+	# Force a debug to see if BoardQueryHelper works now
+	print("\n----- TESTING BOARD QUERY IMMEDIATELY -----")
+	await get_tree().process_frame
+	var testCount = BoardQueryHelper.countCardsOfType("location", "Woods")
+	print("DEBUG: Immediate test - Woods count: ", testCount)
 
 # New function for fill_board button using journeyDeck methods
 func on_fill_board_button_pressed():
@@ -188,3 +213,62 @@ func find_hand_node():
 func find_node_by_name(node_name, current_node = null):
 	# Your existing implementation
 	pass
+
+func debug_card_effects():
+	print("\n=== DEBUGGING CARD EFFECTS ===")
+	
+	# Check if EffectManager exists
+	var effectManager = get_node_or_null("/root/EffectManager")
+	if effectManager:
+		print("✅ EffectManager found")
+		print("Effect definitions loaded: ", effectManager.effectDefinitions.size())
+		print("Active effects: ", effectManager.activeEffects.size())
+		
+		for effect_name in effectManager.effectDefinitions.keys():
+			print("- Effect definition: ", effect_name)
+	else:
+		print("❌ EffectManager not found!")
+	
+	# Check board state
+	print("\n--- BOARD STATE ---")
+	if $GameBoard:
+		print("✅ GameBoard found")
+		print("Board class: ", $GameBoard.get_class())
+		
+		# Check GlobalSignalBus.currentBoard
+		print("GlobalSignalBus.currentBoard: ", GlobalSignalBus.currentBoard)
+		
+		if $GameBoard.has_method("getOccupiedSlots"):
+			var occupiedSlots = $GameBoard.getOccupiedSlots()
+			print("Occupied slots: ", occupiedSlots.size())
+			
+			for slot in occupiedSlots:
+				var card = slot.currentCard
+				if card:
+					print("Card: ", card.cardName)
+					print("- Type: ", card.cardType)
+					print("- Effects: ", card.cardEffects)
+					print("- CardId: ", card.cardId)
+				else:
+					print("Empty slot found")
+		else:
+			print("❌ GameBoard doesn't have getOccupiedSlots method")
+	else:
+		print("❌ GameBoard not found!")
+	
+	## Test BoardQueryHelper specifically
+	#print("\n--- TESTING BOARD QUERY HELPER ---")
+	#BoardQueryHelper.debugBoardState()
+	#
+	## Direct test of counting functions
+	#print("Direct BoardQueryHelper tests:")
+	#var woodsCount = BoardQueryHelper.countCardsOfType("location", "Woods")
+	#print("BoardQueryHelper reports ", woodsCount, " Woods cards")
+	#
+	#var allLocations = BoardQueryHelper.countCardsOfType("location")
+	#print("BoardQueryHelper reports ", allLocations, " location cards total")
+	#
+	#var allUnits = BoardQueryHelper.countCardsOfType("unit")
+	#print("BoardQueryHelper reports ", allUnits, " unit cards total")
+	#
+	#print("=== END DEBUG ===\n")

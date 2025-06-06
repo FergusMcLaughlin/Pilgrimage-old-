@@ -17,9 +17,11 @@ config/icon="res://assets/images/icon.svg"
 
 [autoload]
 
-CardDictionaryJsonLoader="*res://src/singletons/card_dictionary_json_loader.gd"
 GlobalSignalBus="*res://src/singletons/global_signal_bus.gd"
-CreateCard="*res://src/singletons/create_card.gd"
+CardDictionaryJsonLoader="*res://src/singletons/cardFactory/card_dictionary_json_loader.gd"
+CreateCard="*res://src/singletons/cardFactory/create_card.gd"
+CardEffectDictionaryJsonLoader="*res://src/singletons/cardEffectFactory/card_effect_dictionary_json_loader.gd"
+EffectManager="*res://src/singletons/cardEffectFactory/card_effect_manager.gd"
 InputManager="*res://src/singletons/input_manager.gd"
 GameConstants="*res://src/singletons/game_constants.gd"
 CardZIndexManager="*res://src/singletons/card_z_index_manager.gd"

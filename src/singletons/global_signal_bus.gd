@@ -1,5 +1,7 @@
 # GlobalSignalBus.gd - Add to autoload
 extends Node
+
+var currentBoard = null
 # ==============================================
 # CARD SIGNALS
 # ==============================================
@@ -42,8 +44,6 @@ signal cardDrawnToHand(card)
 # ==============================================
 signal boardStateChanged()      # When board state changes
 signal boardSetup()             # When board is initially set up
-signal turnStarted(turnNumber)  # When a new turn begins
-signal turnEnded(turnNumber)    # When current turn ends
 # ==============================================
 # GAME CONTROLLER SIGNALS
 # ==============================================

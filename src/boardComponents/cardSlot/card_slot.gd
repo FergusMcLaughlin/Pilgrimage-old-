@@ -35,7 +35,12 @@ func setCurrentCard(card):
 		tween.tween_property(card, "global_position", global_position, 0.3)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
 		
-		GlobalSignalBus.emit_signal("slotFilled", self, card)
+		print("DEBUG: About to emit slotFilled signal")
+		if GlobalSignalBus.has_signal("slotFilled"):
+			print("DEBUG: slotFilled signal exists, emitting...")
+			GlobalSignalBus.emit_signal("slotFilled", self, card)
+		else:
+			print("ERROR: slotFilled signal does not exist!")
 
 func clearSlot():
 	currentCard = null
