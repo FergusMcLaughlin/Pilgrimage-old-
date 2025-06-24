@@ -8,6 +8,7 @@ var hand: Hand
 var characterCard: Node2D
 
 var currentGameState = GameStates.SETUP
+var movementEnabled: bool = true
 
 enum GameStates {
 	SETUP,
@@ -58,9 +59,19 @@ func setupBoard():
 	await get_tree().process_frame  # Wait for card placement
 	journeyDeck.fillEmptySlots()
 	
+	await get_tree().process_frame
+	GlobalSignalBus.emit_signal("boardSetupComplete")
+	
 	print("GameManager: Board setup complete")
 
+func isMovementAllowed() -> bool:
+	return movementEnabled and GameConstants.interactionsAllowed
+
 func onCardClicked(card):
+	if !isMovementAllowed():
+		print("GameManager: Movement blocked - effects are being processed")
+		return
+	
 	if card.currentState == card.cardState.IN_HAND || card.currentState == card.cardState.BEING_DRAGGED:
 		return
 	

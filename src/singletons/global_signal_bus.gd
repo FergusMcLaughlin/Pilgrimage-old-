@@ -44,6 +44,7 @@ signal cardDrawnToHand(card)
 # ==============================================
 signal boardStateChanged()      # When board state changes
 signal boardSetup()             # When board is initially set up
+signal boardSetupComplete()     # When initial board setup is finished
 # ==============================================
 # GAME CONTROLLER SIGNALS
 # ==============================================
@@ -55,3 +56,17 @@ signal cardDamaged(card, amount, newHealth)
 # ==============================================
 signal sceneTransitionStarted(fromScene, toScene, transitionType)
 signal sceneTransitionCompleted(fromScene, toScene, transitionType)
+# ==============================================
+# EFFECT QUEUE SIGNALS
+# ==============================================
+signal effectProcessingStarted()
+signal effectProcessingFinished() 
+signal effectApplied(triggerType: String, context: Dictionary)
+signal effectsStarted()
+signal effectsFinished()
+# ==============================================
+#  SIGNALS
+# ==============================================
+signal movmentIsBlocked(reason: String)
+signal movmentIsUnblocked(reason: String)
+signal movmentStateChanged(isEnabled: bool)

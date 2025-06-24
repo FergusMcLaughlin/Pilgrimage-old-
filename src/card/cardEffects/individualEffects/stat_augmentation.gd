@@ -4,16 +4,20 @@ extends CardEffect
 
 func shouldRunEffectCheck(triggerType: String, context: Dictionary) -> bool:
 	var expectedTrigger = effectData.get("trigger", "")
-	if triggerType != "slot_filled":
-		return false
 	
-	var targetCardType = effectData.get("target_card_type", "")
-	var targetCardName = effectData.get("target_card_name", "")
-	var forestCardsOnBoard = BoardQueryHelper.countCardsOfType(targetCardType, targetCardName)
-	
-	return forestCardsOnBoard > 0
+	match expectedTrigger: #add as new types are added I HATE TRIGGERS
+		"slot_filled":
+			return triggerType in ["slot_filled", "slot_emptied", "card_removed"]
+		"board_changed":
+			return triggerType in ["slot_filled", "slot_emptied", "card_removed"]
+		_:
+			return triggerType == expectedTrigger
 
 func applyCardEffect(context: Dictionary) -> void:
+	
+	if !is_instance_valid(hostCard):
+		return
+	
 	var targetCardType = effectData.get("target_card_type", "")
 	var targetCardName = effectData.get("target_card_name", "")
 	var cardsOnBoard = BoardQueryHelper.countCardsOfType(targetCardType, targetCardName)

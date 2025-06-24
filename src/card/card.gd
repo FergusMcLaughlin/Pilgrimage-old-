@@ -10,6 +10,10 @@ var cardEffects: Array = []
 var baseAttack: int                  
 var baseHealth: int
 
+const STAT_COLOR_NORMAL = Color.BLACK
+const STAT_COLOR_BUFFED = Color.DARK_GREEN
+const STAT_COLOR_DEBUFFED = Color.DARK_RED
+
 enum cardState {
 	ON_BOARD,
 	IN_DECK,
@@ -56,12 +60,32 @@ func updateCardVisuals ():
 	$Health.text = str(cardHealth)
 	$Attack.text = str(cardAttack)
 	
+	updateStatColours()
+	
 	var texture = load(cardImagePath)
 	if texture:
 		$CardFace.texture = texture
 		$CardFace.scale = Vector2(0.1, 0.1)
 	else: 
 		push_error("Cant load card picture: " + cardImagePath)
+
+func updateStatColours():
+	if cardType == "player":
+		return
+	
+	if cardAttack > baseAttack:
+		$Attack.modulate = STAT_COLOR_BUFFED 
+	elif cardAttack < baseAttack:
+		$Attack.modulate = STAT_COLOR_DEBUFFED 
+	else:
+		$Attack.modulate = STAT_COLOR_NORMAL
+	
+	if cardHealth > baseHealth:
+		$Health.modulate = STAT_COLOR_BUFFED 
+	elif cardHealth < baseHealth:
+		$Health.modulate = STAT_COLOR_DEBUFFED
+	else:
+		$Health.modulate = STAT_COLOR_NORMAL
 
 func setCardState (newCardState):
 	var oldState = currentState

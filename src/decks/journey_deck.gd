@@ -23,7 +23,7 @@ func initialiseJourneyDeck():
 	var journeyCards = [# Mix of combat units with different strengths
 				"M_0001", "M_0002", "M_0003", "M_0003", "M_0004", "M_0001", "M_0002", "M_0004",
 				# Locations spaced out
-				"M_0005", "M_0006", "M_0005", "M_0006",
+				"M_0006", "M_0006", "M_0006", "M_0006","M_0006", "M_0006", "M_0006", "M_0006",
 				# Buffs spaced out to enhance player
 				"M_0007", "M_0008", "M_0009", "M_0007", "M_0008", "M_0009",
 				# More units with buffs interspersed

@@ -20,13 +20,13 @@ config/icon="res://assets/images/icon.svg"
 GlobalSignalBus="*res://src/singletons/global_signal_bus.gd"
 CardDictionaryJsonLoader="*res://src/singletons/cardFactory/card_dictionary_json_loader.gd"
 CreateCard="*res://src/singletons/cardFactory/create_card.gd"
-CardEffectDictionaryJsonLoader="*res://src/singletons/cardEffectFactory/card_effect_dictionary_json_loader.gd"
-EffectManager="*res://src/singletons/cardEffectFactory/card_effect_manager.gd"
+CardEffectDictionaryJsonLoader="*res://src/singletons/cardEffects/card_effect_dictionary_json_loader.gd"
 InputManager="*res://src/singletons/input_manager.gd"
 GameConstants="*res://src/singletons/game_constants.gd"
 CardZIndexManager="*res://src/singletons/card_z_index_manager.gd"
 GameController="*res://src/singletons/game_controller.gd"
 SceneTransitionManager="*res://src/singletons/scene_manager.gd"
+EffectManager="*res://src/singletons/cardEffects/card_effect_manager.gd"
 
 [display]
 
