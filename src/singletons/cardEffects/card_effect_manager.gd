@@ -8,7 +8,7 @@ var effectTimer: EffectTimerHelper
 var effectBatcherHelper: EffectBatcherHelper
 var setupPhase: bool = true
 
-const TIME_PER_BATCH = 0.5
+const TIME_PER_BATCH = 1
 
 func _ready():
 	effectTimer = EffectTimerHelper.new(self)

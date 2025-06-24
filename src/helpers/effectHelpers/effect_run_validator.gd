@@ -1,6 +1,6 @@
 class_name EffectRunValidator
 
-static var cardStates: Dictionary = {}
+static var lastTargetCounts: Dictionary = {}
 
 static func getEffectsToRun(effects: Array[CardEffect], trigger: String, context: Dictionary):
 	var effectsToRun = []
@@ -9,39 +9,33 @@ static func getEffectsToRun(effects: Array[CardEffect], trigger: String, context
 		if !effect.shouldRunEffectCheck(trigger, context):
 			continue
 		
-		var key = str(effect.hostCard.get_instance_id()) + "_" + effect.effectName
-		var currentState = getCurrentValue(effect)
-		var lastState = cardStates.get(key, {})
+		if effect.effectData.get("type") == "stat_augmentation":
+			var targetType = effect.effectData.get("target_card_type", "")
+			var targetName = effect.effectData.get("target_card_name", "")
+			var currentCount =  BoardQueryHelper.countCardsOfType(targetType, targetName)
 		
-		if currentState != lastState or trigger == "slot_emptied" or trigger == "card_removed":
-			cardStates[key] = currentState
+			var key = str(effect.hostCard.get_instance_id()) + "_" + targetType + "_" + targetName
+			var lastCount = lastTargetCounts.get(key, -1)
+		
+			if currentCount != lastCount:
+				print("SimpleEffectTracker: Target count changed from ", lastCount, " to ", currentCount, " for ", effect.effectName)
+				lastTargetCounts[key] = currentCount
+				effectsToRun.append(effect)
+			else:
+				print("SimpleEffectTracker: No change in target count (", currentCount, ") for ", effect.effectName)
+		else:
+			# For other effect types, always run (you can customize this later)
 			effectsToRun.append(effect)
 	
 	return effectsToRun
 
-static func getCurrentValue(effect: CardEffect):
-	if effect.effectData.get("type") == "stat_augmentation":
-		var targetType = effect.effectData.get("target_card_type", "")
-		var targetName = effect.effectData.get("target_card_name", "")
-		var count =  BoardQueryHelper.countCardsOfType(targetType, targetName)
-		
-		return {
-			"target_count": count,
-			"effect_type": "stat_augmentation",
-			"target_type": targetType,
-			"target_name": targetName
-		}
-	else:
-		var board = BoardQueryHelper.getCurrentBoard()
-		var occupiedCount = board.getOccupiedSlots().size() if board else 0
-		return {
-			"occupied_slots": occupiedCount,
-			"effect_type": "general"
-		}
-
-static func getCardKey(card: Node2D) -> String:
-	return str(card.get_instance_id())
-
 static func clearCard(card: Node2D):
-	var key = getCardKey(card)
-	cardStates.erase(key)
+	var cardId = str(card.get_instance_id())
+	var keysToRemove = []
+	
+	for key in lastTargetCounts:
+		if key.begins_with(cardId + "_"):
+			keysToRemove.append(key)
+	
+	for key in keysToRemove:
+		lastTargetCounts.erase(key)
