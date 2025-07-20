@@ -10,6 +10,8 @@ func _ready():
 	spawn_test_card()
 	playerDeck.initialiseFromPreset("test")
 	journeyDeck.initialiseJourneyDeck()
+	await get_tree().process_frame
+	test_effects_system()
 	
 	# Debug information about the scene
 	print("\n----- SCENE DEBUG INFO -----")
@@ -188,3 +190,47 @@ func find_hand_node():
 func find_node_by_name(node_name, current_node = null):
 	# Your existing implementation
 	pass
+
+func test_effects_system():
+	print("\n=== EFFECTS SYSTEM DEBUG ===")
+	
+	# 1. Check if DictionaryJsonLoader has data
+	print("1. Dictionary Data:")
+	print("   Card data loaded: ", !DictionaryJsonLoader.cardData.is_empty())
+	print("   Effect data loaded: ", !DictionaryJsonLoader.effectData.is_empty())
+	print("   Reclusive beast effect exists: ", DictionaryJsonLoader.effectData.has("reclusive_beast"))
+	
+	# 2. Check if GlobalSignalBus.currentBoard is set
+	print("2. Board Reference:")
+	print("   Current board set: ", GlobalSignalBus.currentBoard != null)
+	if GlobalSignalBus.currentBoard:
+		print("   Board type: ", GlobalSignalBus.currentBoard.get_class())
+	
+	# 3. Check if CommandProcessor is available
+	print("3. CommandProcessor:")
+	var command_processor_exists = get_node_or_null("/root/CommandProcessor") != null
+	print("   CommandProcessor autoload exists: ", command_processor_exists)
+	
+	# 4. Test creating a card with effects
+	print("4. Card with Effects Test:")
+	var goatman = CreateCard.createCard("M_0002")  # Goatman has reclusive_beast effect
+	if goatman:
+		print("   Goatman created successfully")
+		print("   Has effects: ", goatman.cardEffects.size() > 0)
+		print("   Effects: ", goatman.cardEffects)
+		print("   Has effectsHelper: ", goatman.effectsHelper != null)
+	else:
+		print("   ERROR: Failed to create Goatman")
+	
+	# 5. Test manual event broadcast
+	print("5. Manual Event Test:")
+	if goatman && GlobalSignalBus.currentBoard:
+		var test_event = EventBrodcast.new(
+			GameEventsBrodcaster.EventType.SLOT_FILLED,
+			goatman,
+			null,
+			{}
+		)
+		print("   Broadcasting test event...")
+		GameEventsBrodcaster.brodcastEvent(test_event)
+		print("   Event broadcast complete")

@@ -1,0 +1,18 @@
+{
+  "reclusive_beast": {
+	"trigger": "slot_filled",
+	"when": {
+	  "query": "event_card_check",
+	  "filter": {
+		"type": "location", 
+		"name": "Woods"
+	  }
+	},
+	"what": {
+	  "action": "modify_stats",
+	  "target": "self",
+	  "stat": "attack",
+	  "amount": 1
+	}
+  }
+}

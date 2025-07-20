@@ -6,6 +6,9 @@ var cardType: String
 var cardHealth: int
 var cardAttack: int
 var cardImagePath: String
+var cardEffects: Array = [] 
+var baseAttack: int                  
+var baseHealth: int
 
 enum cardState {
 	ON_BOARD,
@@ -19,6 +22,7 @@ var currentState: int = cardState.IN_DECK
 var shadowSprite: Sprite2D
 var isReturningToLocation: bool = false
 var shadowHelper: CardShadowHelper
+var effectsHelper: CardEffectsHelper
 
 func _ready():
 	$Area2D.connect("mouse_entered", Callable(self, "onCardAreaEntered"))
@@ -36,7 +40,19 @@ func initialiseCard (cardData):
 	cardHealth = cardData["health"]
 	cardAttack = cardData["attack"]
 	
+	cardEffects = cardData.get("effects", [])
+	baseAttack = cardAttack
+	baseHealth = cardHealth
+	
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
+	
+	if !cardEffects.is_empty():
+		effectsHelper = CardEffectsHelper.new(self)
+		effectsHelper.name = "EffectsHelper"
+		add_child(effectsHelper)
+	
+		effectsHelper.initialise()
+		print("Card: Initialized effects for ", cardName, " with effects: ", cardEffects)
 	
 	updateCardVisuals()
 
@@ -166,3 +182,7 @@ func onCardAreaInputEvent(_viewport,event, _shape_idx):
 			GlobalSignalBus.emit_signal("cardClicked", self)
 		else:
 			GlobalSignalBus.emit_signal("cardClicked", self)
+
+func onEvent(event: EventBrodcast):
+	if effectsHelper:
+		effectsHelper.handleEvent(event)

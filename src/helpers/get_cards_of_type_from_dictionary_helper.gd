@@ -6,12 +6,12 @@ func getCardsOfType(targetType: String):
 	if !isTargetValid(targetType):
 		return false
 	
-	if CardDictionaryJsonLoader.cardData.is_empty():
+	if DictionaryJsonLoader.cardData.is_empty():
 		push_error("ERROR: CardData is Empty.")
 		return false
 	
-	for cardId in CardDictionaryJsonLoader.cardData.keys():
-		var card = CardDictionaryJsonLoader.cardData[cardId]
+	for cardId in DictionaryJsonLoader.cardData.keys():
+		var card = DictionaryJsonLoader.cardData[cardId]
 		if card.has("type") and card["type"] == targetType:
 			cardsOfTypeList.append(card["id"])
 	

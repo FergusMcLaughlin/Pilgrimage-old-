@@ -2,12 +2,14 @@
 extends Node
 
 var cardData = {}
-
+var effectData = {}
 var cardDictionaryPath = "res://data/card_dictionary.json"
+var effectDictionaryPath = "res://data/effect_dictionary.json"
 
 
 func _ready():
 	cardData = loadDictionaryFromFile(cardDictionaryPath)
+	effectData = loadDictionaryFromFile(effectDictionaryPath)
 
 func loadDictionaryFromFile(filepath):
 	if FileAccess.file_exists(filepath):

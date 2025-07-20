@@ -7,6 +7,7 @@ class_name BoardController
 var turnNumber = 0
 
 func _ready():
+	GlobalSignalBus.currentBoard = self
 	GlobalSignalBus.connect("cardPlayed", onCardPlayed)
 	GlobalSignalBus.connect("cardDragEnded", onCardDragEnded)
 

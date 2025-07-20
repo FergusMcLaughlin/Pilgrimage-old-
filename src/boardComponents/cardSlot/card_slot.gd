@@ -35,6 +35,17 @@ func setCurrentCard(card):
 		tween.tween_property(card, "global_position", global_position, 0.3)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
 		
+		#TEST_______________________________________________________________________
+		var event = EventBrodcast.new(
+			GameEventsBrodcaster.EventType.SLOT_FILLED,
+			card,           # The card that was played
+			self,           # The slot it was placed in
+			{"slot": self, "card": card}
+			)
+		GameEventsBrodcaster.brodcastEvent(event)
+		print("Event sent: SLOT_FILLED with card ", card.cardName)
+		#TEST_______________________________________________________________________
+		
 		GlobalSignalBus.emit_signal("slotFilled", self, card)
 
 func clearSlot():

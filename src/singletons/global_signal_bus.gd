@@ -1,5 +1,7 @@
 # GlobalSignalBus.gd - Add to autoload
 extends Node
+
+var currentBoard = null
 # ==============================================
 # CARD SIGNALS
 # ==============================================
@@ -55,3 +57,7 @@ signal cardDamaged(card, amount, newHealth)
 # ==============================================
 signal sceneTransitionStarted(fromScene, toScene, transitionType)
 signal sceneTransitionCompleted(fromScene, toScene, transitionType)
+# ==============================================
+# EVENTS SIGNALS
+# ==============================================
+signal eventBrodcast(event)
