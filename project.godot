@@ -27,6 +27,7 @@ CardZIndexManager="*res://src/singletons/card_z_index_manager.gd"
 GameController="*res://src/singletons/game_controller.gd"
 SceneTransitionManager="*res://src/singletons/scene_manager.gd"
 EffectManager="*res://src/singletons/cardEffects/card_effect_manager.gd"
+CardEffectBus="*res://src/cardEffects/card_effect_bus.gd"
 
 [display]
 

@@ -34,6 +34,9 @@ func _ready():
 	$Area2D.collision_layer = GameConstants.LAYER_CARD
 	$Area2D.collision_mask = 0
 	
+	#cardeffectdebug
+	CardEffectBus.subscribe("card_played_did", _on_other_card_played, 5 , self)
+	
 	shadowHelper = CardShadowHelper.new(self)
 
 func initialiseCard (cardData):
@@ -215,3 +218,8 @@ func onCardAreaInputEvent(_viewport,event, _shape_idx):
 			GlobalSignalBus.emit_signal("cardClicked", self)
 		else:
 			GlobalSignalBus.emit_signal("cardClicked", self)
+
+#cardeffectdebug
+func _on_other_card_played(data: Dictionary):
+	if data.card.cardType == "unit":
+		print("s% gets +1/+1 from a special card on the feild ?", cardName)
