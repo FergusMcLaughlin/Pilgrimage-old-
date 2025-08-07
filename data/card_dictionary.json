@@ -54,6 +54,7 @@
 	"type": "unit",
 	"health": 3,
 	"attack": 6,
+	"effect": ["solitary_beast"],
 	"image_path": "res://assets/images/cards/Goatman.png"
   },
   "M_0003": {
@@ -62,6 +63,7 @@
 	"type": "unit",
 	"health": 1,
 	"attack": 2,
+	"effect": ["effect_woods"],
 	"image_path": "res://assets/images/cards/Goblins.png"
   },
   "M_0004": {
@@ -70,6 +72,7 @@
 	"type": "unit",
 	"health": 2,
 	"attack": 3,
+	"effect": ["effect_woods"],
 	"image_path": "res://assets/images/cards/Oddity.png"
   },
   "M_0005": {

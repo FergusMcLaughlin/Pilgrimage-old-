@@ -7,6 +7,8 @@ var cardHealth: int
 var cardAttack: int
 var cardImagePath: String
 
+var effectName: String
+
 enum cardState {
 	ON_BOARD,
 	IN_DECK,
@@ -36,9 +38,17 @@ func initialiseCard (cardData):
 	cardHealth = cardData["health"]
 	cardAttack = cardData["attack"]
 	
+	if cardData.has("effect") and cardData["effect"] != null:
+		var effects = cardData["effect"]  # This is the array
+		if effects.size() > 0:
+			effectName = effects[0]  # Get first effect as string
+	
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
 	
 	updateCardVisuals()
+	
+	if effectName != null and effectName != "":
+		EffectMediator.addListner(self, effectName)
 
 func updateCardVisuals ():
 	$Name.text = cardName

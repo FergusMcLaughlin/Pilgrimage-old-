@@ -20,6 +20,7 @@ func createCard(cardId) -> Node2D:
 		cardInstance = characterCardScene.instantiate()
 	else:
 		cardInstance = cardScene.instantiate()
+		
 	
 	cardInstance.initialiseCard(cardData)
 	return cardInstance

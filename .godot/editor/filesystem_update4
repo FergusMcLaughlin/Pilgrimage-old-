@@ -1,7 +1,3 @@
-res://src/ui/mainMenu/main_menu.tscn
+res://src/boardComponents/cardSlot/card_slot.tscn
+res://data/effect_dictionary.json
 res://data/card_dictionary.json
-res://src/singletons/game_controller.gd
-res://src/singletons/scene_manager.gd
-res://src/ui/characterSelectorMenu/character_menu.gd
-res://src/ui/gameOver/game_over.gd
-res://src/ui/mainMenu/main_menu.gd

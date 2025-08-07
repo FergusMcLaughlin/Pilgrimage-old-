@@ -35,13 +35,15 @@ func setCurrentCard(card):
 		tween.tween_property(card, "global_position", global_position, 0.3)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
 		
+		
 		GlobalSignalBus.emit_signal("slotFilled", self, card)
+		EffectMediator.effect_signal_card_played.emit(card)
 
 func clearSlot():
 	currentCard = null
 	cardInSlot = false
-	
 	GlobalSignalBus.emit_signal("slotEmptied", self)
+	EffectMediator.cleanUpListners()
 
 func canAcceptCard(card):
 	if cardInSlot:

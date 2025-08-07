@@ -1,0 +1,18 @@
+{
+	"solitary_beast": {
+		"name": "Solitary Beast", 
+		"trigger": "card_played",
+		"timing": "immediate",
+		"frequency": "repeatable",
+		"effect_type": "stat_augment",
+		"parameters": {
+			"target": "self",
+			"attack_per_match": 1,
+			"health_per_match": 1,
+			"count_condition": {
+				"type": "card_played", 
+				"target": "Woods"
+				}
+		}
+	}
+}
