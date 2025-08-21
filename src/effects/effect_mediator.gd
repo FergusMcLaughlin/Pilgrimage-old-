@@ -34,8 +34,7 @@ func cleanUpListners():
 func checkEffects(card):
 	for listener in listeners:
 		if listener.trigger == card.eventType: # is the listner's trigger the same as this event? (on_card_played(do effect) == on_card_played)
-			if checkConditions(listener, card.eventData): #okay the listner is looking for this trigger now we need to check that the condtions for the effect to fire have been met, e.g. on card played if card is woods do effect, well here we check is the card woods ?
-				runEffect(listener, card.eventData) # here will be where we know the effect should be played so well process it ( this might look like adding it to a lsit to be processed in a batch.
+			listener.card.apply
 
 #_______________________________________________________________________________
 func addEffect(effectData):

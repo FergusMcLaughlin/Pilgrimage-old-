@@ -6,7 +6,7 @@ static func createCardEffect(card: Node2D, effectData: Dictionary):
 	effectType = effectData.get("effect_type", "")
 
 	match effectType:
-		"stat_augment":
+		"solitary_beast":
 			return SolitaryBeast.new(card, effectData)
 		# Add more effect types here (damage, draw, spawn, etc.)
 		_:
