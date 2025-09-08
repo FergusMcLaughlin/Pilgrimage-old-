@@ -9,16 +9,19 @@ signal effect_signal_card_played(card)
 func _ready():
 	effect_signal_card_played.connect(checkEffects)
 
-func addListner(card, trigger):
+func addListner(card, effect_instance):
 	cleanUpListners()
-	listeners.append({"card" : card, "trigger" : trigger})
-	print("added " + card.cardName + " to listners, with trigger " + trigger)
+	var effectTrigger = effect_instance.trigger
+	listeners.append({"card": card, "effect": effect_instance, "trigger": effectTrigger})
+	print("added " + card.cardName + " to listeners, with trigger " + effectTrigger)
 	printListeners()
 
 func removeListner(card):
-	if listeners.has(card):
-		listeners.erase(card)
-		print(card.cardName, " earased from list of listners")
+	for i in range(listeners.size()):
+		if listeners[i]["card"] == card:
+			listeners.remove_at(i)
+			print(card.cardName, " erased from list of listeners")
+			break
 
 func cleanUpListners():
 	var validListners = []
@@ -33,8 +36,8 @@ func cleanUpListners():
 
 func checkEffects(card):
 	for listener in listeners:
-		if listener.trigger == card.eventType: # is the listner's trigger the same as this event? (on_card_played(do effect) == on_card_played)
-			listener.card.apply
+		if listener["trigger"] == "card_played":
+			listener["effect"].apply()
 
 #_______________________________________________________________________________
 func addEffect(effectData):

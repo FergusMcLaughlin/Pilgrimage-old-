@@ -10,6 +10,11 @@ static func setupCardEffects(card, cardData):
 		
 		var effectData = EffectDictionaryJsonLoader.effectData[effectName]
 		var cardEffect = CardEffectFactory.createCardEffect(card, effectData)
+		
+		if cardEffect == null:
+			push_error("EffectFactory returned null for " + cardData.name + " it had an effect of type " + effectData.effect_type)
+			return
+		
 		print("EFFECT SYSTEM: 2) Created effect for ", card.cardName, " - Effect type: ", effectData.effect_type)
 		EffectMediator.addListner(card, cardEffect)
 		print("EFFECT SYSTEM: 3) Registered ", card.cardName, " as listener")

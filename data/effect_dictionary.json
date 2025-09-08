@@ -4,7 +4,7 @@
 		"trigger": "card_played",
 		"timing": "immediate",
 		"frequency": "repeatable",
-		"effect_type": "stat_augment",
+		"effect_type": "solitary_beast",
 		"parameters": {
 			"target": "self",
 			"attack_per_match": 1,
