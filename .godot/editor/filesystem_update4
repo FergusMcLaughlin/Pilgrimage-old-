@@ -1,9 +1,10 @@
 res://src/ui/mainMenu/main_menu.tscn
+res://src/effects/cardEffects/solitary_beast.gd
 res://src/card/card.tscn
 res://src/tests/card_test.tscn
 res://src/boardComponents/board/gameBoard.tscn
 res://src/boardComponents/cardSlot/card_slot.tscn
-res://src/effects/effect_mediator.gd
 res://main.tscn
-res://src/helpers/add_card_effect_to_card_helper.gd
-res://data/effect_dictionary.json
+res://src/card/card.gd
+res://src/decks/journey_deck.gd
+res://src/helpers/card_stat_colour_helper.gd

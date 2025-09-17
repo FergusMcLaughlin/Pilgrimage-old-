@@ -5,6 +5,8 @@ var cardName: String
 var cardType: String
 var cardHealth: int
 var cardAttack: int
+var cardBaseHealth: int
+var cardBaseAttack: int
 var cardImagePath: String
 
 var effectName: String
@@ -37,6 +39,8 @@ func initialiseCard (cardData):
 	cardType = cardData["type"]
 	cardHealth = cardData["health"]
 	cardAttack = cardData["attack"]
+	cardBaseHealth = cardData["health"]
+	cardBaseAttack = cardData["attack"]
 	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
 	
 	AddCardEffectToCardHelper.setupCardEffects(self, cardData)
@@ -47,6 +51,8 @@ func updateCardVisuals ():
 	$Name.text = cardName
 	$Health.text = str(cardHealth)
 	$Attack.text = str(cardAttack)
+	
+	CardStatColourHelper.updateStatColours(cardType, cardAttack, cardBaseAttack, cardHealth, cardBaseHealth, $Attack, $Health)
 	
 	var texture = load(cardImagePath)
 	if texture:

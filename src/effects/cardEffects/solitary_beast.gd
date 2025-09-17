@@ -1,41 +1,55 @@
 class_name SolitaryBeast
 
-var host_card: Node2D
-var target_type: String
-var attack_per_match: int
-var health_per_match: int#
+const DEFAULT_TARGET_TYPE := "Woods"
+const DEFAULT_ATTACK_PER_MATCH := 1
+const DEFAULT_HEALTH_PER_MATCH := 1
+const DEFAULT_TRIGGER := "card_played"
+
+var hostCard: Node2D
+var targetType: String
+var attackPerMatch: int
+var healthPerMatch: int
 var trigger: String
 
 func _init(card: Node2D, effectData: Dictionary):
-	host_card = card
-	var params = effectData.get("parameters", {})
-	target_type = params.get("count_condition", {}).get("target", "Woods")
-	attack_per_match = params.get("attack_per_match", 1)
-	health_per_match = params.get("health_per_match", 1)
-	trigger = effectData.get("trigger", "card_played")  # Add this
-
+	hostCard = card
+	
+	var params = effectData.get("parameters", {}) as Dictionary
+	var countCond = params.get("count_condition", {}) as Dictionary
+	
+	targetType = String(countCond.get("target", DEFAULT_TARGET_TYPE))
+	attackPerMatch = int(params.get("attack_per_match", DEFAULT_ATTACK_PER_MATCH))
+	healthPerMatch = int(params.get("health_per_match", DEFAULT_HEALTH_PER_MATCH))
+	trigger = String(effectData.get("trigger", DEFAULT_TRIGGER))
 
 func checkWoodsCardsOnBoard() -> int:
 	var count = 0
 	var slots = GameController.boardController.getOccupiedSlots()
 	
 	for slot in slots:
-		if slot.currentCard && slot.currentCard.cardName == target_type:
+		var card = slot.currentCard
+		if card != null && card.cardName == targetType:
 			count += 1
 	
 	return count
 
+func calculateStatsChange(woodsCount: int) -> Dictionary:
+	var attackBonus = attackPerMatch * woodsCount
+	var healthBonus = healthPerMatch * woodsCount
+	return {
+	"attack" : hostCard.cardBaseAttack + attackBonus,
+	"health" : hostCard.cardBaseHealth + healthBonus
+	}
+
 func apply():
-	print("EFFECTS DEBUG: 9) StatAugmentEffect.apply() called for: ", host_card.cardName)
-	var woods_count = checkWoodsCardsOnBoard()
-	print("EFFECTS DEBUG: 10) Found ", woods_count, " Woods cards on board")
+	if not is_instance_valid(hostCard):
+		push_warning("SolitaryBeast.apply: host card freed")
+		return
 	
-	var attack_bonus = attack_per_match * woods_count
-	var health_bonus = health_per_match * woods_count
+	var woodsCount = checkWoodsCardsOnBoard()
+	var adjusted = calculateStatsChange(woodsCount)
 	
-	print("EFFECTS DEBUG: 11) Before - Attack: ", host_card.cardAttack, " Health: ", host_card.cardHealth)
-	host_card.cardAttack += attack_bonus
-	host_card.cardHealth += health_bonus
-	print("EFFECTS DEBUG: 12) After - Attack: ", host_card.cardAttack, " Health: ", host_card.cardHealth)
+	hostCard.cardAttack = adjusted["attack"]
+	hostCard.cardHealth = adjusted["health"]
 	
-	host_card.updateCardVisuals()
+	hostCard.updateCardVisuals()
