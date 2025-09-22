@@ -8,3 +8,6 @@ res://main.tscn
 res://src/card/card.gd
 res://src/decks/journey_deck.gd
 res://src/helpers/card_stat_colour_helper.gd
+res://data/card_dictionary.json
+res://data/effect_dictionary.json
+res://src/effects/effect_mediator.gd
