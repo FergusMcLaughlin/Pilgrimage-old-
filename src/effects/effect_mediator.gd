@@ -37,7 +37,13 @@ func cleanUpListners():
 func checkEffects(card):
 	for listener in listeners:
 		if listener["trigger"] == "card_played":
-			listener["effect"].apply()
+			#queue system instead of .apply()
+			TaskQ.enqueueTask(
+				Callable(listener["effect"], "apply"),
+				[],
+				10.0, # this should be changed to be what ever is in the effect JSON
+				"effect:" + listener["effect"].trigger
+			)
 
 #_______________________________________________________________________________
 func addEffect(effectData):

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmybsbr6ii0pb"]
+[gd_scene load_steps=8 format=3 uid="uid://dmybsbr6ii0pb"]
 
 [ext_resource type="Script" uid="uid://clnygrjw5bahg" path="res://src/tests/card_test.gd" id="1_r60gl"]
 [ext_resource type="PackedScene" uid="uid://v2d2h6sd3eg8" path="res://src/boardComponents/board/gameBoard.tscn" id="2_luk4p"]
+[ext_resource type="PackedScene" uid="uid://blauqsyvlkgw6" path="res://src/tests/queue_debugger.tscn" id="2_s7h2h"]
 [ext_resource type="PackedScene" uid="uid://cgnxeo00y2kct" path="res://src/hand/hand.tscn" id="4_h6cl3"]
 [ext_resource type="PackedScene" uid="uid://be4w3ppk6lqy0" path="res://src/boardComponents/cardGrid/card_grid.tscn" id="4_i13km"]
 [ext_resource type="PackedScene" uid="uid://bwamppuvr2yh7" path="res://src/decks/player_deck.tscn" id="4_luk4p"]
@@ -81,6 +82,14 @@ offset_top = 275.0
 offset_right = 92.0
 offset_bottom = 306.0
 text = "fill a slot"
+
+[node name="QueueDebugger" parent="Ui" instance=ExtResource("2_s7h2h")]
+offset_left = 1195.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -576.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
 [node name="GameBoard" parent="." instance=ExtResource("2_luk4p")]
 gridPath = NodePath("CardGrid")

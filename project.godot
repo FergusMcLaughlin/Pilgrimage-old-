@@ -28,6 +28,7 @@ SceneTransitionManager="*res://src/singletons/scene_manager.gd"
 CardEffectBus="*res://src/cardEffects/card_effect_bus.gd"
 EffectMediator="*res://src/effects/effect_mediator.gd"
 EffectDictionaryJsonLoader="*res://src/singletons/effect_dictionary_json_loader.gd"
+TaskQ="*res://src/singletons/task_queue.gd"
 
 [display]
 

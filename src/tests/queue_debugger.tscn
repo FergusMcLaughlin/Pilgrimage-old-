@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://blauqsyvlkgw6"]
+
+[ext_resource type="Script" uid="uid://0u700eiwmb3b" path="res://src/tests/queue_debugger.gd" id="1_el8e6"]
+
+[node name="QueueDebugger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_el8e6")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 442.0
+offset_bottom = 369.0

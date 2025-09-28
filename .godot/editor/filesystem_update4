@@ -11,3 +11,15 @@ res://src/helpers/card_stat_colour_helper.gd
 res://data/card_dictionary.json
 res://data/effect_dictionary.json
 res://src/effects/effect_mediator.gd
+res://src/boardComponents/board/boardController.gd
+res://src/boardComponents/cardSlot/card_slot.gd
+res://src/singletons/game_constants.gd
+res://src/singletons/game_controller.gd
+res://src/singletons/global_signal_bus.gd
+res://src/tests/card_test.gd
+res://src/singletons/cardFactory/create_card.gd
+res://src/singletons/task_que.gd
+res://src/singletons/task_queue.gd
+res://src/tests/QueueDebugger.tscn
+res://src/tests/queue_debugger.gd
+res://src/tests/queue_debugger.tscn

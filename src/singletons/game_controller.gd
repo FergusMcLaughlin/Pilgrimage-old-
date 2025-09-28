@@ -7,11 +7,17 @@ var journeyDeck: JourneyDeck
 var hand: Hand
 var characterCard: Node2D
 
-var currentGameState = GameStates.SETUP
+var currentTurn = 0
+var preTurnActions: Array
+var postTurnActions: Array
+
+var current_state: GameStates = GameStates.SETUP
 
 enum GameStates {
 	SETUP,
+	PRE_TURN,
 	PLAYER_TURN,
+	POST_TURN,
 	MOVING,
 	COMBAT,
 	GAME_OVER
@@ -21,6 +27,57 @@ func _ready():
 	GlobalSignalBus.connect("cardClicked", Callable(self, "onCardClicked"))
 	print("GameManager: Connected to cardClicked signal")
 	await get_tree().process_frame
+
+func changeGameState(newState: GameStates):
+	match newState:
+			GameStates.SETUP:
+				#await what has to happen
+				#change state to next
+				return 0
+			GameStates.PRE_TURN:
+				#1. is there a pre turn list ?
+				#2. check actions in list and how long they will take.
+				#3. pause player interaction with board and exicute actions account for branching.
+				#4. flush the list
+				#5. next turn so swap state
+				return 0
+			GameStates.PLAYER_TURN:
+				#let player make changes
+				#check the results into the post turn actions if any effects are triggered.
+				#change state to next
+				return 0
+			GameStates.POST_TURN:
+				#1. is there a post turn list ?
+				#2. check actions in list and how long they will take.
+				#3. pause player interaction with board and exicute actions account for branching.
+				#4. flush the list
+				#5. next turn so swap state
+				return 0
+			GameStates.MOVING:
+				#change state to next
+				return 0
+			GameStates.COMBAT: # dont htink this will be needed as combat results will be worked int othe post turn stuff i think
+				#await what has to happen
+				#change state to next
+				return 0
+			GameStates.GAME_OVER:
+				#await what has to happen
+				#change state to next
+				return 0
+
+func addItemToPreTurnPhase(action):
+	#add an item to a list
+	return 0
+
+func addItemToPostTurnPhase(action):
+	#add an item to a list
+	return 0
+
+func processTurnPhase(phase):
+	#workout howmuch time to lock for, lock, resolve actions
+	#how will this work with knowing when a stage is done and what stage to do next
+	#maybe a helper that adds up the actions, decideds the paus time in seconds, resolves the actions, clears the array/adds to the next array ?
+	return 0
 
 func setupBoard():
 	print("GameManager: Setting up board...")

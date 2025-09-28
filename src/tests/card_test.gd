@@ -6,6 +6,17 @@ var current_test_card = null
 
 
 func _ready():
+	# instant task
+	TaskQ.enqueueTask(func(): print("instant task done"), [], 0.0, "Instant")
+
+	# delayed task
+	TaskQ.enqueueTask(func(): print("delayed task done"), [], 1.5, "Delayed")
+
+	# async task (with await)
+	TaskQ.enqueueTask(func():
+		await get_tree().create_timer(2.0).timeout
+		print("async task done"),
+		[], 0.0, "Async")
 	# Create a test card
 	spawn_test_card()
 	playerDeck.initialiseFromPreset("test")
