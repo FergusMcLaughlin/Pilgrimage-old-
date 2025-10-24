@@ -9,10 +9,10 @@ signal effect_signal_card_played(card)
 func _ready():
 	effect_signal_card_played.connect(checkEffects)
 
-func addListner(card, effect_instance):
+func addListner(card, effectInstance):
 	cleanUpListners()
-	var effectTrigger = effect_instance.trigger
-	listeners.append({"card": card, "effect": effect_instance, "trigger": effectTrigger})
+	var effectTrigger = effectInstance.trigger
+	listeners.append({"card": card, "effect": effectInstance, "trigger": effectTrigger})
 	print("added " + card.cardName + " to listeners, with trigger " + effectTrigger)
 	printListeners()
 
@@ -36,14 +36,20 @@ func cleanUpListners():
 
 func checkEffects(card):
 	for listener in listeners:
+		var listnerOwnerCard = listener["card"]
+		if !is_instance_valid(listnerOwnerCard):
+			continue
+			
 		if listener["trigger"] == "card_played":
-			#queue system instead of .apply()
-			TaskQ.enqueueTask(
-				Callable(listener["effect"], "apply"),
-				[],
-				10.0, # this should be changed to be what ever is in the effect JSON
-				"effect:" + listener["effect"].trigger
-			)
+			var effect = listener["effect"]
+			if effect.has_method("shouldQueueEffect") and effect.shouldQueueEffect():
+				#queue system instead of .apply()
+				TaskQ.enqueueTask(
+					Callable(listener["effect"], "apply"),
+					[],
+					0.5, # this should be changed to be what ever is in the effect JSON
+					"effect:" + listener["card"].cardEffectName
+				)
 
 #_______________________________________________________________________________
 func addEffect(effectData):

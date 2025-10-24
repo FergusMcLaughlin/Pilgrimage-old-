@@ -11,16 +11,20 @@ var attackPerMatch: int
 var healthPerMatch: int
 var trigger: String
 
-func _init(card: Node2D, effectData: Dictionary):
+func _init(card: Node2D, effectData: EffectData):
 	hostCard = card
+	var data = effectData
 	
-	var params = effectData.get("parameters", {}) as Dictionary
+	var params = effectData.parameters
 	var countCond = params.get("count_condition", {}) as Dictionary
 	
 	targetType = String(countCond.get("target", DEFAULT_TARGET_TYPE))
 	attackPerMatch = int(params.get("attack_per_match", DEFAULT_ATTACK_PER_MATCH))
 	healthPerMatch = int(params.get("health_per_match", DEFAULT_HEALTH_PER_MATCH))
-	trigger = String(effectData.get("trigger", DEFAULT_TRIGGER))
+	trigger = String(effectData.trigger if effectData.trigger != "" else DEFAULT_TRIGGER)
+
+func shouldQueueEffect() -> bool:
+	return checkWoodsCardsOnBoard() > 0
 
 func checkWoodsCardsOnBoard() -> int:
 	var count = 0

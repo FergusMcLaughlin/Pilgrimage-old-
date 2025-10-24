@@ -1,4 +1,3 @@
-#Add to autoload
 extends Node
 
 var effectData = {}

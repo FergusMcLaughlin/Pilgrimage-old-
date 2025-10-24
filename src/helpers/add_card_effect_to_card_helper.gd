@@ -1,27 +1,18 @@
 class_name AddCardEffectToCardHelper
 
 static func setupCardEffects(card, cardData):
-	var effectName = getEffectsOnCard(cardData)
+	if cardData.effects.is_empty():
+		print("No effects on card: ", cardData.name)
+		return
 	
-	if effectName != null and effectName != "":
-		if not EffectDictionaryJsonLoader.effectData.has(effectName):
-			push_error("Effect '%s' not found in effect dictionary" % effectName)
-			return
+	for effectData in cardData.effects:
+		if effectData == null:
+			push_warning("Card " + cardData.name + " has null effect reference")
+			continue
 		
-		var effectData = EffectDictionaryJsonLoader.effectData[effectName]
 		var cardEffect = CardEffectFactory.createCardEffect(card, effectData)
+		if cardEffect== null:
+			push_error("EffectFactory returned null for " + cardData.name + " (effect_type: " + effectData.effect_type + ")")
+			continue
 		
-		if cardEffect == null:
-			push_error("EffectFactory returned null for " + cardData.name + " it had an effect of type " + effectData.effect_type)
-			return
-		
-		print("EFFECT SYSTEM: 2) Created effect for ", card.cardName, " - Effect type: ", effectData.effect_type)
 		EffectMediator.addListner(card, cardEffect)
-		print("EFFECT SYSTEM: 3) Registered ", card.cardName, " as listener")
-
-static func getEffectsOnCard(cardData):
-	if cardData.has("effect") and cardData["effect"] != null:
-		var effects = cardData["effect"]  # This is the array
-		if effects.size() > 0:
-			return effects[0]  # Get first effect as string
-	return null

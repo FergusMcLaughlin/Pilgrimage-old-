@@ -54,7 +54,7 @@
 	"type": "unit",
 	"health": 3,
 	"attack": 6,
-	"effect": ["solitary_beast"],
+	"effect": ["solitary_beast",],
 	"image_path": "res://assets/images/cards/Goatman.png"
   },
   "M_0003": {

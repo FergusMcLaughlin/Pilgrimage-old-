@@ -1,10 +1,7 @@
-#Add to autoload
 extends Node
 
 var cardData = {}
-
 var cardDictionaryPath = "res://data/card_dictionary.json"
-
 
 func _ready():
 	cardData = loadDictionaryFromFile(cardDictionaryPath)

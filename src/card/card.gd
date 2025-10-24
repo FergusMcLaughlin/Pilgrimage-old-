@@ -8,8 +8,7 @@ var cardAttack: int
 var cardBaseHealth: int
 var cardBaseAttack: int
 var cardImagePath: String
-
-var effectName: String
+var cardEffectName: String
 
 enum cardState {
 	ON_BOARD,
@@ -34,15 +33,21 @@ func _ready():
 	shadowHelper = CardShadowHelper.new(self)
 
 func initialiseCard (cardData):
-	cardId = cardData["id"]
-	cardName = cardData["name"]
-	cardType = cardData["type"]
-	cardHealth = cardData["health"]
-	cardAttack = cardData["attack"]
-	cardBaseHealth = cardData["health"]
-	cardBaseAttack = cardData["attack"]
-	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
+	cardId = cardData.id
+	cardName = cardData.name
+	cardType = cardData.type
+	cardHealth = cardData.baseHealth
+	cardAttack = cardData.baseAttack
+	cardBaseHealth = cardData.baseHealth
+	cardBaseAttack = cardData.baseAttack
+	cardImagePath = cardData.imagePath
+
+	updateCardVisuals()
 	
+	if !cardData.effects.is_empty():
+		cardEffectName = str(cardData.effects[0].name)
+	else:
+		cardEffectName = ""
 	AddCardEffectToCardHelper.setupCardEffects(self, cardData)
 	
 	updateCardVisuals()
