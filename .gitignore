@@ -3,6 +3,13 @@
 .import/
 *.import
 
+# Ignore internal editor/config files (fixes UID churn + script cache updates)
+.godot/editor_layout.cfg
+.godot/script_editor_cache.cfg
+.godot/project_metadata.cfg
+.godot/uid_cache.bin   # prevents UID regenerating noise
+.godot/global_script_class_cache.cfg
+
 # Exported builds
 export/
 export.cfg

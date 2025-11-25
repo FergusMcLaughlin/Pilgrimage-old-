@@ -1,2 +1,3 @@
 res://src/ui/mainMenu/main_menu.tscn
 res://src/card/card_data.gd
+res://src/helpers/card_data_factory.gd
