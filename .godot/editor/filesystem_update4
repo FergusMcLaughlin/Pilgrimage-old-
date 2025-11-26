@@ -1,4 +1,0 @@
-res://src/ui/mainMenu/main_menu.tscn
-res://src/card/card_data.gd
-res://src/helpers/card_data_factory.gd
-res://src/singletons/card_data_registry.gd
