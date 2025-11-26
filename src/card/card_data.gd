@@ -9,4 +9,4 @@ extends Resource
 @export var cardIsPlayer: bool
 @export var cardIsUnlocked: bool
 @export var cardImagePath: String
-@export var cardEffects: Array[String] = []
+@export var cardEffects: Array = []
