@@ -1,5 +1,5 @@
-class_name cardData
 extends Resource
+class_name CardData
 
 @export var cardId: String
 @export var cardName: String
@@ -9,4 +9,4 @@ extends Resource
 @export var cardIsPlayer: bool
 @export var cardIsUnlocked: bool
 @export var cardImagePath: String
-@export var cardEffects: Array = []
+@export var cardEffects: Array[String] = []

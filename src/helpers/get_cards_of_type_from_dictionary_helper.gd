@@ -1,25 +1,18 @@
 class_name GetCardsOfTypeFromDictionaryHelper
 
-func getCardsOfType(targetType: String):
-	var cardsOfTypeList = []
-	
+func getCardsOfType(targetType: String) -> Array[String]:
 	if !isTargetValid(targetType):
-		return false
+		return []
 	
-	if CardDictionaryJsonLoader.cardData.is_empty():
-		push_error("ERROR: CardData is Empty.")
-		return false
+	var results : Array[String] = []
+	var cardRegistry = CardDataRegistry
 	
-	for cardId in CardDictionaryJsonLoader.cardData.keys():
-		var card = CardDictionaryJsonLoader.cardData[cardId]
-		if card.has("type") and card["type"] == targetType:
-			cardsOfTypeList.append(card["id"])
-	
-	if cardsOfTypeList.is_empty():
-		push_error("ERROR: finding cards with correct type")
-		return false
-	
-	return cardsOfTypeList
+	for cardId in cardRegistry.cardDataById.keys():
+		var data: CardData = cardRegistry.cardDataById[cardId]
+		if data.cardType == targetType:
+			results.append(data.cardId)
+			
+	return results
 
 func isTargetValid(targetType: String):
 	match targetType:

@@ -65,14 +65,14 @@ func orgoniseCardsInHand():
 		if card.currentState == card.cardState.BEING_DRAGGED:
 			continue
 		
-		var  cardData = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
+		var  cardLocation = organiseCardsInHandHelper.getCardPosition(i, cardCount, global_position)
 		
 		if !card.isReturningToLocation:
 			CardZIndexManager.setCardsInHandZIndex(card, i)
 		else:
 			CardZIndexManager.setReturningCardZIndex(card)
 		
-		var tween = organiseCardsInHandHelper.createCardTween(card, cardData.position, cardData.rotation, orgonisationDuration)
+		var tween = organiseCardsInHandHelper.createCardTween(card, cardLocation.position, cardLocation.rotation, orgonisationDuration)
 		
 		if card.isReturningToLocation:
 			var cardIndex = i
