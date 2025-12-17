@@ -10,8 +10,6 @@ var slots = []
 
 func _ready():
 	createGrid()
-#	GlobalSignalBus.connect("slotFilled", onSlotFilled)
-#	GlobalSignalBus.connect("slotEmptied", onSlotEmptied)
 
 func createGrid():
 	#remove existing

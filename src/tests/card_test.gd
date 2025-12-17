@@ -17,12 +17,12 @@ func _ready() -> void:
 	$Ui/ButtonPanel/debug_button.pressed.connect(on_debug_button_pressed)
 
 	# Set globals
-	GameController.boardController = $GameBoard
-	GameController.playerDeck = playerDeck
-	GameController.journeyDeck = journeyDeck
-	GameController.hand = $GameBoard/Hand
+	GameManager.boardController = $GameBoard
+	GameManager.playerDeck = playerDeck
+	GameManager.journeyDeck = journeyDeck
+	GameManager.hand = $GameBoard/Hand
 
-	GameController.setupBoard()
+	GameManager.setupBoard()
 
 	# Boot diagnostics
 	await debug_effect_system_boot()

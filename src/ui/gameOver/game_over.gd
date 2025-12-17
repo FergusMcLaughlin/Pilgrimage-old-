@@ -7,21 +7,21 @@ func _ready():
 	$QuitButton.connect("pressed", Callable(self, "on_quit_button_pressed"))
 
 func on_restart_button_pressed():
-	if SceneTransitionManager.isCurrentlyTransitioning():
+	if SceneManager.isCurrentlyTransitioning():
 		print("Transition already in progress, ignoring click")
 		return
 		
-	SceneTransitionManager.transitionToScene("res://src/tests/card_test.tscn", SceneTransitionManager.TransitionType.FADE)
+	SceneManager.transitionToScene("res://src/tests/card_test.tscn", SceneManager.TransitionType.FADE)
 
 func on_menu_button_pressed():
-	if SceneTransitionManager.isCurrentlyTransitioning():
+	if SceneManager.isCurrentlyTransitioning():
 		print("Transition already in progress, ignoring click")
 		return
 		
-	SceneTransitionManager.transitionToScene("res://src/ui/mainMenu/main_menu.tscn", SceneTransitionManager.TransitionType.FADE)
+	SceneManager.transitionToScene("res://src/ui/mainMenu/main_menu.tscn", SceneManager.TransitionType.FADE)
 
 func on_quit_button_pressed():
-	if SceneTransitionManager.isCurrentlyTransitioning():
+	if SceneManager.isCurrentlyTransitioning():
 		print("Transition already in progress, ignoring click")
 		return
 		

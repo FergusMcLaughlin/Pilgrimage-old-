@@ -60,7 +60,6 @@ func placeCardInSlot(card, slot):
 	slot.setCurrentCard(card)
 	CardZIndexManager.setCardZIndex(card, "ON_BOARD")
 
-
 func focusCharacter(card):
 	if card in characterCards:
 		if focusedCharacter != null:
@@ -84,14 +83,14 @@ func selectCharacter(card):
 		print("Clicked card is not a character card")
 
 func on_back_button_pressed():
-	if SceneTransitionManager.isCurrentlyTransitioning():
+	if SceneManager.isCurrentlyTransitioning():
 		print("Transition already in progress, ignoring click")
 		return
 		
-	SceneTransitionManager.transitionToScene("res://src/ui/mainMenu/main_menu.tscn", SceneTransitionManager.TransitionType.FADE)
+	SceneManager.transitionToScene("res://src/ui/mainMenu/main_menu.tscn", SceneManager.TransitionType.FADE)
 
 func on_quit_button_pressed():
-	if SceneTransitionManager.isCurrentlyTransitioning():
+	if SceneManager.isCurrentlyTransitioning():
 		print("Transition already in progress, ignoring click")
 		return
 		

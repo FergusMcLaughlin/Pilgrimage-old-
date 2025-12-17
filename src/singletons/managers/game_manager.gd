@@ -1,5 +1,4 @@
 extends Node
-class_name GameManager
 
 var boardController: BoardController
 var playerDeck: PlayerDeck

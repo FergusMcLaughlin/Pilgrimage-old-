@@ -11,4 +11,4 @@ func updateCardVisuals():
 		characterDeath()
 
 func characterDeath():
-	SceneTransitionManager.transitionToScene("res://src/ui/gameOver/game_over.tscn", SceneTransitionManager.TransitionType.FADE)
+	SceneManager.transitionToScene("res://src/ui/gameOver/game_over.tscn", SceneManager.TransitionType.FADE)

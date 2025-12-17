@@ -23,13 +23,14 @@ CreateCard="*res://src/singletons/factories/create_card.gd"
 InputManager="*res://src/singletons/managers/input_manager.gd"
 GameConstants="*res://src/singletons/constants/game_constants.gd"
 CardZIndexManager="*res://src/singletons/managers/card_z_index_manager.gd"
-GameController="*res://src/singletons/managers/game_controller.gd"
-SceneTransitionManager="*res://src/singletons/managers/scene_manager.gd"
+SceneTransitionManager="res://src/singletons/managers/scene_manager.gd"
 CardEffectBus="*res://src/cardEffects/card_effect_bus.gd"
 EffectMediator="*res://src/effects/effect_mediator.gd"
 EffectDictionaryJsonLoader="*res://src/singletons/loaders/effect_dictionary_json_loader.gd"
 CardDataRegistry="*res://src/singletons/registries/card_data_registry.gd"
 EffectDataRegistry="*res://src/singletons/registries/effect_data_registry.gd"
+GameManager="*res://src/singletons/managers/game_manager.gd"
+SceneManager="*res://src/singletons/managers/scene_manager.gd"
 
 [display]
 

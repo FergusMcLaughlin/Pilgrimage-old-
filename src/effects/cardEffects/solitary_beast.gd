@@ -23,7 +23,7 @@ func _init(card: Node2D, effectData: EffectData):
 
 func checkWoodsCardsOnBoard() -> int:
 	var count = 0
-	var slots = GameController.boardController.getOccupiedSlots()
+	var slots = GameManager.boardController.getOccupiedSlots()
 	
 	for slot in slots:
 		var card = slot.currentCard

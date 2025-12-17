@@ -49,7 +49,7 @@ func getSlotAtPosition(position:Vector2) -> CardSlot:
 		return result[0].collider.get_parent()
 	return null
 
-func clearBoard():
+func _clearBoard(): #not in use
 	for row in grid.slots:
 		for slot in row:
 			if slot.currentCard:
