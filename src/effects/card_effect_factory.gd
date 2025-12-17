@@ -1,24 +1,19 @@
 class_name CardEffectFactory
 
-static func createCardEffect(card: Node2D, effectData: Dictionary):
-	if typeof(effectData) != TYPE_DICTIONARY:
-		push_error("CardEffectFactory.createCardEffect: effectData must be a Dictionary")
-		return null
-	
-	var effectType = effectData.get("effect_type", "").strip_edges().to_lower()
-	
+static func createCardEffect(card: Node2D, effectData: EffectData):
+	var effectType := effectData.effectType.strip_edges().to_lower()
 	if effectType == "":
-		push_error("CardEffectFactory.createCardEffect: missing effect type in the effect data")
+		push_error("CardEffectFactory: missing effect type in EffectData")
 		return null
 
 	match effectType:
 		"solitary_beast":
 			var effectInstance = SolitaryBeast.new(card, effectData)
-			if effectInstance == null || !effectInstance.has_method("apply"):
-				push_error("CardEffectFactory: constructor for " + effectType + " returned invalid instance")
+			if effectInstance == null or not effectInstance.has_method("apply"):
+				push_error("CardEffectFactory: constructor for %s returned invalid instance" % effectType)
 				return null
 			return effectInstance
-		# Add more effect types here (damage, draw, spawn, etc.)
+		# Add more effect types here
 		_:
-			push_warning("CardEffectFactory: Unknown effect type " + effectType)
+			push_warning("CardEffectFactory: Unknown effect type %s" % effectType)
 			return null

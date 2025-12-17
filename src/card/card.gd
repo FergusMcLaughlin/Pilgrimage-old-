@@ -33,17 +33,17 @@ func _ready():
 	
 	shadowHelper = CardShadowHelper.new(self)
 
-func initialiseCard (cardData):
-	cardId = cardData["id"]
-	cardName = cardData["name"]
-	cardType = cardData["type"]
-	cardHealth = cardData["health"]
-	cardAttack = cardData["attack"]
-	cardBaseHealth = cardData["health"]
-	cardBaseAttack = cardData["attack"]
-	cardImagePath = str("res://assets/images/cards/" + cardName +".png")
+func initialiseCard (card_data: CardData):
+	cardId = card_data.cardId
+	cardName = card_data.cardName
+	cardType = card_data.cardType
+	cardHealth = card_data.cardHealth
+	cardAttack = card_data.cardAttack
+	cardBaseHealth = card_data.cardHealth
+	cardBaseAttack = card_data.cardAttack
+	cardImagePath = str("res://assets/images/cards/" + cardName +".png") #this is not data driven at the min
 	
-	AddCardEffectToCardHelper.setupCardEffects(self, cardData)
+	AddCardEffectToCardHelper.setupCardEffects(self, card_data)
 	
 	updateCardVisuals()
 	

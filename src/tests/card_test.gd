@@ -1,190 +1,217 @@
 extends Node2D
-var current_test_card = null
+
 @onready var playerDeck = $GameBoard/playerDeck
 @onready var journeyDeck = $GameBoard/journeyDeck
 @onready var cardGrid = $GameBoard/CardGrid
 
-
-func _ready():
-	# Create a test card
-	spawn_test_card()
+func _ready() -> void:
 	playerDeck.initialiseFromPreset("test")
 	journeyDeck.initialiseJourneyDeck()
-	
-	# Debug information about the scene
+
 	print("\n----- SCENE DEBUG INFO -----")
 	print_scene_tree()
-	
-	# Check if CardSlot exists
-	if has_node("CardSlot"):
-		print("\nCardSlot found at path: ", $CardSlot.get_path())
-		print("CardSlot methods available:")
-		print("- setCurrentCard: ", $CardSlot.has_method("setCurrentCard"))
-		print("- clearSlot: ", $CardSlot.has_method("clearSlot"))
-		print("- getGlobalSlotCenter: ", $CardSlot.has_method("getGlobalSlotCenter"))
-	else:
-		print("\nWARNING: No node named 'CardSlot' found!")
-		
-	# Connect UI buttons with the correct function names
-	$Ui/ButtonPanel/findmiddleslotButton.pressed.connect(on_flip_button_pressed)
-	$Ui/ButtonPanel/StateButton.pressed.connect(on_change_state_button_pressed)
-	$Ui/ButtonPanel/DragButton.pressed.connect(on_test_drag_button_pressed)
-	$Ui/ButtonPanel/MoveToSlotButton.pressed.connect(on_move_to_slot_button_pressed)
-	$Ui/ButtonPanel/RemoveFromSlotButton.pressed.connect(on_remove_from_slot_button_pressed)
-	$Ui/ButtonPanel/debug_button.pressed.connect(on_debug_button_pressed)
-	
-	# Connect new buttons for journey deck testing
+
+	# UI wiring
 	$Ui/ButtonPanel/fill_board.pressed.connect(on_fill_board_button_pressed)
 	$Ui/ButtonPanel/fill_one_slot.pressed.connect(on_fill_one_slot_button_pressed)
-	
-	# Verify button connections
-	print("\nButton connections:")
-	print("- FlipButton connected: ", $Ui/ButtonPanel/findmiddleslotButton.is_connected("pressed", Callable(self, "on_flip_button_pressed")))
-	print("- StateButton connected: ", $Ui/ButtonPanel/StateButton.is_connected("pressed", Callable(self, "on_change_state_button_pressed")))
-	print("- DragButton connected: ", $Ui/ButtonPanel/DragButton.is_connected("pressed", Callable(self, "on_test_drag_button_pressed")))
-	print("- MoveToSlotButton connected: ", $Ui/ButtonPanel/MoveToSlotButton.is_connected("pressed", Callable(self, "on_move_to_slot_button_pressed")))
-	print("- RemoveFromSlotButton connected: ", $Ui/ButtonPanel/RemoveFromSlotButton.is_connected("pressed", Callable(self, "on_remove_from_slot_button_pressed")))
-	print("- debug_button connected: ", $Ui/ButtonPanel/debug_button.is_connected("pressed", Callable(self, "on_debug_button_pressed")))
-	print("- fill_board connected: ", $Ui/ButtonPanel/fill_board.is_connected("pressed", Callable(self, "on_fill_board_button_pressed")))
-	print("- fill_one_slot connected: ", $Ui/ButtonPanel/fill_one_slot.is_connected("pressed", Callable(self, "on_fill_one_slot_button_pressed")))
-	
+	$Ui/ButtonPanel/debug_button.pressed.connect(on_debug_button_pressed)
+
+	# Set globals
 	GameController.boardController = $GameBoard
-	GameController.playerDeck = $GameBoard/playerDeck
-	GameController.journeyDeck = $GameBoard/journeyDeck
+	GameController.playerDeck = playerDeck
+	GameController.journeyDeck = journeyDeck
 	GameController.hand = $GameBoard/Hand
+
 	GameController.setupBoard()
 
-# New function for fill_board button using journeyDeck methods
-func on_fill_board_button_pressed():
-	print("\n----- FILL BOARD BUTTON PRESSED -----")
-	
-	if journeyDeck:
-		print("Filling board with journey cards")
-		# Use the journeyDeck's fillEmptySlots method
-		journeyDeck.fillEmptySlots()
-	else:
-		print("ERROR: JourneyDeck not found or initialized")
+	# Boot diagnostics
+	await debug_effect_system_boot()
 
-# New function for fill_one_slot button using journeyDeck methods
-func on_fill_one_slot_button_pressed():
-	print("\n----- FILL ONE SLOT BUTTON PRESSED -----")
-	
-	if journeyDeck:
-		print("Filling one empty slot with journey card")
-		
-		# Find an empty slot
-		var emptySlot = find_first_empty_slot()
-		
-		if emptySlot:
-			print("Found empty slot at position: " + str(emptySlot.global_position))
-			# Use the journeyDeck's revealTopCard method
-			var card = journeyDeck.revealTopCard(emptySlot)
-			if card:
-				print("Placed card " + card.cardName + " in slot")
-			else:
-				print("No more cards in journey deck")
+	# Immediately try to locate a solitary_beast card already spawned during setup
+	await get_tree().process_frame
+	await find_and_force_solitary_beast()
+
+
+# -----------------------------
+# EFFECT SYSTEM BOOT DIAGNOSTICS
+# -----------------------------
+func debug_effect_system_boot() -> void:
+	print("\n----- EFFECT SYSTEM BOOT DIAGNOSTICS -----")
+
+	print("Has CardDataRegistry autoload: ", _has_singleton("CardDataRegistry"))
+	print("Has EffectDictionaryJsonLoader autoload: ", _has_singleton("EffectDictionaryJsonLoader"))
+	print("Has EffectDataRegistry autoload: ", _has_singleton("EffectDataRegistry"))
+
+	# Wait for effect registry to populate
+	if _has_singleton("EffectDataRegistry"):
+		if EffectDataRegistry.effectDataById.is_empty():
+			print("EffectDataRegistry empty -> awaiting ready")
+			await EffectDataRegistry.ready
+
+		print("EffectDataRegistry.size: ", EffectDataRegistry.effectDataById.size())
+		print("EffectDataRegistry.keys: ", EffectDataRegistry.effectDataById.keys())
+
+		if EffectDataRegistry.effectDataById.has("solitary_beast"):
+			var ed: EffectData = EffectDataRegistry.getEffectData("solitary_beast")
+			print("solitary_beast EffectData => id=", ed.effectId, " type=", ed.effectType, " trigger=", ed.effectTrigger)
 		else:
-			print("No empty slots found on board")
-	else:
-		print("ERROR: JourneyDeck not found or initialized")
+			print("WARNING: solitary_beast missing from EffectDataRegistry")
 
-# Helper function to find the first empty slot
-func find_first_empty_slot():
-	# Try with grid
+
+# -----------------------------
+# MAIN TEST: find a spawned card with solitary_beast and force apply
+# -----------------------------
+func find_and_force_solitary_beast() -> void:
+	print("\n----- SOLITARY BEAST LIVE CARD TEST -----")
+
+	if not _has_singleton("CardDataRegistry"):
+		print("ERROR: CardDataRegistry missing as autoload")
+		return
+
+	# Find any instantiated Card nodes in the scene tree
+	var cards := find_all_cards_in_scene()
+	print("Found ", cards.size(), " cards in scene")
+
+	# Pick first card whose CardData has solitary_beast
+	for card in cards:
+		if not _has_prop(card, "cardId"):
+			continue
+
+		var card_id: String = str(_get_prop(card, "cardId"))
+		var data: CardData = CardDataRegistry.getCardData(card_id)
+		if data == null:
+			continue
+
+		if data.cardEffects.has("solitary_beast"):
+			print("Found solitary_beast card in scene: ", _get_prop(card, "cardName"), " (id=", card_id, ")")
+			await force_setup_and_apply(card, data)
+			return
+
+	print("No instantiated card with solitary_beast found yet.")
+	print("Press 'fill_one_slot' or 'fill_board' then press 'debug_button' to retry.")
+
+
+func force_setup_and_apply(card: Node2D, data: CardData) -> void:
+	print("\n--- FORCING EFFECT SETUP ---")
+	print("Target card: ", _get_prop(card, "cardName"), " id=", _get_prop(card, "cardId"))
+	print("CardData.effects: ", data.cardEffects)
+
+	# Stats before
+	_print_card_stats("BEFORE", card)
+
+	# Pull effect data
+	var effect_id := "solitary_beast"
+	var effectData: EffectData = EffectDataRegistry.getEffectData(effect_id)
+	print("EffectData: id=", effectData.effectId, " type=", effectData.effectType)
+
+	# Force factory creation
+	print("Calling CardEffectFactory.createCardEffect...")
+	var cardEffect = CardEffectFactory.createCardEffect(card, effectData)
+	print("Factory returned: ", cardEffect)
+
+	if cardEffect == null:
+		print("FAIL: factory returned null.")
+		print("This means your factory match does not accept effectType='", effectData.effectType, "' (or it is still expecting a Dictionary).")
+		return
+
+	# Register
+	print("Registering listener via EffectMediator.addListner...")
+	EffectMediator.addListner(card, cardEffect)
+	print("Registered.")
+
+	# Force apply NOW
+	if cardEffect.has_method("apply"):
+		print("Calling apply() immediately...")
+		cardEffect.apply()
+	else:
+		print("FAIL: cardEffect has no apply() method")
+		return
+
+	# Stats after
+	_print_card_stats("AFTER", card)
+
+	print("If BEFORE == AFTER, then apply() ran but made no change.")
+	print("Next check is SolitaryBeast.checkWoodsCardsOnBoard() returning 0 (expected if Woods doesn’t exist).")
+
+
+# -----------------------------
+# Buttons
+# -----------------------------
+func on_fill_board_button_pressed() -> void:
+	print("\n----- FILL BOARD BUTTON PRESSED -----")
+	journeyDeck.fillEmptySlots()
+
+func on_fill_one_slot_button_pressed() -> void:
+	print("\n----- FILL ONE SLOT BUTTON PRESSED -----")
+	var emptySlot = find_first_empty_slot()
+	if emptySlot:
+		journeyDeck.revealTopCard(emptySlot)
+
+func on_debug_button_pressed() -> void:
+	# Retry the solitary beast scan/apply after you’ve filled board/slot
+	await get_tree().process_frame
+	await find_and_force_solitary_beast()
+
+
+# -----------------------------
+# Helpers
+# -----------------------------
+func find_first_empty_slot() -> Node:
 	if cardGrid and cardGrid.has_method("getEmptySlots"):
 		var emptySlots = cardGrid.getEmptySlots()
 		if not emptySlots.is_empty():
 			return emptySlots[0]
-	
-	# Direct approach - check all slots
+
 	var slots = get_tree().get_nodes_in_group("cardSlot")
 	for slot in slots:
-		if not slot.cardInSlot:
+		if not _get_prop(slot, "cardInSlot", false):
 			return slot
-	
 	return null
 
-# Helper function to print the scene tree for debugging
-func print_scene_tree(node = null, indent = ""):
+
+func find_all_cards_in_scene() -> Array:
+	var result: Array = []
+	_collect_cards(self, result)
+	return result
+
+func _collect_cards(node: Node, out: Array) -> void:
+	# Heuristic: your card scenes are Node2D with cardId/cardName fields
+	if node is Node2D and _has_prop(node, "cardId") and _has_prop(node, "cardName"):
+		out.append(node)
+	for c in node.get_children():
+		_collect_cards(c, out)
+
+
+func _print_card_stats(prefix: String, card: Node2D) -> void:
+	var atk  = _get_prop(card, "cardAttack", "?")
+	var hp   = _get_prop(card, "cardHealth", "?")
+	var batk = _get_prop(card, "cardBaseAttack", "?")
+	var bhp  = _get_prop(card, "cardBaseHealth", "?")
+	print(prefix, " ", _get_prop(card, "cardName", "<unknown>"),
+		" atk=", atk, " hp=", hp, " baseAtk=", batk, " baseHp=", bhp)
+
+
+func print_scene_tree(node = null, indent = "") -> void:
 	if node == null:
 		node = self
 		print("Scene tree structure:")
-	
 	print(indent + node.name + " (" + node.get_class() + ")")
-	
 	for child in node.get_children():
 		print_scene_tree(child, indent + "  ")
 
-# Existing functions...
-func spawn_test_card():
-	# Your existing implementation
-	pass
 
-func on_flip_button_pressed():
-	print("\n----- TESTING GET CENTER SLOT -----")
-	
-	# Access the board controller
-	if $GameBoard.has_method("getCenterSlot"):
-		var centerSlot = $GameBoard.getCenterSlot()
-		
-		if centerSlot:
-			print("Successfully found center slot!")
-			print("Slot name: " + centerSlot.name)
-			print("Slot position: " + str(centerSlot.global_position))
-			print("Slot coordinates: " + str(centerSlot.coordinates))
-			
-			# For visual feedback, let's place a card in the center
-			if playerDeck.has_method("drawCard"):
-				var card = playerDeck.drawCard()
-				if card:
-					centerSlot.setCurrentCard(card)
-					card.global_position = centerSlot.global_position
-					print("Placed card in center slot for visualization")
-		else:
-			print("ERROR: Center slot not found")
-	else:
-		print("ERROR: GameBoard doesn't have getCenterSlot method")
+# ---- Property helpers for Godot 4 (no has_variable) ----
+func _has_prop(obj: Object, prop_name: String) -> bool:
+	for p in obj.get_property_list():
+		if String(p.name) == prop_name:
+			return true
+	return false
 
-func on_change_state_button_pressed():
-	# Your existing implementation
-	pass
+func _get_prop(obj: Object, prop_name: String, default_value = null):
+	if _has_prop(obj, prop_name):
+		return obj.get(prop_name)
+	return default_value
 
-func on_test_drag_button_pressed():
-	# Your existing implementation
-	pass
 
-func on_move_to_slot_button_pressed():
-	# Your existing implementation
-	pass
-
-func on_remove_from_slot_button_pressed():
-	# Your existing implementation
-	pass
-
-func move_card_to_slot(slot):
-	# Your existing implementation
-	pass
-
-func remove_card_from_slot(slot):
-	# Your existing implementation
-	pass
-
-func on_debug_button_pressed():
-	# Your existing implementation
-	pass
-
-func print_card_debug_info(card):
-	# Your existing implementation
-	pass
-
-func find_all_cards_in_scene():
-	# Your existing implementation
-	pass
-
-func find_hand_node():
-	# Your existing implementation
-	pass
-
-func find_node_by_name(node_name, current_node = null):
-	# Your existing implementation
-	pass
+func _has_singleton(name: String) -> bool:
+	return get_node_or_null("/root/" + name) != null

@@ -1,16 +1,42 @@
-# Godot-specific ignores
+# Godot-specific
+.godot/
 .import/
+*.import
+
+# Ignore internal editor/config files (fixes UID churn + script cache updates)
+.godot/editor_layout.cfg
+.godot/script_editor_cache.cfg
+.godot/project_metadata.cfg
+.godot/uid_cache.bin   # prevents UID regenerating noise
+.godot/global_script_class_cache.cfg
+
+# Exported builds
+export/
 export.cfg
 export_presets.cfg
 
-# Imported translations (automatically generated from CSV files)
+# Imported translations
 *.translation
 
-# Mono-specific ignores
+# Mono / C# (if used)
 .mono/
 data_*/
+mono_crash.*
 
-# System/tool-specific ignores
+# Temporary / cache files
+*.tmp
+*.temp
+*.log
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.iml
+
+# Swap files
 *.swp
 *.swo
