@@ -40,9 +40,9 @@ func checkEffects(card):
 			listener["effect"].apply()
 
 #_______________________________________________________________________________
-func addEffect(effectData):
-	effects.append(effectData)
-	print("queued effect " + effectData)
+func addEffect(effectDictionaryData):
+	effects.append(effectDictionaryData)
+	print("queued effect " + effectDictionaryData)
 
 func exicuteEffect(effect):
 	print("now exicuting : ", effect.type)

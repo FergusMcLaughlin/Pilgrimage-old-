@@ -1,13 +1,13 @@
 #Add to autoload
 extends Node
 
-var effectData = {}
+var effectDictionaryData = {}
 
 var effectDictionaryPath = "res://data/effect_dictionary.json"
 
 
 func _ready():
-	effectData = loadDictionaryFromFile(effectDictionaryPath)
+	effectDictionaryData = loadDictionaryFromFile(effectDictionaryPath)
 
 func loadDictionaryFromFile(filepath):
 	if FileAccess.file_exists(filepath):
