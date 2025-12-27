@@ -64,7 +64,6 @@ func updateCardVisuals ():
 func setCardState (newCardState):
 	var oldState = currentState
 	currentState = newCardState
-	print(get_parent())
 	scale = Vector2(1.0, 1.0)
 	
 	if shadowHelper == null:
@@ -72,13 +71,11 @@ func setCardState (newCardState):
 	
 	match currentState:
 		cardState.IN_DECK:
-			print("card in deck")
 			CardZIndexManager.setCardZIndex(self, "DEFUALT")
 			$Area2D.input_pickable = false
 			shadowHelper.setShadowVisible(false)
 			
 		cardState.IN_HAND:
-			print("card in hand")
 			if !isReturningToLocation:
 				CardZIndexManager.setCardZIndex(self, "IN_HAND")
 			$Area2D.input_pickable = true
@@ -86,14 +83,12 @@ func setCardState (newCardState):
 			
 			
 		cardState.ON_BOARD:
-			print("card on board")
 			if !isReturningToLocation:
 				CardZIndexManager.setCardZIndex(self, "ON_BOARD")
 			$Area2D.input_pickable = true
 			shadowHelper.setShadowVisible(false)
 			
 		cardState.BEING_DRAGGED:
-			print("card being dragged")
 			if !isReturningToLocation:
 				CardZIndexManager.setCardZIndex(self, "DRAGGING")
 			scale = Vector2(1.05, 1.05)
@@ -103,7 +98,6 @@ func setCardState (newCardState):
 			shadowHelper.setShadowVisible(true, true)
 			
 		cardState.IN_SLOT:
-			print("card in slot")
 			CardZIndexManager.setCardZIndex(self, "IN_SLOT")
 			$Area2D.input_pickable = true
 			shadowHelper.setShadowVisible(false)
@@ -148,7 +142,6 @@ func flipCard ():
 	GlobalSignalBus.emit_signal("cardFlipped", self)
 
 func onReturnToHandComplete():
-	print("Card return to hand complete!")
 	isReturningToLocation = false
 	
 	if currentState == cardState.IN_HAND:
@@ -166,12 +159,9 @@ func onCardAreaExited():
 
 func onCardAreaInputEvent(_viewport,event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print("Card: Clicked detected, emitting cardClicked signal")
 		if currentState == cardState.IN_SLOT:
-			print("Card in slot clicked, emitting for movement only")
 			GlobalSignalBus.emit_signal("cardClicked", self)
 		elif currentState == cardState.IN_HAND:
-			print("Card in hand clicked")
 			GlobalSignalBus.emit_signal("cardClicked", self)
 		else:
 			GlobalSignalBus.emit_signal("cardClicked", self)

@@ -34,7 +34,6 @@ func onCardClicked(card):
 		return
 	
 	if card.currentState == card.cardState.IN_SLOT:
-		print("InputManager: Card is in slot, not dragging")
 		return
 	
 	if card.currentState != card.cardState.BEING_DRAGGED:

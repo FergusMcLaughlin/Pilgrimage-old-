@@ -34,17 +34,12 @@ func initialiseJourneyDeck():
 	initaliseDeck(journeyCards)
 
 func fillEmptySlots():
-	print("1")
-	print("boardNode = ", boardNode)
-	print("boardNode class = ", boardNode.get_class())
-	print("Has getEmptySlots method: ", boardNode.has_method("getEmptySlots"))
 	
 	if !boardNode || !boardNode.has_method("getEmptySlots"):
 		push_error("JourneyDeck: Board not found or the getEmptySlots function's not there ?")
 		return
 
 	var emptySlots = boardNode.getEmptySlots()
-	print("Found " + str(emptySlots.size()) + " empty slots to fill")
 	var delayBetweenCards = 0.04
 	
 	for slot in emptySlots:

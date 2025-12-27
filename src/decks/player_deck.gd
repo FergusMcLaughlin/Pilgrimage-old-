@@ -21,7 +21,6 @@ func initialiseFromPreset(presetName):
 	var cards = loadDeckPreset(presetName)
 	if cards:
 		initaliseDeck(cards)
-		print("Deck initialized with", cards.size(), "cards")
 	else:
 		push_error("Failed to load deck preset: " + presetName)
 

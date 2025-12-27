@@ -13,14 +13,12 @@ func addListner(card, effect_instance):
 	cleanUpListners()
 	var effectTrigger = effect_instance.trigger
 	listeners.append({"card": card, "effect": effect_instance, "trigger": effectTrigger})
-	print("added " + card.cardName + " to listeners, with trigger " + effectTrigger)
 	printListeners()
 
 func removeListner(card):
 	for i in range(listeners.size()):
 		if listeners[i]["card"] == card:
 			listeners.remove_at(i)
-			print(card.cardName, " erased from list of listeners")
 			break
 
 func cleanUpListners():
@@ -42,7 +40,6 @@ func checkEffects(card):
 #_______________________________________________________________________________
 func addEffect(effectDictionaryData):
 	effects.append(effectDictionaryData)
-	print("queued effect " + effectDictionaryData)
 
 func exicuteEffect(effect):
 	print("now exicuting : ", effect.type)

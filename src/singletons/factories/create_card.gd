@@ -2,7 +2,7 @@
 extends Node
 
 var cardScene = preload("res://src/card/card.tscn")
-var characterCardScene = preload("res://src/card/character_card.tscn")
+var characterCardScene = preload("res://src/card/cardTypes/character_card.tscn")
 
 func _ready():
 	if CardDictionaryJsonLoader.cardDictionaryData.is_empty():

@@ -19,11 +19,9 @@ enum GameStates {
 
 func _ready():
 	GlobalSignalBus.connect("cardClicked", Callable(self, "onCardClicked"))
-	print("GameManager: Connected to cardClicked signal")
 	await get_tree().process_frame
 
 func setupBoard():
-	print("GameManager: Setting up board...")
 	if !boardController || !journeyDeck:
 		push_error("GameManager: Missing references to board or journey deck")
 		return
@@ -51,8 +49,6 @@ func setupBoard():
 
 	await get_tree().process_frame  # Wait for card placement
 	journeyDeck.fillEmptySlots()
-	
-	print("GameManager: Board setup complete")
 
 func onCardClicked(card):
 	if card.currentState == card.cardState.IN_HAND || card.currentState == card.cardState.BEING_DRAGGED:
@@ -109,7 +105,6 @@ func attemptToMove(characterCard, targetSlot):
 		journeyDeck.revealTopCard(fromSlot)
 
 func calculateBattle(attacker, defender):
-	print("Battle: ", attacker.cardName, " vs ", defender.cardName)
 	
 	var attackerWins = attacker.cardAttack > defender.cardHealth
 	var attackerSurvives = attacker.cardHealth > defender.cardAttack

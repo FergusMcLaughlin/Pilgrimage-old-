@@ -5,12 +5,20 @@ extends Node2D
 @onready var cardGrid = $GameBoard/CardGrid
 
 func _ready() -> void:
+	print(ActionTypes.PLAY_CARD)
 	playerDeck.initialiseFromPreset("test")
 	journeyDeck.initialiseJourneyDeck()
 
 	print("\n----- SCENE DEBUG INFO -----")
-	print_scene_tree()
+	ActionQueue.actionEnqueued.connect(func(a): print("ENQUEUED ", a.get("type")))
+	ActionQueue.actionPopped.connect(func(a): print("POPPED ", a.get("type")))
 
+	ActionQueue.enqueueAction({"type": ActionTypes.PLAY_CARD})
+	ActionQueue.enqueueAction({"type": ActionTypes.MODIFY_STATS})
+
+	ActionQueue.popNextAction()
+	ActionQueue.popNextAction()
+	ActionQueue.popNextAction()
 	# UI wiring
 	$Ui/ButtonPanel/fill_board.pressed.connect(on_fill_board_button_pressed)
 	$Ui/ButtonPanel/fill_one_slot.pressed.connect(on_fill_one_slot_button_pressed)
