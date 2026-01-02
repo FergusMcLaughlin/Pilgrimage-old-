@@ -2,6 +2,8 @@ extends Node
 class_name ActionTypes
 
 const PLAY_CARD := "playCard"
+const REVEAL_CARD := "revealCard"
+const SPAWN_CARD := "spawnCard"
 const MODIFY_STATS := "modifyStats"
 const DEAL_DAMAGE := "dealDamage"
 const DRAW_CARD := "drawCard"

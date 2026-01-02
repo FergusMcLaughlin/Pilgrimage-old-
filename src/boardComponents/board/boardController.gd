@@ -17,7 +17,8 @@ func onCardDragEnded(card, dropPosition):
 	var targetSlot = getSlotAtPosition(dropPosition)
 	if targetSlot && !targetSlot.cardInSlot:
 		if targetSlot.canAcceptCard(card):
-			placeCardInSlot(card, targetSlot)
+			# Do nothing. InputManager already enqueued PLAY_CARD.
+			return
 		else:
 			if GlobalSignalBus.has_signal("cardPlacementInvalid"):
 				GlobalSignalBus.emit_signal("cardPlacementInvalid", card, targetSlot)

@@ -17,7 +17,7 @@ func enqueueAction(action: Dictionary) -> void:
 	_queue.append(action)
 	emit_signal("actionEnqueued", action)
 
-func isQueueEmpty() -> bool:
+func queueHasActions() -> bool:
 	return !_queue.is_empty()
 
 func popNextAction() -> Dictionary:

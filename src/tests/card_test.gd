@@ -16,9 +16,6 @@ func _ready() -> void:
 	ActionQueue.enqueueAction({"type": ActionTypes.PLAY_CARD})
 	ActionQueue.enqueueAction({"type": ActionTypes.MODIFY_STATS})
 
-	ActionQueue.popNextAction()
-	ActionQueue.popNextAction()
-	ActionQueue.popNextAction()
 	# UI wiring
 	$Ui/ButtonPanel/fill_board.pressed.connect(on_fill_board_button_pressed)
 	$Ui/ButtonPanel/fill_one_slot.pressed.connect(on_fill_one_slot_button_pressed)

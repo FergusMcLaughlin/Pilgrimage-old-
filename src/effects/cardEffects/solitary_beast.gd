@@ -40,6 +40,17 @@ func calculateStatsChange(woodsCount: int) -> Dictionary:
 	"health" : hostCard.cardBaseHealth + healthBonus
 	}
 
+func onAction(action: Dictionary, when: String) -> void:
+	if when != "post":
+		return
+	var actionType := str(action.get("type", ""))
+
+	# Decide what should trigger re-calc:
+	if actionType != ActionTypes.PLAY_CARD && actionType != ActionTypes.REVEAL_CARD:
+		return
+
+	apply()
+
 func apply():
 	if not is_instance_valid(hostCard):
 		push_warning("SolitaryBeast.apply: host card freed")
@@ -48,7 +59,12 @@ func apply():
 	var woodsCount = checkWoodsCardsOnBoard()
 	var adjusted = calculateStatsChange(woodsCount)
 	
-	hostCard.cardAttack = adjusted["attack"]
-	hostCard.cardHealth = adjusted["health"]
-	
-	hostCard.updateCardVisuals()
+	ActionQueue.enqueueAction({
+		"type": ActionTypes.MODIFY_STATS,
+		"source": hostCard,
+		"target":hostCard,
+		"data": {
+			"attack": adjusted["attack"],
+			"health": adjusted["health"]
+		}
+	})

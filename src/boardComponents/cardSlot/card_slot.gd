@@ -36,7 +36,6 @@ func setCurrentCard(card):
 		
 		
 		GlobalSignalBus.emit_signal("slotFilled", self, card)
-		EffectMediator.effect_signal_card_played.emit(card)
 
 func clearSlot():
 	currentCard = null

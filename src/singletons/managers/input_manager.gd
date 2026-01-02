@@ -102,11 +102,12 @@ func placeCardInSlot(card, slot):
 		returnCardToHand(card)
 		return
 	
-	card.setCardState(card.cardState.ON_BOARD)
-	
-	slot.setCurrentCard(card)
-	
-	GlobalSignalBus.emit_signal("cardPlayed", card, slot)
+	ActionQueue.enqueueAction({
+		"type": ActionTypes.REVEAL_CARD,
+		"source": self,
+		"target": slot,
+		"data": { "reason": "drag_drop" }
+	})
 
 
 func returnCardToHand(card):

@@ -3,17 +3,11 @@ extends Node
 var listeners = []
 var effects = []
 
-#Signals
-signal effect_signal_card_played(card)
-
-func _ready():
-	effect_signal_card_played.connect(checkEffects)
-
 func addListner(card, effect_instance):
 	cleanUpListners()
 	var effectTrigger = effect_instance.trigger
 	listeners.append({"card": card, "effect": effect_instance, "trigger": effectTrigger})
-	printListeners()
+	print("LISTENER ADDED:", card, " trigger=", effect_instance.trigger, " effect=", effect_instance)
 
 func removeListner(card):
 	for i in range(listeners.size()):
@@ -32,12 +26,6 @@ func cleanUpListners():
 	
 	listeners = validListners
 
-func checkEffects(card):
-	for listener in listeners:
-		if listener["trigger"] == "card_played":
-			listener["effect"].apply()
-
-#_______________________________________________________________________________
 func addEffect(effectDictionaryData):
 	effects.append(effectDictionaryData)
 
@@ -49,19 +37,25 @@ func processEffects():
 		var effect = effects.pop_front()
 		exicuteEffect(effect)
 
+func onActionPre(action: Dictionary) -> void:
+	print("action pre")
+	_dispatchAction(action, "pre")
 
-func printListeners():
-	print("==========================================")
-	print("CURRENT LISTENERS (", listeners.size(), " total):")
-	if listeners.size() == 0:
-		print("  (empty)")
-	else:
-		for i in range(listeners.size()):
-			var listener_data = listeners[i]  # This is the dictionary
-			var card = listener_data["card"]   # Get the card from the dictionary
-			if is_instance_valid(card):
-				print("  [", i, "] ", card.cardName, " (", listener_data["trigger"], ")")
-			else:
-				print("  [", i, "] FREED CARD")
-	print("==========================================")
-	
+func onActionPost(action: Dictionary) -> void:
+	print("MEDIATOR post:", action, " listeners=", listeners.size())
+	_dispatchAction(action, "post")
+
+func _dispatchAction(action: Dictionary, when: String) -> void:
+	cleanUpListners()
+	var actionType := str(action.get("type", ""))
+
+	for listener in listeners:
+		var trigger := str(listener.get("trigger", ""))
+
+		# card_played should fire when the board changes (play OR reveal)
+		if trigger == "card_played" and actionType != ActionTypes.PLAY_CARD and actionType != ActionTypes.REVEAL_CARD:
+			continue
+
+		var effect = listener.get("effect", null)
+		if is_instance_valid(effect) and effect.has_method("onAction"):
+			effect.onAction(action, when)
