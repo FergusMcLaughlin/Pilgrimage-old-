@@ -53,7 +53,7 @@ func _dispatchAction(action: Dictionary, when: String) -> void:
 		var trigger := str(listener.get("trigger", ""))
 
 		# card_played should fire when the board changes (play OR reveal)
-		if trigger == "card_played" and actionType != ActionTypes.PLAY_CARD and actionType != ActionTypes.REVEAL_CARD:
+		if trigger == "card_played" and !ActionValidator.isBoardChanged(actionType):
 			continue
 
 		var effect = listener.get("effect", null)

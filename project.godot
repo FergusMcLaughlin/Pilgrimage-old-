@@ -32,7 +32,7 @@ CardDataRegistry="*res://src/singletons/registries/card_data_registry.gd"
 EffectDataRegistry="*res://src/singletons/registries/effect_data_registry.gd"
 ActionQueue="*res://src/singletons/actions/actionQueue.gd"
 ActionProcessor="*res://src/singletons/actions/actionProcessor.gd"
-GameActions="*res://src/singletons/actions/gameActions.gd"
+ActionValidator="*res://src/singletons/actions/actionValidator.gd"
 
 [display]
 

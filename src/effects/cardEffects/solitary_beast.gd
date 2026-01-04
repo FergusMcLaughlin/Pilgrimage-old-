@@ -46,7 +46,7 @@ func onAction(action: Dictionary, when: String) -> void:
 	var actionType := str(action.get("type", ""))
 
 	# Decide what should trigger re-calc:
-	if actionType != ActionTypes.PLAY_CARD && actionType != ActionTypes.REVEAL_CARD:
+	if !ActionValidator.isBoardChanged(actionType):
 		return
 
 	apply()
