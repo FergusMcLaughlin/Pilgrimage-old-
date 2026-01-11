@@ -13,7 +13,18 @@ static func createCardEffect(card: Node2D, effectData: EffectData):
 				push_error("CardEffectFactory: constructor for %s returned invalid instance" % effectType)
 				return null
 			return effectInstance
-		# Add more effect types here
+		"heal_on_kill":
+			var effectInstance = HealOnKill.new(card, effectData)
+			if effectInstance == null or not effectInstance.has_method("apply"):
+				push_error("CardEffectFactory: constructor for %s returned invalid instance" % effectType)
+				return null
+			return effectInstance
+		"buff_attack_on_kill":
+			var effectInstance = BuffAttackOnKill.new(card, effectData)
+			if effectInstance == null or not effectInstance.has_method("apply"):
+				push_error("CardEffectFactory: constructor for %s returned invalid instance" % effectType)
+				return null
+			return effectInstance
 		_:
 			push_warning("CardEffectFactory: Unknown effect type %s" % effectType)
 			return null

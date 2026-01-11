@@ -38,11 +38,9 @@ func processEffects():
 		exicuteEffect(effect)
 
 func onActionPre(action: Dictionary) -> void:
-	print("action pre")
 	_dispatchAction(action, "pre")
 
 func onActionPost(action: Dictionary) -> void:
-	print("MEDIATOR post:", action, " listeners=", listeners.size())
 	_dispatchAction(action, "post")
 
 func _dispatchAction(action: Dictionary, when: String) -> void:

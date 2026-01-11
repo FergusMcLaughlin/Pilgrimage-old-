@@ -14,5 +14,19 @@
 				"target": "Woods"
 				}
 		}
+	},
+	"heal_on_kill": {
+		"name": "Heal", 
+		"trigger": "destroy_card",
+		"timing": "immediate",
+		"frequency": "once",
+		"effect_type": "heal_on_kill"
+	},
+	"buff_attack_on_kill": {
+		"name": "Attack Buff", 
+		"trigger": "destroy_card",
+		"timing": "immediate",
+		"frequency": "once",
+		"effect_type": "buff_attack_on_kill"
 	}
 }

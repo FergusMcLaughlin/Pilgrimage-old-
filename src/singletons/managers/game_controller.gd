@@ -110,8 +110,6 @@ func calculateBattle(attacker, defender):
 	var attackerSurvives = attacker.cardHealth > defender.cardAttack
 	
 	if defender.cardType == "buff":
-		attacker.cardHealth += defender.cardHealth
-		attacker.cardAttack += defender.cardAttack
 		attacker.updateCardVisuals()
 		
 		var result = {
@@ -120,7 +118,12 @@ func calculateBattle(attacker, defender):
 			"attackerDied": false,
 			"isBuff": true
 			}
-		defender.queue_free()
+		
+		ActionQueue.enqueueAction({
+			"type": ActionTypes.DESTROY_CARD,
+			"source": attacker,
+			"target": defender
+		})
 		
 		GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
 		return result
@@ -143,7 +146,11 @@ func calculateBattle(attacker, defender):
 	}
 	
 	if attackerWins:
-		defender.queue_free()
+		ActionQueue.enqueueAction({
+			"type": ActionTypes.DESTROY_CARD,
+			"source": attacker,
+			"target": defender
+		})
 	
 	GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
 	return result
@@ -166,4 +173,3 @@ func applyDamageToCard(card, amount):
 	
 	if newHealth <= 0:
 		pass
-	
