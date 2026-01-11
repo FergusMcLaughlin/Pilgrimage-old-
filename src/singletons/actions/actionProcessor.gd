@@ -1,7 +1,7 @@
 extends Node
 
 var _isBusy: bool = false
-
+#NEED TO LOOK AT HERE
 func _process(_delta: float) -> void:
 	if _isBusy:
 		return
@@ -36,6 +36,8 @@ func _resolveAction(action: Dictionary) -> void:
 			_handle_reveal_card(action)
 		ActionTypes.MODIFY_STATS:
 			_handleModifyStats(action)
+		ActionTypes.DESTROY_CARD:
+			_handleDestroyCard(action)
 		_:
 			push_warning("[ActionProcessor] Unknown action type: %s | %s" % [actionType, action])
 
@@ -118,15 +120,40 @@ func _handleModifyStats(action: Dictionary) -> void:
 		push_warning("MODIFY_STATS: missing or incalid target")
 		return
 	
-	if !data.has("attack") or !data.has("health"):
+	var hasAttack := data.has("attack")
+	var hasHealth := data.has("health")
+	
+	if !hasAttack && !hasHealth:
 		push_warning("MODIFY_STATS: missing data.attack/health")
 		return
 	
-	if target.cardAttack == data["attack"] and target.cardHealth == data["health"]:
-		return
+	var changed = false
 	
-	target.cardHealth = int(data["health"])
-	target.cardAttack = int(data["attack"])
+	if hasAttack:
+		var new_attack := int(data["attack"])
+		if target.cardAttack != new_attack:
+			target.cardAttack = new_attack
+			changed = true
 	
-	if target.has_method("updateCardVisuals"):
+	if hasHealth:
+		var new_health := int(data["health"])
+		if target.cardHealth != new_health:
+			target.cardHealth = new_health
+			changed = true
+	
+	if changed and target.has_method("updateCardVisuals"):
 		target.updateCardVisuals()
+
+func _handleDestroyCard(action: Dictionary) -> void:
+	var destroyer = action.get("source", null)
+	var destroyed = action.get("target", null)
+
+	print("DESTROY:", "source=", destroyer, " target=", destroyed)
+
+	if destroyed == null or !is_instance_valid(destroyed):
+		push_warning("DESTROY_CARD: invalid destroyed")
+		return
+
+	# Example: remove from slot if it has a parent slot reference, then free
+	if destroyed.get_parent() != null:
+		destroyed.queue_free()

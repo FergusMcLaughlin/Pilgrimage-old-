@@ -1,9 +1,9 @@
 extends Node
 
-const PLAY_CARD = "playCard"
-const REVEAL_CARD = "revealCard"
-const MODIFY_STATS = "modifyStats"
-const DESTROY_CARD = "destroyCard"
+const PLAY_CARD = "play_card"
+const REVEAL_CARD = "reveal_card"
+const MODIFY_STATS = "modify_stats"
+const DESTROY_CARD = "destroy_card"
 
 static func isBoardChanged(actionType: String) -> bool:
 	return actionType in [

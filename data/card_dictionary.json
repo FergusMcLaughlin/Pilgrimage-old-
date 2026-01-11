@@ -97,14 +97,16 @@
 	"type": "buff",
 	"health": 2,
 	"attack": 0,
+	"effect": ["heal_on_kill"],
 	"image_path": "res://assets/images/cards/Stew.png"
   },
   "M_0008": {
 	"id": "M_0008",
 	"name": "Ale",
 	"type": "buff",
-	"health": 2,
+	"health": 20,
 	"attack": 0,
+	"effect": ["heal_on_kill"],
 	"image_path": "res://assets/images/cards/Ale.png"
   },
   "M_0009": {
@@ -113,6 +115,7 @@
 	"type": "buff",
 	"health": 0,
 	"attack": 3,
+	"effect": ["buff_attack_on_kill"],
 	"image_path": "res://assets/images/cards/Rally.png"
   }
 }
