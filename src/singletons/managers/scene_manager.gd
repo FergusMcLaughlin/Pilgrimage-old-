@@ -87,7 +87,7 @@ func switchToNewScene(fromScene: Node, toScene: Node):
 func onTransitionAnimationComplete(animationName: String):
 	if animationName.ends_with("_out"):
 		isTransitioning = false
-		GlobalSignalBus.emit_signal("sceneTransitionCompleted", null, currentScene, -1)
+		GlobalSignalBus.emitSceneTransitionCompleted(null,currentScene,-1)
 
 		processPendingTransitions()
 

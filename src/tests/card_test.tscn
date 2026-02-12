@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmybsbr6ii0pb"]
+[gd_scene format=3 uid="uid://dmybsbr6ii0pb"]
 
 [ext_resource type="Script" uid="uid://clnygrjw5bahg" path="res://src/tests/card_test.gd" id="1_r60gl"]
 [ext_resource type="PackedScene" uid="uid://v2d2h6sd3eg8" path="res://src/boardComponents/board/gameBoard.tscn" id="2_luk4p"]
@@ -7,17 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://bwamppuvr2yh7" path="res://src/decks/player_deck.tscn" id="4_luk4p"]
 [ext_resource type="PackedScene" uid="uid://byhaxdjn1i2dd" path="res://src/decks/journey_deck.tscn" id="6_i13km"]
 
-[node name="CardTest" type="Node2D"]
+[node name="CardTest" type="Node2D" unique_id=1869084759]
 script = ExtResource("1_r60gl")
 
-[node name="Ui" type="CanvasLayer" parent="."]
+[node name="Ui" type="CanvasLayer" parent="." unique_id=784837272]
 
-[node name="ButtonPanel" type="Panel" parent="Ui"]
+[node name="ButtonPanel" type="Panel" parent="Ui" unique_id=2104145924]
 offset_top = 3.0
 offset_right = 125.0
 offset_bottom = 327.0
 
-[node name="findmiddleslotButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="findmiddleslotButton" type="Button" parent="Ui/ButtonPanel" unique_id=274206715]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 43.0
@@ -25,7 +25,7 @@ offset_right = 61.0
 offset_bottom = 74.0
 text = "Find middle"
 
-[node name="StateButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="StateButton" type="Button" parent="Ui/ButtonPanel" unique_id=1946847017]
 layout_mode = 0
 offset_left = 21.0
 offset_top = 76.0
@@ -33,7 +33,7 @@ offset_right = 68.0
 offset_bottom = 107.0
 text = "state"
 
-[node name="DragButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="DragButton" type="Button" parent="Ui/ButtonPanel" unique_id=910168059]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 5.0
@@ -41,7 +41,7 @@ offset_right = 66.0
 offset_bottom = 36.0
 text = "drag"
 
-[node name="MoveToSlotButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="MoveToSlotButton" type="Button" parent="Ui/ButtonPanel" unique_id=1372898413]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 181.0
@@ -49,7 +49,7 @@ offset_right = 115.0
 offset_bottom = 212.0
 text = "moveto/slot"
 
-[node name="RemoveFromSlotButton" type="Button" parent="Ui/ButtonPanel"]
+[node name="RemoveFromSlotButton" type="Button" parent="Ui/ButtonPanel" unique_id=21100722]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 112.0
@@ -57,7 +57,7 @@ offset_right = 120.0
 offset_bottom = 143.0
 text = "Remove/slot"
 
-[node name="debug_button" type="Button" parent="Ui/ButtonPanel"]
+[node name="debug_button" type="Button" parent="Ui/ButtonPanel" unique_id=54072321]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 147.0
@@ -65,7 +65,7 @@ offset_right = 117.0
 offset_bottom = 178.0
 text = "debug cards"
 
-[node name="fill_board" type="Button" parent="Ui/ButtonPanel"]
+[node name="fill_board" type="Button" parent="Ui/ButtonPanel" unique_id=108503962]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 235.0
@@ -74,7 +74,7 @@ offset_bottom = 266.0
 text = "fill board
 "
 
-[node name="fill_one_slot" type="Button" parent="Ui/ButtonPanel"]
+[node name="fill_one_slot" type="Button" parent="Ui/ButtonPanel" unique_id=1589751618]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 275.0
@@ -82,19 +82,19 @@ offset_right = 92.0
 offset_bottom = 306.0
 text = "fill a slot"
 
-[node name="GameBoard" parent="." instance=ExtResource("2_luk4p")]
+[node name="GameBoard" parent="." unique_id=381275871 instance=ExtResource("2_luk4p")]
 gridPath = NodePath("CardGrid")
 
-[node name="Hand" parent="GameBoard" instance=ExtResource("4_h6cl3")]
+[node name="Hand" parent="GameBoard" unique_id=652373744 instance=ExtResource("4_h6cl3")]
 position = Vector2(769, 824)
 
-[node name="playerDeck" parent="GameBoard" instance=ExtResource("4_luk4p")]
+[node name="playerDeck" parent="GameBoard" unique_id=1235069963 instance=ExtResource("4_luk4p")]
 position = Vector2(165, 475)
 
-[node name="CardGrid" parent="GameBoard" instance=ExtResource("4_i13km")]
+[node name="CardGrid" parent="GameBoard" unique_id=1342115588 instance=ExtResource("4_i13km")]
 position = Vector2(749, 380)
 
-[node name="journeyDeck" parent="GameBoard" instance=ExtResource("6_i13km")]
+[node name="journeyDeck" parent="GameBoard" unique_id=1024338133 instance=ExtResource("6_i13km")]
 position = Vector2(744, 68)
 rotation = 1.5708
 boardNodePath = NodePath("..")

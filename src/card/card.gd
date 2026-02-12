@@ -23,6 +23,7 @@ var currentState: int = cardState.IN_DECK
 var shadowSprite: Sprite2D
 var isReturningToLocation: bool = false
 var shadowHelper: CardShadowHelper
+var movementTween: Tween = null
 
 func _ready():
 	$Area2D.connect("mouse_entered", Callable(self, "onCardAreaEntered"))
@@ -106,7 +107,7 @@ func setCardState (newCardState):
 	if scale != Vector2(1.0,1.0):
 		shadowHelper.updateShadowForScale(scale)
 	
-	GlobalSignalBus.emit_signal("cardStateChanged", self, oldState, newCardState)
+	GlobalSignalBus.emitCardStateChanged(self, oldState, newCardState)
 
 func _set(property, value):
 	if property == "scale" && shadowHelper != null:
@@ -139,7 +140,15 @@ func flipCard ():
 			var isDragging = currentState == cardState.BEING_DRAGGED
 			shadowHelper.setShadowVisible(true, isDragging)
 	)
-	GlobalSignalBus.emit_signal("cardFlipped", self)
+	GlobalSignalBus.emitCardFlipped(self)
+
+func moveToPosition(targetPosition: Vector2) -> void:
+	if movementTween != null && movementTween.is_valid():
+		movementTween.kill()
+	
+	movementTween = create_tween()
+	movementTween.tween_property(self, "global_position", targetPosition, 0.3)
+	movementTween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2)
 
 func onReturnToHandComplete():
 	isReturningToLocation = false
@@ -152,16 +161,19 @@ func toggleShadow(isVisable):
 		shadowSprite.visible = isVisable
 
 func onCardAreaEntered():
-	GlobalSignalBus.emit_signal("cardHovered", self)
+	GlobalSignalBus.emitCardHovered(self)
 
 func onCardAreaExited():
-	GlobalSignalBus.emit_signal("cardUnhovered", self)
+	GlobalSignalBus.emitCardUnhovered(self)
 
 func onCardAreaInputEvent(_viewport,event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if currentState == cardState.IN_SLOT:
-			GlobalSignalBus.emit_signal("cardClicked", self)
+			GlobalSignalBus.emitCardClicked(self)
 		elif currentState == cardState.IN_HAND:
-			GlobalSignalBus.emit_signal("cardClicked", self)
+			GlobalSignalBus.emitCardClicked(self)
 		else:
-			GlobalSignalBus.emit_signal("cardClicked", self)
+			GlobalSignalBus.emitCardClicked(self)
+
+func cleanUpEffects() -> void:
+	EffectMediator.removeListnersForCard(self)

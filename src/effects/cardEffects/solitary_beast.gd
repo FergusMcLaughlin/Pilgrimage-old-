@@ -23,7 +23,7 @@ func _init(card: Node2D, effectData: EffectData):
 
 func checkWoodsCardsOnBoard() -> int:
 	var count = 0
-	var slots = GameController.boardController.getOccupiedSlots()
+	var slots = GameController.boardController.grid.getOccupiedSlots()
 	
 	for slot in slots:
 		var card = slot.currentCard
@@ -59,12 +59,13 @@ func apply():
 	var woodsCount = checkWoodsCardsOnBoard()
 	var adjusted = calculateStatsChange(woodsCount)
 	
-	ActionQueue.enqueueAction({
-		"type": ActionTypes.MODIFY_STATS,
-		"source": hostCard,
-		"target":hostCard,
-		"data": {
-			"attack": adjusted["attack"],
-			"health": adjusted["health"]
-		}
-	})
+	ActionQueue.enqueueAction(
+		ActionTypes.make(
+			ActionTypes.MODIFY_STATS,
+			hostCard,hostCard,
+			{
+				"attack": adjusted["attack"],
+				"health": adjusted["health"]
+			}
+		)
+	)

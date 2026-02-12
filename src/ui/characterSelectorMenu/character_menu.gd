@@ -41,10 +41,10 @@ func createCharacterCards():
 			characterCards.append(cardInstance)
 
 func placeCharacterCardsInGrid():
-	if !boardNode || !boardNode.has_method("getEmptySlots"):
-		push_error("JourneyDeck: Board not found or the getEmptySlots function's not there ?")
+	if !boardNode || !boardNode.grid.has_method("getEmptySlots"):
+		push_error("JourneyDeck: Board not found or the getEmptySlots function's not InGrid")
 		return
-	var emptySlots = boardNode.getEmptySlots()
+	var emptySlots = boardNode.grid.getEmptySlots()
 	var delayBetweenCards = 0.04
 	
 	for i in range(min(characterCards.size(), emptySlots.size())):

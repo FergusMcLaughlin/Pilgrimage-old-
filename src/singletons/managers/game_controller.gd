@@ -35,7 +35,7 @@ func setupBoard():
 		push_error("GameManager: Failed to create character card")
 		return
 	
-	var centerSlot = boardController.getCenterSlot()
+	var centerSlot = boardController.grid.getCenterSlot()
 	if !centerSlot:
 		push_error("GameManager: Could not find center slot")
 		return
@@ -73,7 +73,7 @@ func onCardClicked(card):
 	attemptToMove(characterCard, targetSlot)
 
 func findCharacterCardOnBoard():
-	var occupiedSlots = boardController.getOccupiedSlots()
+	var occupiedSlots = boardController.grid.getOccupiedSlots()
 	for slot in occupiedSlots:
 		var card = slot.currentCard
 		if card && card.get("isPlayerCard") == true:
@@ -119,13 +119,17 @@ func calculateBattle(attacker, defender):
 			"isBuff": true
 			}
 		
-		ActionQueue.enqueueAction({
-			"type": ActionTypes.DESTROY_CARD,
-			"source": attacker,
-			"target": defender
-		})
+		ActionQueue.enqueueAction(
+			ActionTypes.make(
+				ActionTypes.DESTROY_CARD,
+				attacker,
+				defender,
+				{}
+			)
+		)
 		
-		GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
+		GlobalSignalBus.emitBattleCompleted(attacker,defender,result)
+		
 		return result
 	
 	attackerWins = attacker.cardAttack > defender.cardHealth
@@ -146,13 +150,16 @@ func calculateBattle(attacker, defender):
 	}
 	
 	if attackerWins:
-		ActionQueue.enqueueAction({
-			"type": ActionTypes.DESTROY_CARD,
-			"source": attacker,
-			"target": defender
-		})
+		ActionQueue.enqueueAction(
+			ActionTypes.make(
+				ActionTypes.DESTROY_CARD,
+				attacker,
+				defender,
+				{}
+			)
+		)
 	
-	GlobalSignalBus.emit_signal("battleCompleted", attacker, defender, result)
+	GlobalSignalBus.emitBattleCompleted(attacker,defender,result)
 	return result
 
 func moveCard(card, targetSlot):
@@ -162,14 +169,14 @@ func moveCard(card, targetSlot):
 		fromSlot.clearSlot()
 	
 	targetSlot.setCurrentCard(card)
-	GlobalSignalBus.emit_signal("cardMoved", card, fromSlot, targetSlot)
+	GlobalSignalBus.emitCardMoved(card,fromSlot,targetSlot)
 
 func applyDamageToCard(card, amount):
 	var newHealth = card.cardHealth - amount
 	card.cardHealth = newHealth
 	card.updateCardVisuals()
 	
-	GlobalSignalBus.emit_signal("cardDamaged", card, amount, newHealth)
+	GlobalSignalBus.emitCardDamaged(card,amount,newHealth)
 	
 	if newHealth <= 0:
 		pass

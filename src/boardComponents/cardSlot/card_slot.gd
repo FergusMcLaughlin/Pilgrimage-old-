@@ -17,8 +17,6 @@ func _ready():
 	area.connect("mouseExited", onArea2dMouseExited)
 	area.connect("inputEvent", onArea2dInputEvent)
 	
-	GlobalSignalBus.connect("cardDragStarted", onCardDragStarted)
-	
 	$Area2D.collision_layer = GameConstants.LAYER_SLOT
 	$Area2D.collision_mask = 0
 
@@ -26,22 +24,20 @@ func setCurrentCard(card):
 	currentCard = card
 	cardInSlot = true
 	
-
-	if card != null:
-		card.setCardState(card.cardState.IN_SLOT)
-		card.reparent(self, true)
-		var tween = create_tween()
-		tween.tween_property(card, "global_position", global_position, 0.3)
-		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
-		
-		
-		GlobalSignalBus.emit_signal("slotFilled", self, card)
+	card.setCardState(card.cardState.IN_SLOT)
+	card.reparent(self, true)
+	
+	card.moveToPosition(global_position)
+	
+	GlobalSignalBus.emitSlotFilled(self, card)
 
 func clearSlot():
+	if currentCard != null and currentCard.has_method("cleanUpEffects"):
+		currentCard.cleanUpEffects()
+	
 	currentCard = null
 	cardInSlot = false
-	GlobalSignalBus.emit_signal("slotEmptied", self)
-	EffectMediator.cleanUpListners()
+	GlobalSignalBus.emitSlotEmptied(self)
 
 func canAcceptCard(card):
 	if cardInSlot:
@@ -50,26 +46,15 @@ func canAcceptCard(card):
 		return true
 	return card.type in allowedCardTypes
 
-func getGlobalSlotCenter():
-	return global_position
-
 func onArea2dMouseEntered():
-	GlobalSignalBus.emit_signal("slotHovered", self)
+	GlobalSignalBus.emitSlotHovered(self)
 
 func onArea2dMouseExited():
-	GlobalSignalBus.emit_signal("slotUnhovered", self)
+	GlobalSignalBus.emitSlotUnhovered(self)
 
 func onArea2dInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		GlobalSignalBus.emit_signal("slotClicked", self)
+		GlobalSignalBus.emitSlotClicked(self)
 
 func onCardDragStarted(card):
 	pass
-
-#func onCardDragEnded(card, position):
-	#var slotRect = Rect2(global_position - Vector2(collisonShape.shape.extents), collisonShape.shape.extents * 2)
-	#if slotRect.has_point(position) and !cardInSlot:
-		#if canAcceptCard(card):
-				   #if !cardInSlot && canAcceptCard(card):
-			## Maybe highlight the slot or play a sound
-			#pass

@@ -26,6 +26,11 @@ func cleanUpListners():
 	
 	listeners = validListners
 
+func removeListnersForCard(card) -> void:
+	for i in range(listeners.size() - 1, -1, -1):
+		if listeners[i].get("card", null) == card:
+			listeners.remove_at(i)
+
 func addEffect(effectDictionaryData):
 	effects.append(effectDictionaryData)
 

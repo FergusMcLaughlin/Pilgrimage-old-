@@ -36,11 +36,11 @@ func apply(attacker: Node2D, destroyed: Node2D):
 	var buffHealAmount = int(destroyed.cardBaseHealth)
 	var newHealth = int(attacker.cardHealth) + buffHealAmount
 	
-	ActionQueue.enqueueAction({
-		"type": ActionTypes.MODIFY_STATS,
-		"source": hostCard,
-		"target":attacker,
-		"data": {
-			"health": newHealth
-		}
-	})
+	ActionQueue.enqueueAction(
+		ActionTypes.make(
+			ActionTypes.MODIFY_STATS,
+			hostCard,
+			attacker,
+			{"health": newHealth}
+			)
+		)

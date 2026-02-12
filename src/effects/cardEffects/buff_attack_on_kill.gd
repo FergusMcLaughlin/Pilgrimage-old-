@@ -37,11 +37,11 @@ func apply(attacker: Node2D, destroyed: Node2D):
 	var buffAttackAmount = int(destroyed.cardBaseAttack)
 	var newAttack = int(attacker.cardAttack) + buffAttackAmount
 	
-	ActionQueue.enqueueAction({
-		"type": ActionTypes.MODIFY_STATS,
-		"source": hostCard,
-		"target":attacker,
-		"data": {
-			"attack": newAttack
-		}
-	})
+	ActionQueue.enqueueAction(
+		ActionTypes.make(
+			ActionTypes.MODIFY_STATS,
+			hostCard,
+			attacker,
+			{"attack": newAttack}
+		)
+	)

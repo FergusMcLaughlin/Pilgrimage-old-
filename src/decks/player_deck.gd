@@ -55,5 +55,5 @@ func drawMultipleCardsToHand(count): #not used yet
 
 func onDeckInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		GlobalSignalBus.emit_signal("deckClicked", self)
+		GlobalSignalBus.emitDeckClicked(self)
 		drawCardToHand()

@@ -55,8 +55,7 @@ func _handle_play_card(action: Dictionary) -> void:
 
 	# Optional: final validation guard
 	if slot.has_method("canAcceptCard") and !slot.canAcceptCard(card):
-		if GlobalSignalBus.has_signal("cardPlacementInvalid"):
-			GlobalSignalBus.emit_signal("cardPlacementInvalid", card, slot)
+		GlobalSignalBus.emitCardPlacementInvalid(card,slot)
 		return
 
 	# TODO: move your old direct play placement here:
@@ -65,12 +64,11 @@ func _handle_play_card(action: Dictionary) -> void:
 	var tween = create_tween()
 	tween.tween_property(card, "global_position", slot.global_position, 0.3)
 	tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.2)
-
+	
 	if slot.has_method("setCurrentCard"):
 		slot.setCurrentCard(card)
-
-	if GlobalSignalBus.has_signal("cardPlayed"):
-		GlobalSignalBus.emit_signal("cardPlayed", card, slot)
+	
+	GlobalSignalBus.emitCardPlayed(card, slot)
 
 
 func _handle_reveal_card(action: Dictionary) -> void:
@@ -107,9 +105,8 @@ func _handle_reveal_card(action: Dictionary) -> void:
 	# Preserve previous signals/behavior
 	if deck != null and is_instance_valid(deck) and deck.has_signal("journeyCardRevealed"):
 		deck.emit_signal("journeyCardRevealed", card, slot)
-
-	if GlobalSignalBus.has_signal("slotFilled"):
-		GlobalSignalBus.emit_signal("slotFilled", slot, card)
+	
+	GlobalSignalBus.emitSlotFilled(slot,card)
 
 
 func _handleModifyStats(action: Dictionary) -> void:

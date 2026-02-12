@@ -25,7 +25,7 @@ func _input(event):
 			
 			cardBeingDragged.rotation = lerp(originalCardRotation, targetRotation, weight)
 			
-			GlobalSignalBus.emit_signal("cardDragging", cardBeingDragged, newPosition)
+			GlobalSignalBus.emitCardDragging(cardBeingDragged,newPosition)
 		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT && !event.pressed:
 			stopDraggingCard(event.global_position)
 
@@ -61,7 +61,7 @@ func startDraggingCard(card):
 	var oldState = card.currentState
 	card.setCardState(card.cardState.BEING_DRAGGED)
 	
-	GlobalSignalBus.emit_signal("cardDragStarted", card)
+	GlobalSignalBus.emitCardDragStarted(card)
 
 func stopDraggingCard(position):
 	if !cardBeingDragged:
@@ -74,7 +74,7 @@ func stopDraggingCard(position):
 	else:
 		returnCardToHand(cardBeingDragged)
 		
-	GlobalSignalBus.emit_signal("cardDragEnded", cardBeingDragged, position)
+	GlobalSignalBus.emitCardDragEnded(cardBeingDragged,position)
 	cardBeingDragged = null
 
 func findDroppingTarget(position):
@@ -102,12 +102,14 @@ func placeCardInSlot(card, slot):
 		returnCardToHand(card)
 		return
 	
-	ActionQueue.enqueueAction({
-		"type": ActionTypes.REVEAL_CARD,
-		"source": self,
-		"target": slot,
-		"data": { "reason": "drag_drop" }
-	})
+	ActionQueue.enqueueAction(
+		ActionTypes.make(
+			ActionTypes.REVEAL_CARD,
+			self,
+			slot,
+			{"reason": "drag_drop" }
+		)
+	)
 
 
 func returnCardToHand(card):
@@ -115,5 +117,4 @@ func returnCardToHand(card):
 	CardZIndexManager.setReturningCardZIndex(card)
 	card.setCardState(card.cardState.IN_HAND)
 	
-	if GlobalSignalBus.has_signal("cardReturnedToHand"):
-		GlobalSignalBus.emit_signal("cardReturnedToHand", card)
+	GlobalSignalBus.emitCardReturnedToHand(card)

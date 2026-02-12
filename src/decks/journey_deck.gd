@@ -29,11 +29,11 @@ func initialiseJourneyDeck():
 	initaliseDeck(journeyCards)
 
 func fillEmptySlots():
-	if !boardNode || !boardNode.has_method("getEmptySlots"):
+	if !boardNode || !boardNode.grid.has_method("getEmptySlots"):
 		push_error("JourneyDeck: Board not found or getEmptySlots missing")
 		return
 
-	var emptySlots = boardNode.getEmptySlots()
+	var emptySlots = boardNode.grid.getEmptySlots()
 	var delayBetweenCards = 0.04
 
 	for slot in emptySlots:
@@ -47,14 +47,14 @@ func fillEmptySlots():
 
 
 func _requestRevealCard(card: Node2D, slot: Node) -> void:
-	ActionQueue.enqueueAction({
-		"type": ActionTypes.REVEAL_CARD,
-		"source": self,     # the deck
-		"target": slot,
-		"data": {
-			"card": card
-		}
-	})
+	ActionQueue.enqueueAction(
+		ActionTypes.make(
+			ActionTypes.REVEAL_CARD,
+			self,
+			slot,
+			{"card": card}
+			)
+		)
 
 func revealTopCard(slot):
 	if cards.is_empty():
@@ -72,8 +72,8 @@ func updateDeckDisplay():
 
 func onDeckInputEvent(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
-		GlobalSignalBus.emit_signal("deckClicked", self)
-		if boardNode && boardNode.has_method("getEmptySlots"):
-			var emptySlots = boardNode.getEmptySlots()
+		GlobalSignalBus.emitDeckClicked(self)
+		if boardNode && boardNode.grid.has_method("getEmptySlots"):
+			var emptySlots = boardNode.grid.getEmptySlots()
 			if !emptySlots.is_empty():
 				revealTopCard(emptySlots[0])
