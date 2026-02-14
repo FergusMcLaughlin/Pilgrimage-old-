@@ -1,14 +1,9 @@
 extends Node2D
 
-var cardId: String
-var cardName: String
-var cardType: String
+var cardData: CardData
 var cardHealth: int
 var cardAttack: int
-var cardBaseHealth: int
-var cardBaseAttack: int
 var cardImagePath: String
-
 var effectName: String
 
 enum cardState {
@@ -34,26 +29,24 @@ func _ready():
 	
 	shadowHelper = CardShadowHelper.new(self)
 
-func initialiseCard (card_data: CardData):
-	cardId = card_data.cardId
-	cardName = card_data.cardName
-	cardType = card_data.cardType
-	cardHealth = card_data.cardHealth
-	cardAttack = card_data.cardAttack
-	cardBaseHealth = card_data.cardHealth
-	cardBaseAttack = card_data.cardAttack
-	cardImagePath = str("res://assets/images/cards/" + cardName +".png") #this is not data driven at the min
+func initialiseCard (data: CardData):
+	cardData = data
 	
-	AddCardEffectToCardHelper.setupCardEffects(self, card_data)
+	cardHealth = data.cardBaseHealth
+	cardAttack = data.cardBaseAttack
+	
+	cardImagePath = str("res://assets/images/cards/" + cardData.cardName +".png") #this is not data driven at the min
+	
+	AddCardEffectToCardHelper.setupCardEffects(self, cardData)
 	
 	updateCardVisuals()
 	
 func updateCardVisuals ():
-	$Name.text = cardName
+	$Name.text = cardData.cardName
 	$Health.text = str(cardHealth)
 	$Attack.text = str(cardAttack)
 	
-	CardStatColourHelper.updateStatColours(cardType, cardAttack, cardBaseAttack, cardHealth, cardBaseHealth, $Attack, $Health)
+	CardStatColourHelper.updateStatColours(cardData.cardType, cardAttack, cardData.cardBaseAttack, cardHealth, cardData.cardBaseHealth, $Attack, $Health)
 	
 	var texture = load(cardImagePath)
 	if texture:

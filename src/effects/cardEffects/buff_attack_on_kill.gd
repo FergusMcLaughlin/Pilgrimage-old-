@@ -34,7 +34,7 @@ func apply(attacker: Node2D, destroyed: Node2D):
 		push_warning("BuffAttackOnKill.apply: destroyed or destroyer is not valid.")
 		return
 	
-	var buffAttackAmount = int(destroyed.cardBaseAttack)
+	var buffAttackAmount = int(destroyed.cardData.cardBaseAttack)
 	var newAttack = int(attacker.cardAttack) + buffAttackAmount
 	
 	ActionQueue.enqueueAction(

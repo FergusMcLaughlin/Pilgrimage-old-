@@ -54,7 +54,7 @@ func onCardClicked(card):
 	if card.currentState == card.cardState.IN_HAND || card.currentState == card.cardState.BEING_DRAGGED:
 		return
 	
-	if card.get("isPlayerCard") == true:
+	if card.cardData.cardIsPlayer == true:
 		return
 	
 	var characterCard = findCharacterCardOnBoard()
@@ -76,7 +76,7 @@ func findCharacterCardOnBoard():
 	var occupiedSlots = boardController.grid.getOccupiedSlots()
 	for slot in occupiedSlots:
 		var card = slot.currentCard
-		if card && card.get("isPlayerCard") == true:
+		if card && card.cardData.cardIsPlayer == true:
 			return card
 	return null
 
@@ -109,7 +109,7 @@ func calculateBattle(attacker, defender):
 	var attackerWins = attacker.cardAttack > defender.cardHealth
 	var attackerSurvives = attacker.cardHealth > defender.cardAttack
 	
-	if defender.cardType == "buff":
+	if defender.cardData.cardType == "buff":
 		attacker.updateCardVisuals()
 		
 		var result = {

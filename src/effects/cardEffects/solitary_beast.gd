@@ -27,7 +27,7 @@ func checkWoodsCardsOnBoard() -> int:
 	
 	for slot in slots:
 		var card = slot.currentCard
-		if card != null && card.cardName == targetType:
+		if card != null && card.cardData.cardName == targetType:
 			count += 1
 	
 	return count
@@ -36,8 +36,8 @@ func calculateStatsChange(woodsCount: int) -> Dictionary:
 	var attackBonus = attackPerMatch * woodsCount
 	var healthBonus = healthPerMatch * woodsCount
 	return {
-	"attack" : hostCard.cardBaseAttack + attackBonus,
-	"health" : hostCard.cardBaseHealth + healthBonus
+	"attack" : hostCard.cardData.cardBaseAttack + attackBonus,
+	"health" : hostCard.cardData.cardBaseHealth + healthBonus
 	}
 
 func onAction(action: Dictionary, when: String) -> void:

@@ -33,7 +33,7 @@ func apply(attacker: Node2D, destroyed: Node2D):
 		push_warning("Heal.apply: destroyed or destroyer is not valid.")
 		return
 	
-	var buffHealAmount = int(destroyed.cardBaseHealth)
+	var buffHealAmount = int(destroyed.cardData.cardBaseHealth)
 	var newHealth = int(attacker.cardHealth) + buffHealAmount
 	
 	ActionQueue.enqueueAction(

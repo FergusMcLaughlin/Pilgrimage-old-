@@ -44,7 +44,7 @@ func canAcceptCard(card):
 		return false
 	if allowedCardTypes.is_empty():
 		return true
-	return card.type in allowedCardTypes
+	return card.cardData.type in allowedCardTypes
 
 func onArea2dMouseEntered():
 	GlobalSignalBus.emitSlotHovered(self)
